@@ -4,715 +4,542 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Optimum · Knowledge Challenge</title>
-<meta name="description" content="Test your knowledge of the Universal Data Acceleration Network. Earn your rank, get a certificate.">
+<meta name="description" content="Test your knowledge of the Universal Data Acceleration Network.">
 <meta name="theme-color" content="#0a0a0c">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<style>/* ── RESET ── */
+<style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-/* ── VARS ── */
 :root{
-  --bg:#0a0a0c;
-  --s1:#101013;
-  --s2:#16161b;
-  --s3:#1e1e25;
-  --lav:#b87cff;
-  --azure:#51b1fe;
-  --mint:#64e27f;
-  --peach:#fea158;
-  --txt:#fafafa;
-  --txt2:#c4c7d0;
-  --txt3:#7f8696;
-  --bdr:rgba(255,255,255,0.08);
-  --ok:#64e27f;
-  --no:#ff5a6e;
+  --bg:#0a0a0c;--s1:#101013;--s2:#16161b;--s3:#1e1e25;
+  --lav:#b87cff;--azure:#51b1fe;--mint:#64e27f;--peach:#fea158;
+  --txt:#fafafa;--txt2:#c4c7d0;--txt3:#7f8696;
+  --bdr:rgba(255,255,255,.08);--ok:#64e27f;--no:#ff5a6e;
 }
-
 html{scroll-behavior:smooth}
-
-body{
-  background:var(--bg);
-  color:var(--txt);
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
-  min-height:100vh;
-  overflow-x:hidden;
-  cursor:none;
-  -webkit-font-smoothing:antialiased;
-}
-
-/* ── CURSOR ── */
-#cur-dot{position:fixed;top:0;left:0;width:5px;height:5px;background:#fff;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .15s,height .15s;will-change:transform}
-#cur-ring{position:fixed;top:0;left:0;width:30px;height:30px;border:1.5px solid rgba(184,124,255,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);will-change:transform;transition:width .25s,height .25s,border-color .2s}
-
-/* ── BACKGROUND ── */
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 #bgc{position:fixed;inset:0;z-index:0;pointer-events:none}
-#grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.45;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-
-/* ── LAYOUT ── */
 .wrap{position:relative;z-index:10;min-height:100vh}
 .c{max-width:660px;margin:0 auto;padding:0 20px}
 
-/* ── NAV ── */
+/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(10,10,12,.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr)}
-.nav-l{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-logo{height:22px;width:auto;display:block}
-.nav-chip{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--lav);background:rgba(184,124,255,.08);border:1px solid rgba(184,124,255,.2);padding:6px 13px;border-radius:100px;box-shadow:0 0 18px rgba(184,124,255,.1)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-.01em;color:#fff;text-decoration:none}
+.brand .mark{width:26px;height:14px;flex-shrink:0}
+.chip{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--lav);background:rgba(184,124,255,.08);border:1px solid rgba(184,124,255,.2);padding:6px 13px;border-radius:100px}
 
-/* ── SCREENS ── */
+/* SCREENS */
 .screen{display:none}
 .screen.on{display:block}
 
-/* ── INTRO ── */
-#s-intro{padding:140px 0 80px;text-align:center;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
-.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lav);margin-bottom:24px;opacity:0;animation:up .7s .1s forwards}
+/* INTRO */
+#intro{padding:130px 0 80px;text-align:center;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lav);margin-bottom:24px}
 .eyebrow::before,.eyebrow::after{content:'';width:26px;height:1px;background:var(--lav);opacity:.4}
-.title{font-size:clamp(42px,7vw,76px);font-weight:800;line-height:1.02;letter-spacing:-.04em;margin-bottom:20px;color:#fff;opacity:0;animation:up .7s .22s forwards}
-.title em{font-style:normal;background:linear-gradient(110deg,var(--lav),var(--azure),var(--mint));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 28px rgba(184,124,255,.35))}
-.lead{font-size:17px;color:var(--txt2);line-height:1.65;max-width:440px;margin:0 auto 40px;opacity:0;animation:up .7s .34s forwards}
-.tiers{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:44px;opacity:0;animation:up .7s .46s forwards}
-.tp{display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:100px;font-size:12.5px;font-weight:500;background:var(--s2);border:1px solid var(--bdr);transition:all .25s;cursor:none;color:var(--txt2)}
+h1{font-size:clamp(42px,7vw,72px);font-weight:800;line-height:1.03;letter-spacing:-.04em;margin-bottom:20px;color:#fff}
+h1 em{font-style:normal;background:linear-gradient(110deg,var(--lav),var(--azure),var(--mint));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lead{font-size:17px;color:var(--txt2);line-height:1.65;max-width:440px;margin:0 auto 40px}
+.tiers{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:44px}
+.tp{display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:100px;font-size:12.5px;font-weight:500;background:var(--s2);border:1px solid var(--bdr);color:var(--txt2);transition:.25s}
 .tp:hover{border-color:rgba(255,255,255,.15);transform:translateY(-3px);color:var(--txt)}
-.pip{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.t0 .pip{background:var(--txt3)}
-.t1 .pip{background:var(--azure);box-shadow:0 0 8px var(--azure)}
-.t2 .pip{background:var(--peach);box-shadow:0 0 8px var(--peach)}
-.t3 .pip{background:var(--lav);box-shadow:0 0 10px var(--lav);animation:ppulse 2.5s ease-in-out infinite}
-@keyframes ppulse{0%,100%{opacity:1}50%{opacity:.5}}
-.cta-wrap{opacity:0;animation:up .7s .58s forwards}
+.pip{width:7px;height:7px;border-radius:50%}
+.p0{background:var(--txt3)}.p1{background:var(--azure);box-shadow:0 0 8px var(--azure)}.p2{background:var(--peach);box-shadow:0 0 8px var(--peach)}.p3{background:var(--lav);box-shadow:0 0 10px var(--lav)}
 .note{margin-top:18px;font-size:12.5px;color:var(--txt3)}
 
-/* ── BUTTONS ── */
-.btn-start{position:relative;display:inline-flex;align-items:center;gap:12px;padding:18px 46px;border-radius:100px;border:none;cursor:none;font-size:15px;font-weight:700;letter-spacing:-.01em;color:#0a0a0c;background:#fff;overflow:hidden;transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s;box-shadow:0 0 0 1px rgba(184,124,255,.15),0 8px 28px rgba(184,124,255,.15)}
-.btn-start::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,var(--lav),var(--azure));opacity:0;transition:opacity .35s}
-.btn-start:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(184,124,255,.55),0 20px 50px rgba(184,124,255,.4)}
-.btn-start:hover::after{opacity:1}
-.btn-start:hover .lbl{color:#fff}
-.btn-start:active{transform:scale(.98)}
-.lbl,.arr{position:relative;z-index:1;transition:color .3s}
-.arr{width:18px;height:18px;transition:transform .25s,color .3s}
-.btn-start:hover .arr{transform:translateX(5px)}
-
-.btn-next{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:100px;background:var(--s3);border:1px solid var(--bdr);color:var(--txt);font-size:14px;font-weight:500;cursor:none;transition:all .2s}
-.btn-next:hover{background:var(--lav);border-color:var(--lav);color:#0a0a0c;box-shadow:0 0 30px rgba(184,124,255,.4)}
-
-.btn-dl{flex:1;min-width:175px;display:flex;align-items:center;justify-content:center;gap:9px;padding:15px 24px;border-radius:100px;border:none;cursor:none;background:linear-gradient(110deg,var(--lav),var(--azure));color:#fff;font-size:14.5px;font-weight:700;transition:transform .2s,box-shadow .2s;box-shadow:0 0 24px rgba(184,124,255,.3)}
-.btn-dl:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(184,124,255,.55),0 14px 40px rgba(184,124,255,.35)}
-
-.btn-x{flex:1;min-width:130px;display:flex;align-items:center;justify-content:center;gap:8px;padding:15px 22px;border-radius:100px;border:none;cursor:none;background:#fff;color:#0a0a0c;font-size:14.5px;font-weight:700;transition:transform .2s,box-shadow .2s}
-.btn-x:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(255,255,255,.2),0 12px 30px rgba(0,0,0,.3)}
-.btn-x svg{width:16px;height:16px;flex-shrink:0}
-
-.btn-ghost{display:flex;align-items:center;gap:8px;padding:15px 22px;border-radius:100px;background:transparent;border:1px solid rgba(255,255,255,.14);color:var(--txt);font-size:14.5px;font-weight:500;cursor:none;transition:all .2s}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:none;cursor:pointer;font-family:inherit;font-weight:700;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;border-radius:100px}
+.btn-primary{padding:17px 44px;font-size:15px;color:#0a0a0c;background:#fff;position:relative;overflow:hidden}
+.btn-primary span,.btn-primary svg{position:relative;z-index:1;transition:color .3s}
+.btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,var(--lav),var(--azure));opacity:0;transition:opacity .3s}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 45px rgba(184,124,255,.5),0 18px 45px rgba(184,124,255,.35)}
+.btn-primary:hover::after{opacity:1}
+.btn-primary:hover span,.btn-primary:hover svg{color:#fff}
+.btn-primary:active{transform:scale(.98)}
+.btn-primary svg{width:18px;height:18px}
+.btn-next{padding:13px 26px;font-size:14px;font-weight:500;color:var(--txt);background:var(--s3);border:1px solid var(--bdr)}
+.btn-next:hover{background:var(--lav);color:#0a0a0c;box-shadow:0 0 28px rgba(184,124,255,.4)}
+.btn-dl{flex:1;min-width:175px;padding:15px 24px;font-size:14.5px;color:#fff;background:linear-gradient(110deg,var(--lav),var(--azure));box-shadow:0 0 22px rgba(184,124,255,.3)}
+.btn-dl:hover{transform:translateY(-2px);box-shadow:0 0 42px rgba(184,124,255,.55)}
+.btn-x{flex:1;min-width:130px;padding:15px 22px;font-size:14.5px;color:#0a0a0c;background:#fff}
+.btn-x:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(255,255,255,.2)}
+.btn-x svg{width:16px;height:16px}
+.btn-ghost{padding:15px 22px;font-size:14.5px;font-weight:500;color:var(--txt);background:transparent;border:1px solid rgba(255,255,255,.14)}
 .btn-ghost:hover{background:var(--s3)}
+.btn-copy{padding:9px 17px;font-size:13px;font-weight:500;color:var(--txt);background:var(--s3);border:1px solid var(--bdr)}
+.btn-copy:hover{background:var(--lav);color:#0a0a0c}
 
-.btn-copy{display:inline-flex;align-items:center;gap:7px;padding:9px 17px;border-radius:100px;background:var(--s3);border:1px solid var(--bdr);color:var(--txt);font-size:13px;font-weight:500;cursor:none;transition:all .2s;white-space:nowrap}
-.btn-copy:hover{background:var(--lav);border-color:var(--lav);color:#0a0a0c;box-shadow:0 0 22px rgba(184,124,255,.4)}
-
-/* ── QUIZ ── */
-#s-quiz{padding:100px 0 90px;min-height:100vh}
+/* QUIZ */
+#quiz{padding:100px 0 90px;min-height:100vh}
 .qtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .qcnt{font-size:13px;color:var(--txt3);font-weight:500}
 .qcnt b{color:var(--txt)}
 .schip{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:100px;background:var(--s2);border:1px solid var(--bdr);font-size:13px;font-weight:500;color:var(--txt2)}
-.schip b{color:var(--mint);font-weight:700;text-shadow:0 0 10px rgba(100,226,127,.5)}
-
-/* progress */
-.prog{height:3px;background:var(--s3);border-radius:3px;margin-bottom:30px;position:relative;overflow:visible}
-.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#7c3aed,var(--lav),var(--azure));transition:width .55s cubic-bezier(.4,0,.2,1);box-shadow:0 0 14px rgba(184,124,255,.5),0 0 28px rgba(81,177,254,.25);position:relative}
-.prog-fill::before{content:'';position:absolute;inset:0;border-radius:3px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:shimmer 2s linear infinite}
-@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
-.prog-fill::after{content:'';position:absolute;right:-4px;top:50%;width:9px;height:9px;border-radius:50%;background:#fff;transform:translateY(-50%);box-shadow:0 0 12px var(--lav)}
-
-/* question */
+.schip b{color:var(--mint);font-weight:700}
+.prog{height:3px;background:var(--s3);border-radius:3px;margin-bottom:30px;position:relative;overflow:hidden}
+.prog i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#7c3aed,var(--lav),var(--azure));width:0;transition:width .5s cubic-bezier(.4,0,.2,1);box-shadow:0 0 14px rgba(184,124,255,.5)}
 .qcard{background:var(--s1);border:1px solid var(--bdr);border-radius:22px;padding:34px 38px;margin-bottom:12px;position:relative;overflow:hidden}
 .qcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(184,124,255,.5),transparent)}
 .tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:18px}
-.tag-easy{background:rgba(100,226,127,.12);color:var(--mint);border:1px solid rgba(100,226,127,.25)}
-.tag-medium{background:rgba(254,161,88,.12);color:var(--peach);border:1px solid rgba(254,161,88,.25)}
-.tag-hard{background:rgba(255,90,110,.1);color:#ff8593;border:1px solid rgba(255,90,110,.25)}
-.qtxt{font-size:clamp(18px,2.5vw,22px);font-weight:700;line-height:1.4;color:#fff;letter-spacing:-.02em}
-
-/* options */
+.tag.easy{background:rgba(100,226,127,.12);color:var(--mint);border:1px solid rgba(100,226,127,.25)}
+.tag.medium{background:rgba(254,161,88,.12);color:var(--peach);border:1px solid rgba(254,161,88,.25)}
+.tag.hard{background:rgba(255,90,110,.1);color:#ff8593;border:1px solid rgba(255,90,110,.25)}
+.qtext{font-size:clamp(18px,2.5vw,22px);font-weight:700;line-height:1.4;color:#fff;letter-spacing:-.02em}
 .opts{display:grid;gap:10px;margin-bottom:14px}
-.opt{display:flex;align-items:center;gap:15px;padding:16px 20px;border-radius:15px;background:var(--s1);border:1px solid var(--bdr);cursor:none;text-align:left;transition:all .18s;position:relative;overflow:hidden}
-.opt::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(184,124,255,.06),transparent);opacity:0;transition:opacity .18s}
+.opt{display:flex;align-items:center;gap:15px;padding:16px 20px;border-radius:15px;background:var(--s1);border:1px solid var(--bdr);cursor:pointer;text-align:left;transition:.18s;font-family:inherit;color:var(--txt)}
 .opt:hover:not(:disabled){border-color:rgba(184,124,255,.35);transform:translateX(4px);box-shadow:0 0 22px rgba(184,124,255,.15)}
-.opt:hover:not(:disabled)::before{opacity:1}
 .opt:disabled{cursor:default}
-.okey{flex-shrink:0;width:32px;height:32px;border-radius:9px;background:var(--s3);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--txt3);transition:all .18s}
+.okey{flex-shrink:0;width:32px;height:32px;border-radius:9px;background:var(--s3);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--txt3);transition:.18s}
 .opt:hover:not(:disabled) .okey{background:rgba(184,124,255,.12);border-color:rgba(184,124,255,.3);color:var(--lav)}
-.otxt{font-size:14.5px;font-weight:400;line-height:1.4;color:var(--txt);position:relative;z-index:1}
-.opt.ok{background:rgba(100,226,127,.08);border-color:rgba(100,226,127,.4)!important;transform:none!important;box-shadow:0 0 24px rgba(100,226,127,.2)}
+.otext{font-size:14.5px;line-height:1.4}
+.opt.ok{background:rgba(100,226,127,.08);border-color:rgba(100,226,127,.4)}
 .opt.ok .okey{background:rgba(100,226,127,.16);border-color:var(--ok);color:var(--ok)}
-.opt.no{background:rgba(255,90,110,.07);border-color:rgba(255,90,110,.28)!important;opacity:.65;transform:none!important}
+.opt.no{background:rgba(255,90,110,.07);border-color:rgba(255,90,110,.28);opacity:.65}
 .opt.no .okey{background:rgba(255,90,110,.12);border-color:var(--no);color:var(--no)}
-
-/* feedback */
 .fb{border-radius:14px;padding:15px 19px;font-size:14px;line-height:1.6;display:none;margin-bottom:6px}
-.fb-ok{display:block;background:rgba(100,226,127,.08);border:1px solid rgba(100,226,127,.2);color:#aef2bd;animation:up .35s ease}
-.fb-no{display:block;background:rgba(255,90,110,.08);border:1px solid rgba(255,90,110,.2);color:#ffb3bc;animation:up .35s ease}
+.fb.show{display:block}
+.fb.good{background:rgba(100,226,127,.08);border:1px solid rgba(100,226,127,.2);color:#aef2bd}
+.fb.bad{background:rgba(255,90,110,.08);border:1px solid rgba(255,90,110,.2);color:#ffb3bc}
 .fb b{display:block;margin-bottom:4px;font-weight:700}
 #nextwrap{display:none;text-align:right;margin-top:12px}
 
-/* ── RESULTS ── */
-#s-res{padding:100px 0 100px;min-height:100vh}
-.reson{text-align:center;margin-bottom:40px}
-.rorb{width:112px;height:112px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:46px;position:relative;margin:0 auto 22px;box-shadow:0 0 50px rgba(184,124,255,.3)}
-.rorb::before{content:'';position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(var(--lav),var(--azure),var(--mint),var(--peach),var(--lav));animation:spin 5s linear infinite;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:2px}
-.rorb::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--s2);z-index:-1}
+/* RESULT */
+#result{padding:100px 0 100px;min-height:100vh}
+.rhero{text-align:center;margin-bottom:40px}
+.orb{width:108px;height:108px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:44px;position:relative;margin:0 auto 22px;box-shadow:0 0 50px rgba(184,124,255,.3)}
+.orb::before{content:'';position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(var(--lav),var(--azure),var(--mint),var(--peach),var(--lav));animation:spin 5s linear infinite;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:2px}
+.orb::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--s2);z-index:-1}
+@keyframes spin{to{transform:rotate(360deg)}}
 .rname{font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:-.03em;margin-bottom:8px}
-.rscore-line{font-size:13px;color:var(--txt3);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.rsub{font-size:13px;color:var(--txt3);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
 .rdesc{font-size:15px;color:var(--txt2);line-height:1.65;max-width:430px;margin:12px auto 0}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:32px}
-.sbox{background:var(--s1);border:1px solid var(--bdr);border-radius:18px;padding:22px 12px;text-align:center}
-.snum{font-size:34px;font-weight:800;line-height:1;margin-bottom:6px;letter-spacing:-.02em}
-.slbl{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3)}
-.cinp{background:var(--s1);border:1px solid var(--bdr);border-radius:18px;padding:24px 28px;margin-bottom:16px}
-.cinp label{display:block;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);margin-bottom:10px}
-.cinp input{width:100%;background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:14px 16px;font-size:15px;color:var(--txt);outline:none;transition:border-color .2s,box-shadow .2s}
-.cinp input:focus{border-color:rgba(184,124,255,.4);box-shadow:0 0 0 3px rgba(184,124,255,.08)}
-.cinp input::placeholder{color:var(--txt3)}
+.sb{background:var(--s1);border:1px solid var(--bdr);border-radius:18px;padding:22px 12px;text-align:center}
+.sn{font-size:34px;font-weight:800;line-height:1;margin-bottom:6px;letter-spacing:-.02em}
+.sl{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3)}
+.preview{border-radius:18px;overflow:hidden;border:1px solid var(--bdr);margin-bottom:18px;background:var(--s2);display:block;width:100%}
+.preview canvas{width:100%;height:auto;display:block}
+.field{background:var(--s1);border:1px solid var(--bdr);border-radius:18px;padding:24px 28px;margin-bottom:16px}
+.field label{display:block;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);margin-bottom:10px}
+.field input{width:100%;background:var(--s2);border:1px solid var(--bdr);border-radius:12px;padding:14px 16px;font-size:15px;color:var(--txt);outline:none;font-family:inherit;transition:.2s}
+.field input:focus{border-color:rgba(184,124,255,.4);box-shadow:0 0 0 3px rgba(184,124,255,.08)}
+.field input::placeholder{color:var(--txt3)}
 .arow{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
-.tweet-block{background:var(--s1);border:1px solid var(--bdr);border-radius:18px;padding:24px 28px;margin-bottom:16px}
-.tweet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px;flex-wrap:wrap}
-.tweet-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3)}
-.tweet-text{font-size:14px;line-height:1.65;color:var(--txt);white-space:pre-wrap;background:var(--bg);border:1px solid var(--bdr);border-radius:12px;padding:16px 18px;margin-bottom:12px}
-.share-row{display:flex;gap:10px;flex-wrap:wrap}
+.tweet{background:var(--s1);border:1px solid var(--bdr);border-radius:18px;padding:24px 28px;margin-bottom:16px}
+.thead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px;flex-wrap:wrap}
+.ttitle{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3)}
+.ttext{font-size:14px;line-height:1.65;color:var(--txt);white-space:pre-wrap;background:var(--bg);border:1px solid var(--bdr);border-radius:12px;padding:16px 18px;margin-bottom:12px}
+.srow{display:flex;gap:10px;flex-wrap:wrap}
 
-/* ── ANIMATIONS ── */
 @keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-.ain{opacity:0;animation:up .5s forwards}
-
-/* ── CERTIFICATE (off-screen) ── */
-#cert-shell{position:fixed;left:-9999px;top:-9999px;width:1600px;z-index:-99}
-#cert{width:1600px;height:900px;background:#0a0a0c;position:relative;overflow:hidden}
-.cl{position:absolute}
-.c-mesh{inset:0;background:radial-gradient(ellipse 850px 720px at 12% 22%,rgba(184,124,255,.11) 0%,transparent 58%),radial-gradient(ellipse 650px 600px at 88% 78%,rgba(81,177,254,.09) 0%,transparent 58%),radial-gradient(ellipse 450px 400px at 50% 115%,rgba(100,226,127,.07) 0%,transparent 58%)}
-.c-grid{inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:80px 80px}
-.c-topline{top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--lav) 28%,var(--azure) 72%,transparent)}
-.c-corner{width:46px;height:46px}.c-corner::before,.c-corner::after{content:'';position:absolute;background:rgba(184,124,255,.35)}.c-corner::before{width:2px;height:46px}.c-corner::after{width:46px;height:2px}
-.ctl{top:38px;left:38px}.ctr{top:38px;right:38px}.ctr::before{left:auto;right:0}.cbl{bottom:38px;left:38px}.cbl::before{top:auto;bottom:0}.cbr{bottom:38px;right:38px}.cbr::before{left:auto;right:0;top:auto;bottom:0}.cbr::after{top:auto;bottom:0}
-.c-blob{top:-120px;left:-120px;width:480px;opacity:.08}
-.c-mascot{right:88px;bottom:110px;width:170px;opacity:.95;filter:drop-shadow(0 12px 44px rgba(184,124,255,.4))}
-.c-body{inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 120px;text-align:center}
-.c-brand{margin-bottom:30px}.c-blogo{height:26px;opacity:.9}
-.c-presents{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:16px}
-.c-name{font-size:64px;font-weight:800;letter-spacing:-.03em;color:#fafafa;margin-bottom:4px;line-height:1.05}
-.c-div{width:220px;height:1px;background:linear-gradient(90deg,transparent,rgba(184,124,255,.55),transparent);margin:16px auto}
-.c-tier{font-size:40px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px}
-.c-tsub{font-size:14px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:36px}
-.c-stats{display:flex;align-items:center;gap:52px}.c-si{text-align:center}
-.c-sv{font-size:36px;font-weight:800;color:var(--lav);line-height:1;margin-bottom:4px}
-.c-sl{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28)}
-.c-sep{width:1px;height:50px;background:rgba(255,255,255,.08)}
-.c-foot{bottom:40px;left:0;right:0;padding:0 72px;display:flex;align-items:center;justify-content:space-between}
-.c-url{font-size:13px;color:rgba(255,255,255,.22);letter-spacing:.06em}
-.c-seal{width:80px;height:80px;border-radius:50%;border:1.5px solid rgba(184,124,255,.28);display:flex;flex-direction:column;align-items:center;justify-content:center}
-.c-sn{font-size:26px;font-weight:800;color:var(--lav);line-height:1}.c-st{font-size:10px;color:rgba(184,124,255,.5);letter-spacing:.08em}
-.c-date{font-size:13px;color:rgba(255,255,255,.2);letter-spacing:.06em}
-
-/* ── LOADER ── */
-#loader{position:fixed;inset:0;background:rgba(10,10,12,.9);backdrop-filter:blur(14px);z-index:8000;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px}
-.lspin{width:44px;height:44px;border-radius:50%;border:2px solid rgba(184,124,255,.12);border-top-color:var(--lav);animation:spin .75s linear infinite}
-.ltxt{font-size:13px;color:var(--txt3);letter-spacing:.06em}
-
-/* ── MOBILE ── */
-@media(max-width:600px){
-  body{cursor:auto}
-  #cur-dot,#cur-ring{display:none}
-  button,input,.tp,.opt{cursor:pointer}
-  .nav-chip{display:none}
-  .qcard{padding:26px 20px}
-  .cinp,.tweet-block{padding:20px 18px}
-  .title{letter-spacing:-.025em}
-  #s-intro{padding:110px 0 60px}
-}
+.anim{animation:up .5s forwards}
 
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
+
+@media(max-width:600px){
+  .chip{display:none}
+  .qcard{padding:26px 20px}
+  .field,.tweet{padding:20px 18px}
+  #intro{padding:110px 0 60px}
+}
 </style>
 </head>
 <body>
-
-<div id="cur-dot"></div>
-<div id="cur-ring"></div>
 <canvas id="bgc"></canvas>
-<div id="grain"></div>
 
-<div id="loader"><div class="lspin"></div><div class="ltxt">generating certificate…</div></div>
-
-<!-- ══ CERTIFICATE (off-screen render) ══ -->
-<div id="cert-shell"><div id="cert">
-  <div class="cl c-mesh"></div>
-  <div class="cl c-grid"></div>
-  <div class="cl c-topline"></div>
-  <div class="cl c-blob">
-    <svg viewBox="0 0 900 485" xmlns="http://www.w3.org/2000/svg" width="100%">
-      <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#b87cff"/><stop offset="100%" stop-color="#51b1fe"/></linearGradient></defs>
-      <path d="M657.531 485C607.578 485 559.644 469.973 518.773 441.432C498.086 427.01 474.068 419.345 449.243 419.345C424.418 419.345 402.116 426.606 382.64 440.423C341.567 469.57 293.128 484.899 242.57 484.899C192.012 484.899 113.299 458.274 67.0797 409.764C20.8609 361.355 -2.85405 297.818 0.274301 230.751C3.09991 170.844 28.2276 114.266 71.0154 71.3028C113.904 28.4404 170.416 3.22727 230.359 0.302545C234.396 0.10084 238.433 0 242.469 0C292.422 0 340.356 15.027 381.227 43.5683C401.914 57.9902 425.932 65.655 450.757 65.655C475.582 65.655 497.884 58.3936 517.36 44.5768C558.433 15.4305 606.872 0.100859 657.43 0.100859C707.988 0.100859 786.701 26.7259 832.92 75.236C879.139 123.645 902.854 187.182 899.726 254.249C896.9 314.156 871.772 370.734 828.985 413.697C786.096 456.56 729.584 481.773 669.64 484.697C665.604 484.899 661.567 485 657.531 485Z" fill="url(#cg)"/></svg>
-  </div>
-  <div class="cl c-corner ctl"></div><div class="cl c-corner ctr"></div>
-  <div class="cl c-corner cbl"></div><div class="cl c-corner cbr"></div>
-  <img class="cl c-mascot" src="assets/mascot.png" alt="" onerror="this.style.display='none'">
-  <div class="cl c-body">
-    <div class="c-brand"><img class="c-blogo" src="assets/logo-white.png" alt="Optimum" onerror="this.style.display='none'"></div>
-    <div class="c-presents">This certifies that</div>
-    <div class="c-name" id="cn-name">Your Name</div>
-    <div class="c-div"></div>
-    <div class="c-tier" id="cn-tier">Node Operator</div>
-    <div class="c-tsub">Optimum Knowledge Challenge</div>
-    <div class="c-stats">
-      <div class="c-si"><div class="c-sv" id="cn-score">7/10</div><div class="c-sl">Score</div></div>
-      <div class="c-sep"></div>
-      <div class="c-si"><div class="c-sv" id="cn-pct">70%</div><div class="c-sl">Accuracy</div></div>
-      <div class="c-sep"></div>
-      <div class="c-si"><div class="c-sv" id="cn-time">1:42</div><div class="c-sl">Time</div></div>
-    </div>
-  </div>
-  <div class="cl c-foot">
-    <div class="c-url">getoptimum.xyz</div>
-    <div class="c-seal"><div class="c-sn" id="cn-sn">7</div><div class="c-st">/ 10</div></div>
-    <div class="c-date" id="cn-date">June 2026</div>
-  </div>
-</div></div>
-
-<!-- ══ PAGE ══ -->
 <div class="wrap">
-
 <nav>
-  <a class="nav-l" href="#">
-    <img class="nav-logo" src="assets/logo-white.png" alt="Optimum" onerror="this.style.display='none'">
+  <a class="brand" href="#">
+    <svg class="mark" viewBox="0 0 900 485" xmlns="http://www.w3.org/2000/svg"><path d="M657.531 485C607.578 485 559.644 469.973 518.773 441.432C498.086 427.01 474.068 419.345 449.243 419.345C424.418 419.345 402.116 426.606 382.64 440.423C341.567 469.57 293.128 484.899 242.57 484.899C192.012 484.899 113.299 458.274 67.0797 409.764C20.8609 361.355 -2.85405 297.818 0.274301 230.751C3.09991 170.844 28.2276 114.266 71.0154 71.3028C113.904 28.4404 170.416 3.22727 230.359 0.302545C234.396 0.10084 238.433 0 242.469 0C292.422 0 340.356 15.027 381.227 43.5683C401.914 57.9902 425.932 65.655 450.757 65.655C475.582 65.655 497.884 58.3936 517.36 44.5768C558.433 15.4305 606.872 0.100859 657.43 0.100859C707.988 0.100859 786.701 26.7259 832.92 75.236C879.139 123.645 902.854 187.182 899.726 254.249C896.9 314.156 871.772 370.734 828.985 413.697C786.096 456.56 729.584 481.773 669.64 484.697C665.604 484.899 661.567 485 657.531 485ZM449.344 351.471C480.022 351.471 509.59 360.85 535.021 378.601C562.873 398.065 595.67 408.352 629.779 408.352C663.888 408.352 635.33 408.352 638.155 408.15C679.026 406.133 717.676 388.887 747.042 359.539C776.307 330.191 793.564 291.565 795.481 250.619C797.6 204.731 781.454 161.263 749.868 128.184C718.281 95.104 675.695 76.8497 629.88 76.8497C584.065 76.8497 562.167 87.3383 534.112 107.206C509.691 124.452 480.93 133.63 450.757 133.63C420.079 133.63 390.511 124.25 365.08 106.5C337.228 87.0358 304.431 76.7488 270.322 76.7488C236.212 76.7488 264.771 76.7488 261.946 76.9505C221.075 78.9675 182.425 96.2133 153.059 125.561C123.794 154.91 106.537 193.536 104.62 234.482C102.501 280.37 118.647 323.838 150.233 356.917C181.82 389.997 224.405 408.251 270.221 408.251C316.036 408.251 337.934 397.763 365.989 377.895C390.41 360.649 419.171 351.471 449.344 351.471Z" fill="#fff"/></svg>
+    optimum
   </a>
-  <div class="nav-chip">Knowledge Challenge</div>
+  <div class="chip">Knowledge Challenge</div>
 </nav>
 
 <!-- INTRO -->
-<div class="screen on" id="s-intro">
-<div class="c">
-  <div class="eyebrow">Universal Data Acceleration Network</div>
-  <h1 class="title">how well do you<br>know <em>optimum?</em></h1>
-  <p class="lead">10 questions, mixed difficulty, drawn from a bank of 40. test what you know about RLNC, mump2p, flexnodes and bandwidth math.</p>
-  <div class="tiers">
-    <div class="tp t0"><span class="pip"></span>0–4 · Newcomer</div>
-    <div class="tp t1"><span class="pip"></span>5–7 · Node Operator</div>
-    <div class="tp t2"><span class="pip"></span>8–9 · Validator</div>
-    <div class="tp t3"><span class="pip"></span>10 · Flexnode Master</div>
+<section class="screen on" id="intro">
+  <div class="c">
+    <div class="eyebrow">Universal Data Acceleration Network</div>
+    <h1>how well do you<br>know <em>optimum?</em></h1>
+    <p class="lead">10 questions, mixed difficulty, drawn from a bank of 40. test what you know about RLNC, mump2p, flexnodes and bandwidth math.</p>
+    <div class="tiers">
+      <div class="tp"><span class="pip p0"></span>0–4 · Newcomer</div>
+      <div class="tp"><span class="pip p1"></span>5–7 · Node Operator</div>
+      <div class="tp"><span class="pip p2"></span>8–9 · Validator</div>
+      <div class="tp"><span class="pip p3"></span>10 · Flexnode Master</div>
+    </div>
+    <div>
+      <button class="btn btn-primary" id="startBtn">
+        <span>Start Challenge</span>
+        <svg viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <p class="note">no wallet · no signup · just you and the docs</p>
+    </div>
   </div>
-  <div class="cta-wrap">
-    <button class="btn-start" data-act="start">
-      <span class="lbl">Start Challenge</span>
-      <svg class="arr" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <p class="note">no wallet · no signup · just you and the docs</p>
-  </div>
-</div>
-</div>
+</section>
 
 <!-- QUIZ -->
-<div class="screen" id="s-quiz">
-<div class="c">
-  <div class="qtop">
-    <div class="qcnt">Question <b id="qnum">1</b> / 10</div>
-    <div class="schip">Score <b id="qlive">0</b></div>
+<section class="screen" id="quiz">
+  <div class="c">
+    <div class="qtop">
+      <div class="qcnt">Question <b id="qnum">1</b> / 10</div>
+      <div class="schip">Score <b id="qscore">0</b></div>
+    </div>
+    <div class="prog"><i id="qprog"></i></div>
+    <div class="qcard">
+      <div class="tag easy" id="qtag">Easy</div>
+      <div class="qtext" id="qtext">—</div>
+    </div>
+    <div class="opts" id="qopts"></div>
+    <div class="fb" id="qfb"></div>
+    <div id="nextwrap"><button class="btn btn-next" id="nextBtn">Continue →</button></div>
   </div>
-  <div class="prog"><div class="prog-fill" id="qprog" style="width:0%"></div></div>
-  <div class="qcard" id="qcard">
-    <div id="qdiff" class="tag tag-easy">Easy</div>
-    <div class="qtxt" id="qtext">—</div>
-  </div>
-  <div class="opts" id="opts"></div>
-  <div class="fb" id="feedback"></div>
-  <div id="nextwrap">
-    <button class="btn-next" id="nextbtn" data-act="next">Continue →</button>
-  </div>
-</div>
-</div>
+</section>
 
-<!-- RESULTS -->
-<div class="screen" id="s-res">
-<div class="c">
-  <div class="reson ain">
-    <div class="rorb" id="rorb">🏆</div>
-    <div class="rname" id="rname">Validator</div>
-    <div class="rscore-line" id="rscore">8 out of 10</div>
-    <p class="rdesc" id="rdesc">deep knowledge.</p>
-  </div>
-  <div class="stats ain" style="animation-delay:.1s">
-    <div class="sbox"><div class="snum" id="r-correct" style="color:var(--ok)">8</div><div class="slbl">Correct</div></div>
-    <div class="sbox"><div class="snum" id="r-wrong" style="color:var(--no)">2</div><div class="slbl">Wrong</div></div>
-    <div class="sbox"><div class="snum" id="r-time" style="color:var(--lav)">2:10</div><div class="slbl">Time</div></div>
-  </div>
-  <div class="cinp ain" style="animation-delay:.2s">
-    <label>Your name or X handle for the certificate</label>
-    <input type="text" id="certname" placeholder="@yourhandle" maxlength="28">
-  </div>
-  <div class="arow ain" style="animation-delay:.3s">
-    <button class="btn-dl" data-act="download">
-      <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 2v7m0 0L5 7m2.5 2L10 7M2 12h11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Download Certificate
-    </button>
-    <button class="btn-ghost" data-act="restart">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1.5 7A5.5 5.5 0 1 0 3 3M1.5 1v2.5H4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      Try Again
-    </button>
-  </div>
-  <div class="tweet-block ain" style="animation-delay:.4s">
-    <div class="tweet-head">
-      <div class="tweet-title">ready-to-post tweet</div>
-      <button class="btn-copy" id="copybtn" data-act="copy">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 7V2.5A1.5 1.5 0 0 1 3.5 1H7" stroke="currentColor" stroke-width="1.2"/></svg>
-        Copy
+<!-- RESULT -->
+<section class="screen" id="result">
+  <div class="c">
+    <div class="rhero anim">
+      <div class="orb" id="rorb">🏆</div>
+      <div class="rname" id="rname">Validator</div>
+      <div class="rsub" id="rsub">8 out of 10</div>
+      <p class="rdesc" id="rdesc"></p>
+    </div>
+    <div class="stats anim" style="animation-delay:.1s">
+      <div class="sb"><div class="sn" id="rcorrect" style="color:var(--ok)">8</div><div class="sl">Correct</div></div>
+      <div class="sb"><div class="sn" id="rwrong" style="color:var(--no)">2</div><div class="sl">Wrong</div></div>
+      <div class="sb"><div class="sn" id="rtime" style="color:var(--lav)">2:10</div><div class="sl">Time</div></div>
+    </div>
+    <div class="preview anim" id="certPreview" style="animation-delay:.2s"></div>
+    <div class="field anim" style="animation-delay:.25s">
+      <label>Your name or X handle for the certificate</label>
+      <input type="text" id="certName" placeholder="@yourhandle" maxlength="28">
+    </div>
+    <div class="arow anim" style="animation-delay:.3s">
+      <button class="btn btn-dl" id="dlBtn">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 2v7m0 0L5 7m2.5 2L10 7M2 12h11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download Certificate
+      </button>
+      <button class="btn btn-ghost" id="retryBtn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1.5 7A5.5 5.5 0 1 0 3 3M1.5 1v2.5H4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Try Again
       </button>
     </div>
-    <div class="tweet-text" id="tweet-text"></div>
-    <div class="share-row">
-      <button class="btn-x" data-act="share">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        Share on X
-      </button>
+    <div class="tweet anim" style="animation-delay:.4s">
+      <div class="thead">
+        <div class="ttitle">ready-to-post tweet</div>
+        <button class="btn btn-copy" id="copyBtn">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="vertical-align:-1px"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 7V2.5A1.5 1.5 0 0 1 3.5 1H7" stroke="currentColor" stroke-width="1.2"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="ttext" id="tweetText"></div>
+      <div class="srow">
+        <button class="btn btn-x" id="shareBtn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Share on X
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</section>
 </div>
 
-</div>
-<script>// ─── QUESTIONS (40 шт) ───
-const QUESTIONS = [
-  // EASY
-  {d:"easy",q:"What does RLNC stand for?",o:["Random Latency Network Coding","Random Linear Network Coding","Recursive Layer Network Consensus","Rapid Linear Node Communication"],a:1,e:"RLNC — Random Linear Network Coding — is Optimum's core data encoding technique from MIT. It eliminates redundancy and improves loss tolerance."},
-  {d:"easy",q:"What is Optimum's primary role in the blockchain ecosystem?",o:["A new Layer 1 consensus mechanism","An Ethereum L2 rollup","A Universal Data Acceleration Network","A decentralized exchange"],a:2,e:"Optimum is the Universal Data Acceleration Network. It speeds up data movement between nodes without changing consensus."},
-  {d:"easy",q:"Compared to gossipsub, Optimum achieves approximately how much bandwidth reduction?",o:["20–30%","50–60%","90–95%","99%+"],a:2,e:"~90–95% bandwidth reduction vs gossipsub by eliminating redundant transmission via RLNC-coded frames."},
-  {d:"easy",q:"Which institution's research is the scientific foundation of Optimum?",o:["Stanford","ETH Zurich","MIT","Carnegie Mellon"],a:2,e:"Built on award-winning MIT research. Prof. Muriel Médard from MIT EECS is co-inventor of RLNC and Optimum's CEO."},
-  {d:"easy",q:"Who is the co-inventor of RLNC and a key figure behind Optimum?",o:["Vitalik Buterin","Prof. Muriel Médard","Satoshi Nakamoto","Anatoly Yakovenko"],a:1,e:"Prof. Muriel Médard, NEC Chair at MIT EECS, ranked #1 globally in Network Coding, co-invented RLNC and is Optimum's CEO."},
-  {d:"easy",q:"What is mump2p?",o:["A multi-user messaging protocol","Optimum's RLNC-accelerated gossipsub-compatible pub/sub","A memory pooling mechanism","A node uptime monitor"],a:1,e:"mump2p is Optimum's first production product — RLNC-accelerated pub/sub, fully libp2p/gossipsub compatible."},
-  {d:"easy",q:"Does Optimum require consensus rule changes to integrate?",o:["Yes, hard fork required","No — works at propagation layer, zero consensus changes","Only with validator vote","Only for PoW chains"],a:1,e:"Chain-agnostic by design, zero consensus modifications. Complements the existing stack."},
-  {d:"easy",q:"Optimum is designed to be:",o:["Compatible only with Ethereum","Compatible only with Solana","Chain-agnostic, works with any blockchain","Bitcoin only"],a:2,e:"Chain-agnostic — integrates with any blockchain without requiring protocol rewrites."},
-  {d:"easy",q:"What does Optimum primarily optimize?",o:["Smart contract execution","Data movement and propagation between nodes","Token fees","Wallet UX"],a:1,e:"Data movement sets the ceiling. Optimum optimizes how data propagates across the network."},
-  {d:"easy",q:"mump2p is compatible with which existing P2P stack?",o:["BitTorrent","libp2p / gossipsub","IPFS only","Fully proprietary"],a:1,e:"mump2p is libp2p/gossipsub-compatible, slots into existing infrastructure with no changes."},
-  {d:"easy",q:"What is the 'ceiling' that Optimum claims to raise?",o:["Gas fees","Token price","Data movement performance","Validator count"],a:2,e:"\"Data movement sets the ceiling. Optimum raises it.\" — the core tagline."},
-  {d:"easy",q:"What problem does most blockchain networking waste resources on?",o:["Mining difficulty","Redundant data transmission","Token swaps","Wallet signatures"],a:1,e:"Most networks burn bandwidth on redundant transmission. Optimum transmits less, delivers more."},
-  {d:"easy",q:"What kind of network does Optimum operate as?",o:["Closed permissioned consortium","Permissionless network anyone can run nodes on","Single centralized server","Private validator club"],a:1,e:"Permissionless network of flexnodes that anyone can operate alongside existing clients."},
-  {d:"easy",q:"Faster block and blob delivery with Optimum primarily benefits:",o:["NFT artists","Validators (fewer missed slots, better MEV)","CEX traders","Stablecoin issuers"],a:1,e:"More successful attestations, better MEV capture, fewer missed proposals — measurable revenue for validators."},
-  {d:"easy",q:"Optimum works alongside scaling solutions by:",o:["Replacing all execution layers","Complementing execution while improving network performance","Forcing chain mergers","Removing validators"],a:1,e:"Complementary to scaling — works alongside execution without touching protocol rules."},
-  // MEDIUM
-  {d:"medium",q:"What is a 'flexnode' in the Optimum network?",o:["Validator with MEV boost","Operator-run node that encodes/decodes RLNC-coded gossip frames","Smart contract on Ethereum","Governance token holder"],a:1,e:"Flexnodes encode/decode RLNC frames, maintain coded buffers, and serve DeRAM/DeROM requests."},
-  {d:"medium",q:"Optimum's DeRAM stands for:",o:["Decentralized Relay and Messaging","Distributed RAM for smart contracts","Decentralized Random Access Memory","Dynamic Resource Allocation Module"],a:2,e:"DeRAM — Decentralized Random Access Memory — shared-state memory layer with low-latency read-write semantics."},
-  {d:"medium",q:"How much faster can Optimum deliver blocks and blobs vs gossipsub?",o:["2–3x","6–20x","50x","About the same"],a:1,e:"6–20x faster block and blob delivery vs gossipsub."},
-  {d:"medium",q:"What is the relationship between DeRAM and DeROM?",o:["Competing protocols","DeRAM is read-write; DeROM is read-only/append-oriented","DeROM replaces DeRAM","They are the same"],a:1,e:"DeRAM = read-write shared-state. DeROM = read-only/append, optimized for broadcast and caching."},
-  {d:"medium",q:"What does a flexnode maintain to recover loss and smooth tail latency?",o:["A mempool","Bounded coded buffers","Full archive of chain history","List of validators"],a:1,e:"Flexnodes maintain bounded coded buffers to recover loss and smooth tail latency."},
-  {d:"medium",q:"Why does RLNC improve loss tolerance?",o:["Retransmits every packet twice","Coded fragments allow reconstruction from any sufficient subset","Faster connection","Zip compression"],a:1,e:"RLNC encodes data so any sufficient set of coded fragments reconstructs the original — no specific packets needed."},
-  {d:"medium",q:"Which product should builders adopt NOW for measurable latency gains?",o:["DeROM","DeRAM","mump2p","Native token"],a:2,e:"Adopt mump2p now; DeRAM and DeROM unlock low-latency reads/writes next."},
-  {d:"medium",q:"What types of data does mump2p propagate?",o:["NFT metadata only","Blocks, blobs, and transactions","Validator signatures only","Smart contract bytecode"],a:1,e:"mump2p provides fast, resilient propagation of blocks, blobs, and transactions."},
-  {d:"medium",q:"DeROM is optimized for:",o:["High-frequency trading","Broadcast and caching (read-only/append)","Private key storage","Token bridging"],a:1,e:"DeROM — Decentralized Read-Only Memory — read-only/append-oriented, optimized for broadcast and caching."},
-  {d:"medium",q:"What makes Optimum integration 'zero-setup' for operators?",o:["Requires special hardware","No infrastructure changes, no extra hardware, no consensus mods","Needs 6-month migration","Requires client rewrite"],a:1,e:"Permissionless, zero-setup — no infrastructure changes, no extra hardware, no consensus modifications."},
-  {d:"medium",q:"How do flexnodes interact with existing clients?",o:["Replace all clients","Interoperate with existing clients and libp2p/gossipsub","Require clients to shut down","Work in isolation only"],a:1,e:"Flexnodes interoperate with existing clients and libp2p/gossipsub where applicable."},
-  {d:"medium",q:"For validators, faster propagation primarily reduces risk of:",o:["Wallet hacks","Missed slots / missed proposals","Token inflation","Smart contract bugs"],a:1,e:"Lower latency → lower missed-slot risk → APY/MEV uplift for validators."},
-  {d:"medium",q:"Under standard RLNC models, the dissemination strategy is:",o:["Experimental","Provably optimal for throughput/latency under loss and contention","Slower but more secure","Testnet-only"],a:1,e:"Under standard RLNC models, strategy is provably optimal for throughput/latency under loss and contention."},
-  {d:"medium",q:"Optimum's approach to the memory layer:",o:["Ignores memory","Optimizes memory layer for accelerated data propagation and real-time access","Stores data on-chain only","Deletes old memory"],a:1,e:"Optimum's RLNC-based memory layer optimization accelerates data propagation and improves real-time access."},
-  {d:"medium",q:"mump2p accelerates:",o:["Token minting","Low-latency gossip across geographically distributed nodes","Database backups","Front-end rendering"],a:1,e:"Optimum accelerates low-latency gossip across geographically distributed nodes, reducing congestion."},
-  // HARD
-  {d:"hard",q:"Which user type does NOT directly benefit from Optimum per its docs?",o:["L1/L2 teams needing faster blob propagation","Validators seeking lower missed-slot risk","dApp developers wanting faster tx inclusion","Fiat currency traders on CEXes"],a:3,e:"Documented users: L1/L2 teams, validators, node operators, builders, dApp devs. CEX traders are outside scope."},
-  {d:"hard",q:"Optimum is described in its docs as the fastest decentralized internet protocol for:",o:["Gaming","Web3","Video streaming","Email"],a:1,e:"\"Optimum is the fastest decentralized internet protocol for web3.\""},
-  {d:"hard",q:"Which testnet/partner metric does Optimum highlight?",o:["1 million TPS","40+ testnet partners and counting","500 validators max","10-second block times"],a:1,e:"Optimum highlights 40+ testnet partners & counting, and $24b ETH stake connected."},
-  {d:"hard",q:"What is 'DeROM' short for?",o:["Decentralized Routing Module","Decentralized Read-Only Memory","Distributed Relay Output Mesh","Dynamic Read Operation Manager"],a:1,e:"DeROM — Decentralized Read-Only Memory — read-only/append memory for broadcast and caching."},
-  {d:"hard",q:"In RLNC, what must a node collect to decode the original data?",o:["Exact original packets in order","Enough linearly independent coded fragments","A password from sender","Full blockchain history"],a:1,e:"A node needs enough linearly independent coded fragments to reconstruct original data — not specific packets."},
-  {d:"hard",q:"Optimum's DeRAM exposes what kind of semantics across nodes?",o:["Write-once read-never","Low-latency shared-state read-write semantics","Encrypted-only storage","Single-node local cache"],a:1,e:"DeRAM exposes low-latency shared-state read-write semantics across nodes."},
-  {d:"hard",q:"What does Optimum claim about MEV for validators?",o:["Eliminates MEV entirely","Faster propagation can improve MEV capture potential","Bans MEV","MEV is irrelevant"],a:1,e:"Faster inclusion and improved MEV capture potential — a meaningful upgrade for validator operations."},
-  {d:"hard",q:"Why is reducing redundant transmission important under network load?",o:["Makes tokens cheaper","Redundant transmission wastes bandwidth and slows propagation under load","Increases mining rewards","No real effect"],a:1,e:"Most networks rely on redundant transmission that wastes bandwidth and slows propagation under load."},
-  {d:"hard",q:"What is the broad category Optimum positions itself in?",o:["A meme coin","High-performance memory/data infrastructure for any blockchain","A centralized cloud provider","A hardware wallet"],a:1,e:"\"The world's first high-performance memory infrastructure for any blockchain.\""},
-  {d:"hard",q:"What technique does Optimum apply to gossip to reduce redundancy?",o:["Sharding","Random Linear Network Coding (RLNC)","Merkle proofs","Zero-knowledge rollups"],a:1,e:"By applying RLNC to gossip, Optimum reduces redundancy and improves loss tolerance."},
+<script>
+"use strict";
+(function(){
+// ===== QUESTION BANK (40) =====
+var BANK=[
+{d:"easy",q:"What does RLNC stand for?",o:["Random Latency Network Coding","Random Linear Network Coding","Recursive Layer Network Consensus","Rapid Linear Node Communication"],a:1,e:"RLNC \u2014 Random Linear Network Coding \u2014 is Optimum's core encoding technique from MIT. It eliminates redundancy and improves loss tolerance."},
+{d:"easy",q:"What is Optimum's primary role in the blockchain ecosystem?",o:["A new Layer 1 consensus mechanism","An Ethereum L2 rollup","A Universal Data Acceleration Network","A decentralized exchange"],a:2,e:"Optimum is the Universal Data Acceleration Network. It speeds up data movement between nodes without changing consensus."},
+{d:"easy",q:"Compared to gossipsub, Optimum achieves roughly how much bandwidth reduction?",o:["20\u201330%","50\u201360%","90\u201395%","99%+"],a:2,e:"~90\u201395% bandwidth reduction vs gossipsub by eliminating redundant transmission via RLNC-coded frames."},
+{d:"easy",q:"Which institution's research is the scientific foundation of Optimum?",o:["Stanford","ETH Zurich","MIT","Carnegie Mellon"],a:2,e:"Built on award-winning MIT research. Prof. Muriel Medard from MIT EECS co-invented RLNC."},
+{d:"easy",q:"Who is the co-inventor of RLNC and a key figure behind Optimum?",o:["Vitalik Buterin","Prof. Muriel Medard","Satoshi Nakamoto","Anatoly Yakovenko"],a:1,e:"Prof. Muriel Medard, NEC Chair at MIT EECS, co-invented RLNC and is Optimum's CEO."},
+{d:"easy",q:"What is mump2p?",o:["A multi-user messaging protocol","Optimum's RLNC-accelerated, gossipsub-compatible pub/sub","A memory pooling mechanism","A node uptime monitor"],a:1,e:"mump2p is Optimum's first production product \u2014 RLNC-accelerated pub/sub, fully libp2p/gossipsub compatible."},
+{d:"easy",q:"Does Optimum require consensus rule changes to integrate?",o:["Yes, hard fork required","No \u2014 works at propagation layer, zero consensus changes","Only with validator vote","Only for PoW chains"],a:1,e:"Chain-agnostic by design, zero consensus modifications. It complements the existing stack."},
+{d:"easy",q:"Optimum is designed to be:",o:["Compatible only with Ethereum","Compatible only with Solana","Chain-agnostic, works with any blockchain","Bitcoin only"],a:2,e:"Chain-agnostic \u2014 integrates with any blockchain without protocol rewrites."},
+{d:"easy",q:"What does Optimum primarily optimize?",o:["Smart contract execution","Data movement and propagation between nodes","Token minting fees","Wallet UX"],a:1,e:"Data movement sets the ceiling. Optimum optimizes how data propagates across the network."},
+{d:"easy",q:"Faster block and blob delivery with Optimum mainly benefits:",o:["NFT artists","Validators (fewer missed slots, better MEV)","CEX traders","Stablecoin issuers"],a:1,e:"More successful attestations, better MEV capture, fewer missed proposals \u2014 measurable revenue for validators."},
+{d:"easy",q:"What is the 'ceiling' Optimum claims to raise?",o:["Gas fees","Token price","Data movement performance","Validator count"],a:2,e:"\"Data movement sets the ceiling. Optimum raises it.\" \u2014 the core tagline."},
+{d:"easy",q:"What does most blockchain networking waste resources on?",o:["Mining difficulty","Redundant data transmission","Token swaps","Wallet signatures"],a:1,e:"Most networks burn bandwidth on redundant transmission. Optimum transmits less, delivers more."},
+{d:"easy",q:"mump2p is compatible with which existing P2P stack?",o:["BitTorrent","libp2p / gossipsub","IPFS only","Fully proprietary"],a:1,e:"mump2p is libp2p/gossipsub-compatible, slotting into existing infrastructure."},
+{d:"easy",q:"What kind of network does Optimum operate as?",o:["Closed permissioned consortium","Permissionless network anyone can run nodes on","Single centralized server","Private validator club"],a:1,e:"A permissionless network of flexnodes that anyone can operate alongside existing clients."},
+{d:"easy",q:"Optimum works alongside scaling solutions by:",o:["Replacing all execution layers","Complementing execution while improving network performance","Forcing chain mergers","Removing validators"],a:1,e:"Complementary to scaling \u2014 works alongside execution without touching protocol rules."},
+{d:"medium",q:"What is a 'flexnode' in the Optimum network?",o:["A validator with MEV boost","An operator-run node that encodes/decodes RLNC-coded gossip frames","A smart contract","A governance token holder"],a:1,e:"Flexnodes encode/decode RLNC frames, maintain coded buffers, and serve DeRAM/DeROM requests."},
+{d:"medium",q:"Optimum's DeRAM stands for:",o:["Decentralized Relay and Messaging","Distributed RAM for contracts","Decentralized Random Access Memory","Dynamic Resource Allocation Module"],a:2,e:"DeRAM \u2014 Decentralized Random Access Memory \u2014 a shared-state memory layer with low-latency read-write semantics."},
+{d:"medium",q:"How much faster can Optimum deliver blocks and blobs vs gossipsub?",o:["2\u20133x","6\u201320x","50x","About the same"],a:1,e:"6\u201320x faster block and blob delivery vs gossipsub."},
+{d:"medium",q:"What is the relationship between DeRAM and DeROM?",o:["Competing protocols","DeRAM is read-write; DeROM is read-only/append-oriented","DeROM replaces DeRAM","They are identical"],a:1,e:"DeRAM = read-write shared-state. DeROM = read-only/append, optimized for broadcast and caching."},
+{d:"medium",q:"What does a flexnode maintain to recover loss and smooth tail latency?",o:["A mempool","Bounded coded buffers","Full chain history","A list of validators"],a:1,e:"Flexnodes maintain bounded coded buffers to recover loss and smooth tail latency."},
+{d:"medium",q:"Why does RLNC improve loss tolerance?",o:["It retransmits every packet twice","Coded fragments let nodes reconstruct from any sufficient subset","Faster connection","Zip compression"],a:1,e:"RLNC encodes data so any sufficient set of coded fragments reconstructs the original \u2014 no specific packets needed."},
+{d:"medium",q:"Which product should builders adopt NOW for measurable latency gains?",o:["DeROM","DeRAM","mump2p","A native token"],a:2,e:"Adopt mump2p now; DeRAM and DeROM unlock low-latency reads/writes next."},
+{d:"medium",q:"What types of data does mump2p propagate?",o:["NFT metadata only","Blocks, blobs, and transactions","Validator signatures only","Contract bytecode"],a:1,e:"mump2p provides fast, resilient propagation of blocks, blobs, and transactions."},
+{d:"medium",q:"DeROM is optimized for:",o:["High-frequency trading","Broadcast and caching (read-only/append)","Private key storage","Token bridging"],a:1,e:"DeROM \u2014 Decentralized Read-Only Memory \u2014 read-only/append-oriented, optimized for broadcast and caching."},
+{d:"medium",q:"What makes Optimum integration 'zero-setup' for operators?",o:["Requires special hardware","No infrastructure changes, no extra hardware, no consensus mods","Needs 6-month migration","Requires client rewrite"],a:1,e:"Permissionless, zero-setup \u2014 no infrastructure changes, no extra hardware, no consensus modifications."},
+{d:"medium",q:"How do flexnodes interact with existing clients?",o:["Replace all clients","Interoperate with existing clients and libp2p/gossipsub","Require clients to shut down","Work in isolation only"],a:1,e:"Flexnodes interoperate with existing clients and libp2p/gossipsub where applicable."},
+{d:"medium",q:"For validators, faster propagation mainly reduces risk of:",o:["Wallet hacks","Missed slots / missed proposals","Token inflation","Contract bugs"],a:1,e:"Lower latency means lower missed-slot risk, which means APY/MEV uplift for validators."},
+{d:"medium",q:"Under standard RLNC models, the dissemination strategy is:",o:["Experimental","Provably optimal for throughput/latency under loss and contention","Slower but safer","Testnet-only"],a:1,e:"Under standard RLNC models, the strategy is provably optimal for throughput/latency under loss and contention."},
+{d:"medium",q:"Optimum's approach to the memory layer:",o:["Ignores memory","Optimizes the memory layer for accelerated propagation and real-time access","Stores data on-chain only","Deletes old memory"],a:1,e:"Optimum's RLNC-based memory layer optimization accelerates data propagation and improves real-time access."},
+{d:"medium",q:"mump2p accelerates:",o:["Token minting","Low-latency gossip across geographically distributed nodes","Database backups","Front-end rendering"],a:1,e:"Optimum accelerates low-latency gossip across geographically distributed nodes, reducing congestion."},
+{d:"hard",q:"Which user type does NOT directly benefit from Optimum per its docs?",o:["L1/L2 teams needing faster blob propagation","Validators seeking lower missed-slot risk","dApp devs wanting faster tx inclusion","Fiat traders on centralized exchanges"],a:3,e:"Documented users: L1/L2 teams, validators, node operators, builders, dApp devs. CEX traders are outside scope."},
+{d:"hard",q:"Optimum is described in its docs as the fastest decentralized internet protocol for:",o:["Gaming","Web3","Video streaming","Email"],a:1,e:"\"Optimum is the fastest decentralized internet protocol for web3.\""},
+{d:"hard",q:"Which testnet/partner metric does Optimum highlight?",o:["1 million TPS","40+ testnet partners and counting","500 validators max","10-second blocks"],a:1,e:"Optimum highlights 40+ testnet partners and counting, plus $24b ETH stake connected."},
+{d:"hard",q:"What is 'DeROM' short for?",o:["Decentralized Routing Module","Decentralized Read-Only Memory","Distributed Relay Output Mesh","Dynamic Read Operation Manager"],a:1,e:"DeROM \u2014 Decentralized Read-Only Memory \u2014 read-only/append memory for broadcast and caching."},
+{d:"hard",q:"In RLNC, what must a node collect to decode the original data?",o:["The exact original packets in order","Enough linearly independent coded fragments","A password from the sender","The full blockchain history"],a:1,e:"A node needs enough linearly independent coded fragments to reconstruct the original \u2014 not specific packets."},
+{d:"hard",q:"Optimum's DeRAM exposes what kind of semantics across nodes?",o:["Write-once read-never","Low-latency shared-state read-write semantics","Encrypted-only storage","Single-node local cache"],a:1,e:"DeRAM exposes low-latency shared-state read-write semantics across nodes."},
+{d:"hard",q:"What does Optimum claim about MEV for validators?",o:["Eliminates MEV entirely","Faster propagation can improve MEV capture potential","Bans MEV","MEV is irrelevant"],a:1,e:"Faster inclusion and improved MEV capture potential \u2014 a meaningful upgrade for validator operations."},
+{d:"hard",q:"Why is reducing redundant transmission important under load?",o:["Makes tokens cheaper","It wastes bandwidth and slows propagation under load","Increases mining rewards","No real effect"],a:1,e:"Most networks rely on redundant transmission that wastes bandwidth and slows propagation under load."},
+{d:"hard",q:"What broad category does Optimum position itself in?",o:["A meme coin","High-performance memory/data infrastructure for any blockchain","A centralized cloud provider","A hardware wallet"],a:1,e:"\"The world's first high-performance memory infrastructure for any blockchain.\""},
+{d:"hard",q:"What technique does Optimum apply to gossip to cut redundancy?",o:["Sharding","Random Linear Network Coding (RLNC)","Merkle proofs","Zero-knowledge rollups"],a:1,e:"By applying RLNC to gossip, Optimum reduces redundancy and improves loss tolerance."}
 ];
 
-// ─── TIERS ───
-const TIERS = [
-  {min:0,  max:4,  name:"Newcomer",       emoji:"🌱", col:"#9aa1b2", desc:"just getting started. the RLNC tech is fascinating once it clicks — dig into the docs."},
-  {min:5,  max:7,  name:"Node Operator",  emoji:"⚡", col:"#51b1fe", desc:"solid foundation. you understand the core architecture of optimum. keep going."},
-  {min:8,  max:9,  name:"Validator",      emoji:"🔐", col:"#fea158", desc:"deep knowledge of the protocol. you clearly spent time in the docs."},
-  {min:10, max:10, name:"Flexnode Master",emoji:"🏆", col:"#b87cff", desc:"perfect score. protocol-level understanding. the network would be lucky to have you running a flexnode."},
+// ===== TIERS =====
+var TIERS=[
+{min:0,max:4,name:"Newcomer",emoji:"\uD83C\uDF31",col:"#9aa1b2",desc:"just getting started. the RLNC tech is fascinating once it clicks \u2014 dig into the docs."},
+{min:5,max:7,name:"Node Operator",emoji:"\u26A1",col:"#51b1fe",desc:"solid foundation. you understand the core architecture of optimum. keep going."},
+{min:8,max:9,name:"Validator",emoji:"\uD83D\uDD10",col:"#fea158",desc:"deep knowledge of the protocol. you clearly spent time in the docs."},
+{min:10,max:10,name:"Flexnode Master",emoji:"\uD83C\uDFC6",col:"#b87cff",desc:"perfect score. protocol-level understanding. the network would be lucky to have you running a flexnode."}
 ];
 
-// ─── HELPERS ───
-const $ = id => document.getElementById(id);
-const tierFor = s => TIERS.find(t => s >= t.min && s <= t.max);
-const fmtTime = s => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;
+// ===== STATE =====
+var pool=[],cur=0,score=0,answered=false,startTime=0,elapsed=0;
 
-function shuffle(arr){
-  const a=[...arr];
-  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
-  return a;
-}
+function $(id){return document.getElementById(id);}
+function tierFor(s){for(var i=0;i<TIERS.length;i++){if(s>=TIERS[i].min&&s<=TIERS[i].max)return TIERS[i];}return TIERS[0];}
+function fmt(s){return Math.floor(s/60)+":"+(s%60<10?"0":"")+(s%60);}
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 
-// ─── STATE ───
-let pool=[], cur=0, sc=0, answered=false, t0=0, elapsed=0;
-
-// ─── BUILD POOL: 4 easy + 4 medium + 2 hard, shuffled answers ───
 function buildPool(){
-  const easy=shuffle(QUESTIONS.filter(q=>q.d==="easy")).slice(0,4);
-  const med =shuffle(QUESTIONS.filter(q=>q.d==="medium")).slice(0,4);
-  const hard=shuffle(QUESTIONS.filter(q=>q.d==="hard")).slice(0,2);
-  return shuffle([...easy,...med,...hard]).map(q=>{
-    const correct=q.o[q.a];
-    const opts=shuffle(q.o);
-    return {...q, o:opts, a:opts.indexOf(correct)};
+  var easy=shuffle(BANK.filter(function(q){return q.d==="easy";})).slice(0,4);
+  var med =shuffle(BANK.filter(function(q){return q.d==="medium";})).slice(0,4);
+  var hard=shuffle(BANK.filter(function(q){return q.d==="hard";})).slice(0,2);
+  var picked=shuffle(easy.concat(med).concat(hard));
+  return picked.map(function(q){
+    var correct=q.o[q.a];
+    var opts=shuffle(q.o);
+    return {d:q.d,q:q.q,o:opts,a:opts.indexOf(correct),e:q.e};
   });
 }
 
-// ─── SCREENS ───
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
-  $(id).classList.add('on');
-  window.scrollTo({top:0,behavior:'smooth'});
+function showScreen(id){
+  var s=document.querySelectorAll(".screen");
+  for(var i=0;i<s.length;i++)s[i].classList.remove("on");
+  $(id).classList.add("on");
+  window.scrollTo(0,0);
 }
 
-// ─── START ───
 function startQuiz(){
-  pool=buildPool(); cur=0; sc=0; answered=false; t0=Date.now();
-  show('s-quiz');
+  pool=buildPool();cur=0;score=0;answered=false;startTime=Date.now();
+  showScreen("quiz");
   renderQ();
 }
 
-// ─── RENDER QUESTION ───
 function renderQ(){
   answered=false;
-  const Q=pool[cur];
-  const L=['A','B','C','D'];
-
-  $('qnum').textContent=cur+1;
-  $('qlive').textContent=sc;
-  $('qprog').style.width=(cur/10*100)+'%';
-
-  const tag=$('qdiff');
+  var Q=pool[cur];var L=["A","B","C","D"];
+  $("qnum").textContent=cur+1;
+  $("qscore").textContent=score;
+  $("qprog").style.width=(cur/10*100)+"%";
+  var tag=$("qtag");
   tag.textContent=Q.d.charAt(0).toUpperCase()+Q.d.slice(1);
-  tag.className='tag tag-'+Q.d;
-  $('qtext').textContent=Q.q;
-
-  const og=$('opts');
-  og.innerHTML='';
-  Q.o.forEach((o,i)=>{
-    const b=document.createElement('button');
-    b.className='opt';
-    b.innerHTML=`<span class="okey">${L[i]}</span><span class="otxt">${o}</span>`;
-    b.onclick=()=>pick(i,b);
-    og.appendChild(b);
+  tag.className="tag "+Q.d;
+  $("qtext").textContent=Q.q;
+  var box=$("qopts");box.innerHTML="";
+  Q.o.forEach(function(opt,i){
+    var b=document.createElement("button");
+    b.className="opt";
+    b.innerHTML='<span class="okey">'+L[i]+'</span><span class="otext"></span>';
+    b.querySelector(".otext").textContent=opt;
+    b.addEventListener("click",function(){pick(i,b);});
+    box.appendChild(b);
   });
-
-  $('feedback').className='fb';
-  $('feedback').innerHTML='';
-  $('nextwrap').style.display='none';
-
-  // entrance animation
-  const card=$('qcard');
-  card.style.opacity='0';
-  card.style.transform='translateY(16px)';
-  requestAnimationFrame(()=>{
-    card.style.transition='opacity .4s ease, transform .4s ease';
-    card.style.opacity='1';
-    card.style.transform='translateY(0)';
-  });
+  var fb=$("qfb");fb.className="fb";fb.innerHTML="";
+  $("nextwrap").style.display="none";
 }
 
-// ─── PICK ANSWER ───
 function pick(i,btn){
-  if(answered)return;
-  answered=true;
-  const Q=pool[cur];
-  document.querySelectorAll('.opt').forEach(x=>x.disabled=true);
-  const fb=$('feedback');
+  if(answered)return;answered=true;
+  var Q=pool[cur];
+  var btns=document.querySelectorAll(".opt");
+  for(var k=0;k<btns.length;k++)btns[k].disabled=true;
+  var fb=$("qfb");
   if(i===Q.a){
-    sc++;
-    btn.classList.add('ok');
-    fb.className='fb fb-ok';
-    fb.innerHTML=`<b>Correct ✓</b>${Q.e}`;
-  } else {
-    btn.classList.add('no');
-    document.querySelectorAll('.opt')[Q.a].classList.add('ok');
-    fb.className='fb fb-no';
-    fb.innerHTML=`<b>Not quite ✗</b>${Q.e}`;
+    score++;btn.classList.add("ok");
+    fb.className="fb good show";
+    fb.innerHTML="<b>Correct \u2713</b>";fb.appendChild(document.createTextNode(Q.e));
+  }else{
+    btn.classList.add("no");
+    btns[Q.a].classList.add("ok");
+    fb.className="fb bad show";
+    fb.innerHTML="<b>Not quite \u2717</b>";fb.appendChild(document.createTextNode(Q.e));
   }
-  $('qlive').textContent=sc;
-  $('nextwrap').style.display='block';
-  $('nextbtn').textContent=cur===pool.length-1?'See results →':'Continue →';
+  $("qscore").textContent=score;
+  $("nextBtn").textContent=(cur===pool.length-1)?"See results \u2192":"Continue \u2192";
+  $("nextwrap").style.display="block";
 }
 
-function nextQuestion(){
-  cur++;
-  if(cur>=pool.length) showResults();
-  else renderQ();
+function nextQ(){cur++;if(cur>=pool.length)showResult();else renderQ();}
+
+function showResult(){
+  elapsed=Math.floor((Date.now()-startTime)/1000);
+  var t=tierFor(score);
+  $("rorb").textContent=t.emoji;
+  $("rname").textContent=t.name;$("rname").style.color=t.col;
+  $("rsub").textContent=score+" out of 10 correct";
+  $("rdesc").textContent=t.desc;
+  $("rcorrect").textContent=score;
+  $("rwrong").textContent=10-score;
+  $("rtime").textContent=fmt(elapsed);
+  $("qprog").style.width="100%";
+  $("tweetText").textContent=buildTweet(score,t);
+  drawCert(getName());
+  showScreen("result");
 }
 
-// ─── RESULTS ───
-function showResults(){
-  elapsed=Math.floor((Date.now()-t0)/1000);
-  const tier=tierFor(sc);
-  $('qprog').style.width='100%';
+function getName(){var v=$("certName").value.trim();return v||"Anonymous";}
 
-  $('rorb').textContent=tier.emoji;
-  $('rname').textContent=tier.name;
-  $('rname').style.color=tier.col;
-  $('rdesc').textContent=tier.desc;
-  $('rscore').textContent=sc+' out of 10 correct';
-  $('r-correct').textContent=sc;
-  $('r-wrong').textContent=10-sc;
-  $('r-time').textContent=fmtTime(elapsed);
-
-  $('tweet-text').textContent=buildTweet(sc,tier);
-  show('s-res');
+function buildTweet(s,t){
+  var time=fmt(elapsed);
+  if(t.name==="Flexnode Master")return"just scored a perfect 10/10 on the optimum knowledge challenge\n\n\u27A4 rank: flexnode master\n\u27A4 time: "+time+"\n\nRLNC. mump2p. flexnodes. deRAM. know the protocol cold.\n\nthink you can match it?";
+  if(t.name==="Validator")return s+"/10 on the optimum knowledge challenge. earned validator rank.\n\n\u27A4 time: "+time+"\n\nsolid grasp on how optimum moves data faster than gossipsub. still gaps on the deeper stuff.\n\nyour turn:";
+  if(t.name==="Node Operator")return"ran the optimum knowledge challenge. "+s+"/10, node operator rank.\n\n\u27A4 time: "+time+"\n\nRLNC and mump2p make sense now. back to the docs for the rest.\n\ncan you beat me?";
+  return"just took the optimum knowledge challenge. "+s+"/10.\n\nclearly need more time in the docs lol. the RLNC tech is wild once it clicks.\n\nsee how you do:";
 }
 
-function restart(){ show('s-intro'); }
+// ===== CERTIFICATE via native Canvas (no external libs) =====
+function drawCert(name){
+  try{
+    var t=tierFor(score);
+    var W=1600,H=900;
+    var cv=document.createElement("canvas");
+    cv.width=W;cv.height=H;
+    var x=cv.getContext("2d");
+    // bg
+    x.fillStyle="#0a0a0c";x.fillRect(0,0,W,H);
+    // glow blobs
+    function glow(cx,cy,r,col){var g=x.createRadialGradient(cx,cy,0,cx,cy,r);g.addColorStop(0,col);g.addColorStop(1,"rgba(0,0,0,0)");x.fillStyle=g;x.beginPath();x.arc(cx,cy,r,0,7);x.fill();}
+    glow(220,180,520,"rgba(184,124,255,0.16)");
+    glow(1400,760,460,"rgba(81,177,254,0.13)");
+    glow(800,980,420,"rgba(100,226,127,0.10)");
+    // grid
+    x.strokeStyle="rgba(255,255,255,0.025)";x.lineWidth=1;
+    for(var gx=0;gx<W;gx+=80){x.beginPath();x.moveTo(gx,0);x.lineTo(gx,H);x.stroke();}
+    for(var gy=0;gy<H;gy+=80){x.beginPath();x.moveTo(0,gy);x.lineTo(W,gy);x.stroke();}
+    // top line
+    var tg=x.createLinearGradient(0,0,W,0);tg.addColorStop(0,"rgba(184,124,255,0)");tg.addColorStop(.3,"#b87cff");tg.addColorStop(.7,"#51b1fe");tg.addColorStop(1,"rgba(81,177,254,0)");
+    x.fillStyle=tg;x.fillRect(0,0,W,4);
+    // corners
+    x.strokeStyle="rgba(184,124,255,0.35)";x.lineWidth=2;
+    function corner(cx,cy,dx,dy){x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+dx,cy);x.moveTo(cx,cy);x.lineTo(cx,cy+dy);x.stroke();}
+    corner(40,40,46,46);corner(W-40,40,-46,46);corner(40,H-40,46,-46);corner(W-40,H-40,-46,-46);
+    // text
+    x.textAlign="center";
+    x.fillStyle="rgba(255,255,255,0.3)";x.font="600 22px -apple-system,Segoe UI,sans-serif";
+    x.fillText("O P T I M U M",W/2,150);
+    x.fillStyle="rgba(255,255,255,0.28)";x.font="400 20px -apple-system,Segoe UI,sans-serif";
+    x.fillText("THIS CERTIFIES THAT",W/2,290);
+    x.fillStyle="#fafafa";x.font="800 76px -apple-system,Segoe UI,sans-serif";
+    x.fillText(name,W/2,380);
+    // divider
+    var dg=x.createLinearGradient(W/2-150,0,W/2+150,0);dg.addColorStop(0,"rgba(184,124,255,0)");dg.addColorStop(.5,"rgba(184,124,255,0.6)");dg.addColorStop(1,"rgba(184,124,255,0)");
+    x.fillStyle=dg;x.fillRect(W/2-150,415,300,1);
+    // tier
+    x.fillStyle=t.col;x.font="800 56px -apple-system,Segoe UI,sans-serif";
+    x.fillText(t.name.toUpperCase(),W/2,490);
+    x.fillStyle="rgba(255,255,255,0.3)";x.font="400 20px -apple-system,Segoe UI,sans-serif";
+    x.fillText("OPTIMUM KNOWLEDGE CHALLENGE",W/2,535);
+    // stats
+    var pct=Math.round(score/10*100);
+    var sy=640;
+    function stat(cx,val,lbl){x.fillStyle="#b87cff";x.font="800 48px -apple-system,Segoe UI,sans-serif";x.fillText(val,cx,sy);x.fillStyle="rgba(255,255,255,0.3)";x.font="600 16px -apple-system,Segoe UI,sans-serif";x.fillText(lbl,cx,sy+34);}
+    stat(W/2-300,score+"/10","SCORE");
+    stat(W/2,pct+"%","ACCURACY");
+    stat(W/2+300,fmt(elapsed),"TIME");
+    // separators
+    x.strokeStyle="rgba(255,255,255,0.1)";x.lineWidth=1;
+    x.beginPath();x.moveTo(W/2-150,615);x.lineTo(W/2-150,665);x.moveTo(W/2+150,615);x.lineTo(W/2+150,665);x.stroke();
+    // footer
+    x.fillStyle="rgba(255,255,255,0.25)";x.font="500 22px -apple-system,Segoe UI,sans-serif";
+    x.textAlign="left";x.fillText("getoptimum.xyz",74,H-60);
+    x.textAlign="right";
+    var now=new Date();var months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+    x.fillText(months[now.getMonth()]+" "+now.getFullYear(),W-74,H-60);
+    // seal
+    x.textAlign="center";x.strokeStyle="rgba(184,124,255,0.28)";x.lineWidth=2;
+    x.beginPath();x.arc(W/2,H-90,42,0,7);x.stroke();
+    x.fillStyle="#b87cff";x.font="800 30px -apple-system,Segoe UI,sans-serif";x.fillText(""+score,W/2,H-82);
+    x.fillStyle="rgba(184,124,255,0.5)";x.font="600 13px -apple-system,Segoe UI,sans-serif";x.fillText("/ 10",W/2,H-62);
 
-// ─── TWEET ───
-function buildTweet(score,tier){
-  const v={
-    "Flexnode Master":[`just scored 10/10 on the optimum knowledge challenge`,``,`➤ rank: flexnode master`,`➤ time: ${fmtTime(elapsed)}`,``,`RLNC. mump2p. flexnodes. deRAM. know the protocol cold.`,``,`think you can match it?`],
-    "Validator":[`${score}/10 on the optimum knowledge challenge. earned validator rank.`,``,`➤ time: ${fmtTime(elapsed)}`,``,`solid grasp on how optimum moves data faster than gossipsub. still gaps on the deeper stuff.`,``,`your turn:`],
-    "Node Operator":[`ran the optimum knowledge challenge. ${score}/10, node operator rank.`,``,`➤ time: ${fmtTime(elapsed)}`,``,`RLNC and mump2p make sense now. back to the docs for the rest.`,``,`can you beat me?`],
-    "Newcomer":[`just took the optimum knowledge challenge. ${score}/10.`,``,`clearly need more time in the docs lol. the RLNC tech is wild once it clicks.`,``,`see how you do:`],
-  };
-  return v[tier.name].join('\n');
+    // show preview
+    var prev=$("certPreview");prev.innerHTML="";
+    var disp=cv.cloneNode(true);disp.getContext("2d").drawImage(cv,0,0);
+    prev.appendChild(disp);
+    window._certCanvas=cv;
+  }catch(err){console.warn("cert draw failed",err);}
+}
+
+function downloadCert(){
+  try{
+    drawCert(getName());
+    var cv=window._certCanvas;
+    if(!cv)return;
+    var a=document.createElement("a");
+    a.download="optimum-cert-"+getName().replace(/[^a-z0-9]/gi,"_").toLowerCase()+".png";
+    a.href=cv.toDataURL("image/png");
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+  }catch(err){console.warn("download failed",err);alert("Could not generate image. Try a screenshot of the preview above.");}
 }
 
 function copyTweet(){
-  navigator.clipboard.writeText($('tweet-text').textContent).then(()=>{
-    const b=$('copybtn');
-    const orig=b.innerHTML;
-    b.textContent='Copied ✓';
-    b.style.background='#64e27f';b.style.color='#0a0a0c';
-    setTimeout(()=>{b.innerHTML=orig;b.style.background='';b.style.color='';},2200);
-  });
+  var txt=$("tweetText").textContent;
+  function done(){var b=$("copyBtn");var o=b.innerHTML;b.textContent="Copied \u2713";b.style.background="#64e27f";b.style.color="#0a0a0c";setTimeout(function(){b.innerHTML=o;b.style.background="";b.style.color="";},2000);}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,function(){fallbackCopy(txt);done();});}
+  else{fallbackCopy(txt);done();}
 }
+function fallbackCopy(txt){var ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(ta);}
 
 function shareOnX(){
-  const url='https://twitter.com/intent/tweet?text='+encodeURIComponent($('tweet-text').textContent);
-  window.open(url,'_blank','width=600,height=500');
+  var url="https://twitter.com/intent/tweet?text="+encodeURIComponent($("tweetText").textContent);
+  window.open(url,"_blank");
 }
 
-// ─── LAZY-LOAD html2canvas (only when needed, avoids CSP/eval issues at startup) ───
-let _h2cPromise = null;
-function loadHtml2Canvas(){
-  if(window.html2canvas) return Promise.resolve();
-  if(_h2cPromise) return _h2cPromise;
-  _h2cPromise = new Promise((resolve,reject)=>{
-    const s=document.createElement('script');
-    s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-    s.onload=resolve;
-    s.onerror=reject;
-    document.head.appendChild(s);
-  });
-  return _h2cPromise;
-}
-
-// ─── CERTIFICATE ───
-function downloadCert(){
-  const name=$('certname').value.trim()||'Anonymous';
-  const tier=tierFor(sc);
-  const pct=Math.round(sc/10*100);
-  const ds=new Date().toLocaleDateString('en-US',{month:'long',year:'numeric'});
-
-  $('cn-name').textContent=name;
-  $('cn-tier').textContent=tier.name.toUpperCase();
-  $('cn-tier').style.color=tier.col;
-  $('cn-score').textContent=sc+'/10';
-  $('cn-pct').textContent=pct+'%';
-  $('cn-time').textContent=fmtTime(elapsed);
-  $('cn-sn').textContent=sc;
-  $('cn-date').textContent=ds;
-
-  $('loader').style.display='flex';
-  loadHtml2Canvas().then(()=>{
-    return html2canvas($('cert'),{width:1600,height:900,scale:1,useCORS:true,allowTaint:true,backgroundColor:'#0a0a0c',logging:false});
-  }).then(cv=>{
-    $('loader').style.display='none';
-    const a=document.createElement('a');
-    a.download='optimum-cert-'+name.replace(/[^a-z0-9]/gi,'_').toLowerCase()+'.png';
-    a.href=cv.toDataURL('image/png');
-    a.click();
-  }).catch(err=>{
-    $('loader').style.display='none';
-    alert('Certificate generation needs html2canvas. If you have a strict privacy extension blocking scripts, try disabling it for this page, or take a screenshot instead.');
-    console.error(err);
-  });
-}
-
-// ─── BACKGROUND ANIMATION ───
+// ===== BACKGROUND ANIMATION (guarded) =====
 try{(function(){
-  const cv=document.getElementById('bgc');
-  if(!cv||!cv.getContext)return;
-  const cx=cv.getContext('2d');
-  if(!cx)return;
-  function rz(){cv.width=innerWidth;cv.height=innerHeight;}
-  rz(); addEventListener('resize',rz);
-  const orbs=[
-    {x:.15,y:.2,r:340,c:[184,124,255],vx:.00007,vy:.00005},
-    {x:.8, y:.65,r:260,c:[81,177,254], vx:-.00008,vy:.00006},
-    {x:.5, y:.9, r:200,c:[100,226,127],vx:.00009,vy:-.00005},
+  var cv=$("bgc");if(!cv||!cv.getContext)return;
+  var x=cv.getContext("2d");if(!x)return;
+  function rz(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
+  rz();window.addEventListener("resize",rz);
+  var orbs=[
+    {x:.15,y:.2,r:340,c:"184,124,255",vx:.00007,vy:.00005},
+    {x:.8,y:.65,r:260,c:"81,177,254",vx:-.00008,vy:.00006},
+    {x:.5,y:.9,r:200,c:"100,226,127",vx:.00009,vy:-.00005}
   ];
-  let t=0;
-  (function draw(){
-    cx.clearRect(0,0,cv.width,cv.height);t++;
-    orbs.forEach((o,i)=>{
-      o.x+=o.vx;o.y+=o.vy;
-      if(o.x<0||o.x>1)o.vx*=-1;
-      if(o.y<0||o.y>1)o.vy*=-1;
-      const px=o.x*cv.width,py=o.y*cv.height;
-      const R=o.r*(1+.06*Math.sin(t*.009+i*2));
-      const g=cx.createRadialGradient(px,py,0,px,py,R);
-      g.addColorStop(0,`rgba(${o.c},0.09)`);
-      g.addColorStop(.5,`rgba(${o.c},0.03)`);
-      g.addColorStop(1,`rgba(${o.c},0)`);
-      cx.beginPath();cx.arc(px,py,R,0,Math.PI*2);
-      cx.fillStyle=g;cx.fill();
-    });
+  var t=0;
+  function draw(){
+    x.clearRect(0,0,cv.width,cv.height);t++;
+    for(var i=0;i<orbs.length;i++){
+      var o=orbs[i];o.x+=o.vx;o.y+=o.vy;
+      if(o.x<0||o.x>1)o.vx*=-1;if(o.y<0||o.y>1)o.vy*=-1;
+      var px=o.x*cv.width,py=o.y*cv.height,R=o.r*(1+.06*Math.sin(t*.009+i*2));
+      var g=x.createRadialGradient(px,py,0,px,py,R);
+      g.addColorStop(0,"rgba("+o.c+",0.09)");g.addColorStop(.5,"rgba("+o.c+",0.03)");g.addColorStop(1,"rgba("+o.c+",0)");
+      x.fillStyle=g;x.beginPath();x.arc(px,py,R,0,7);x.fill();
+    }
     requestAnimationFrame(draw);
-  })();
-})();}catch(e){console.warn('bg anim skipped',e);}
+  }
+  draw();
+})();}catch(e){console.warn("bg skipped",e);}
 
-// ─── CURSOR ───
-try{(function(){
-  if(innerWidth<600)return;
-  const dot=document.getElementById('cur-dot');
-  const ring=document.getElementById('cur-ring');
-  if(!dot||!ring)return;
-  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
-  document.addEventListener('mousemove',e=>{
-    mx=e.clientX;my=e.clientY;
-    dot.style.transform=`translate(${mx}px,${my}px)translate(-50%,-50%)`;
-  },{passive:true});
-  (function loop(){
-    rx+=(mx-rx)*.18;ry+=(my-ry)*.18;
-    ring.style.transform=`translate(${rx}px,${ry}px)translate(-50%,-50%)`;
-    requestAnimationFrame(loop);
-  })();
-  document.addEventListener('mouseover',e=>{
-    const hot=!!e.target.closest('button,a,input,.opt,.tp');
-    dot.style.width=hot?'10px':'5px';
-    dot.style.height=hot?'10px':'5px';
-    ring.style.width=hot?'48px':'30px';
-    ring.style.height=hot?'48px':'30px';
-    ring.style.borderColor=hot?'rgba(184,124,255,.9)':'rgba(184,124,255,.45)';
-  },{passive:true});
-})();}catch(e){console.warn('cursor skipped',e);}
-
-
-// ─── WIRE UP BUTTONS (robust, no inline onclick dependency) ───
-function wireUp(){
-  const bind = (sel, fn) => {
-    document.querySelectorAll(sel).forEach(el => {
-      el.addEventListener('click', e => { e.preventDefault(); try{ fn(); }catch(err){ console.error(err); } });
-    });
-  };
-  bind('[data-act="start"]', startQuiz);
-  bind('[data-act="next"]', nextQuestion);
-  bind('[data-act="download"]', downloadCert);
-  bind('[data-act="restart"]', restart);
-  bind('[data-act="copy"]', copyTweet);
-  bind('[data-act="share"]', shareOnX);
+// ===== WIRE UP =====
+function wire(){
+  $("startBtn").addEventListener("click",startQuiz);
+  $("nextBtn").addEventListener("click",nextQ);
+  $("dlBtn").addEventListener("click",downloadCert);
+  $("retryBtn").addEventListener("click",function(){showScreen("intro");});
+  $("copyBtn").addEventListener("click",copyTweet);
+  $("shareBtn").addEventListener("click",shareOnX);
+  $("certName").addEventListener("input",function(){drawCert(getName());});
 }
-if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', wireUp);
-} else {
-  wireUp();
-}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",wire);
+else wire();
+
+})();
 </script>
 </body>
 </html>
