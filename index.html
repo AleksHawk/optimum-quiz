@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimum Knowledge Challenge</title>
     
-    <!-- Повернено оригінальний favicon -->
-    <link rel="icon" type="image/webp" href="./favicon.webp">
-    
     <!-- Open Graph Tags for X (Twitter) Preview -->
     <meta property="og:title" content="Optimum Knowledge Challenge">
     <meta property="og:description" content="Prove your knowledge of RLNC, mump2p, DeRAM, and the technology raising the ceiling for blockchain data movement.">
@@ -136,8 +133,7 @@
         .social-links a:hover, .sound-toggle:hover { color: var(--text-main); transform: translateY(-2px); }
         .social-links svg, .sound-toggle svg { width: 20px; height: 20px; fill: currentColor; }
 
-        /* ВИПРАВЛЕНО ЦЕНТРУВАННЯ: Тепер картка завжди по центру */
-        main { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 6rem 2rem 2rem 2rem; position: relative;}
+        main { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 6rem 2rem 2rem 2rem; position: relative; }
 
         .glass-card {
             background: var(--surface-color);
@@ -170,18 +166,18 @@
         .intro-content { display: flex; justify-content: flex-start; align-items: center; gap: 2rem; position: relative; }
         .intro-text { flex: 1; max-width: 480px; position: relative; z-index: 2; }
         
-        /* ВИПРАВЛЕНО МАСКОТ: Тепер він має z-index більший ніж у картки (10), щоб бути ПОВЕРХ неї */
+        /* Mascot Hero - Increased size and layered ON TOP of the card */
         .mascot-hero { 
             position: absolute;
             right: -340px;
             top: 50%;
             transform: translateY(-50%);
-            width: 600px;
+            width: 650px; /* Increased size */
             height: auto; 
             object-fit: contain; 
             flex-shrink: 0;
             pointer-events: none;
-            z-index: 20; /* Більше ніж .glass-card (10) */
+            z-index: 20; /* Ensure it's above .glass-card */
             filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(184,124,255,0.2));
         }
 
@@ -268,31 +264,30 @@
         .btn-next.show { display: inline-block; }
         .btn-next:hover { background: var(--text-main); color: var(--bg-color); }
 
-        /* ВИПРАВЛЕНО РЕЗУЛЬТАТИ: Компактніше щоб поміщалось без скролу */
         .results-container { text-align: center; }
-        .mascot-result { height: 180px; margin-bottom: 0.5rem; filter: drop-shadow(0 0 30px rgba(184, 124, 255, 0.3)); }
+        .mascot-result { height: 250px; margin-bottom: 1rem; filter: drop-shadow(0 0 30px rgba(184, 124, 255, 0.3)); }
         
-        .rank-label-sm { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.2rem; }
-        .rank-title { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .rank-label-sm { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .rank-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; letter-spacing: -0.02em; }
         
-        .score-display { font-family: monospace; font-size: 4rem; font-weight: 300; margin: 0.5rem 0; line-height: 1; letter-spacing: -0.05em; }
+        .score-display { font-family: monospace; font-size: 6rem; font-weight: 300; margin: 1rem 0; line-height: 1; letter-spacing: -0.05em; }
         
-        .stats-grid { display: flex; justify-content: center; gap: 3rem; margin-bottom: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .stats-grid { display: flex; justify-content: center; gap: 4rem; margin-bottom: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .stat-item { display: flex; flex-direction: column; }
-        .stat-value { font-family: monospace; font-size: 1.5rem; font-weight: 400; }
-        .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem;}
+        .stat-value { font-family: monospace; font-size: 1.8rem; font-weight: 400; }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem;}
         
         .action-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-        /* TWEET SECTION - Компактніша */
-        .tweet-section { text-align: left; margin-bottom: 1.5rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1rem 1.2rem; }
-        .tweet-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
+        /* TWEET SECTION */
+        .tweet-section { text-align: left; margin-bottom: 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.2rem 1.4rem; }
+        .tweet-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
         .tweet-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 600; }
         .tweet-variants { display: flex; gap: 0.4rem; }
-        .tv-btn { width: 24px; height: 24px; border-radius: 5px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.75rem; font-weight: 600; transition: var(--transition-smooth); }
+        .tv-btn { width: 28px; height: 28px; border-radius: 7px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.8rem; font-weight: 600; transition: var(--transition-smooth); }
         .tv-btn.active { background: var(--accent-purple); border-color: var(--accent-purple); color: #fff; }
         .tv-btn:hover:not(.active) { border-color: rgba(255,255,255,0.3); color: var(--text-main); }
-        .tweet-preview { font-size: 0.85rem; line-height: 1.4; color: var(--text-main); white-space: pre-wrap; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 0.8rem 1rem; font-family: inherit; }
+        .tweet-preview { font-size: 0.9rem; line-height: 1.55; color: var(--text-main); white-space: pre-wrap; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem 1.1rem; font-family: inherit; }
 
         .creator-badge {
             position: fixed; bottom: 24px; right: 24px; display: flex; align-items: center; gap: 12px;
@@ -310,7 +305,7 @@
             .intro-content { flex-direction: column-reverse; text-align: center; }
             .ranks-container { justify-content: center; }
             .intro-text { max-width: 100%; }
-            .mascot-hero { position: static; transform: none; right: auto; top: auto; width: 280px; max-width: 75vw; margin: 0 auto; z-index: 1; }
+            .mascot-hero { position: static; transform: none; right: auto; top: auto; width: 280px; max-width: 75vw; margin: 0 auto; z-index: 1;}
             .glass-card { padding: 2rem 1.5rem; border-radius: 0; border-left: none; border-right: none; }
             header { padding: 1.5rem; flex-wrap: wrap; }
             .nav-tabs { width: 100%; order: 3; justify-content: center; margin-top: 1rem; }
@@ -380,7 +375,7 @@
 
                         <button id="btn-start" class="btn-primary hover-target">Start Challenge</button>
                     </div>
-                    <!-- Mascot Hero - Збільшений та лежить ПОВЕРХ картки (див CSS z-index) -->
+                    <!-- Mascot Hero - Збільшений та лежить ПОВЕРХ картки (z-index 20) -->
                     <img src="./mascot-hero.png" alt="Optimum Mascot" class="mascot-hero">
                 </div>
             </div>
@@ -423,7 +418,7 @@
                 <div class="rank-label-sm">Final Rank Achieved</div>
                 <h2 id="res-rank-text" class="rank-title text-gradient">Flexnode Master</h2>
                 
-                <div class="score-display"><span id="res-score">10</span><span style="font-size: 2rem; color: var(--surface-border)">/10</span></div>
+                <div class="score-display"><span id="res-score">10</span><span style="font-size: 3rem; color: var(--surface-border)">/10</span></div>
                 
                 <div class="stats-grid">
                     <div class="stat-item">
@@ -567,10 +562,7 @@
             return array;
         };
 
-        const switchView = (v) => { 
-            Object.values(DOM.views).forEach(el => el.classList.remove('active')); 
-            DOM.views[v].classList.add('active'); 
-        };
+        const switchView = (v) => { Object.values(DOM.views).forEach(el => el.classList.remove('active')); DOM.views[v].classList.add('active'); };
 
         // TIMER
         let timerInterval;
@@ -684,6 +676,7 @@
             // TWITTER SHARING LOGIC
             const sc = STATE.correctCount;
             const tr = rank.toLowerCase();
+            const tm = (typeof formatTime === 'function' && STATE.totalTime != null) ? formatTime(STATE.totalTime) : null;
             const URL = 'https://alekshawk.github.io/optimum-quiz/';
             STATE.tweets = [
 `just took the optimum knowledge quiz and scored ${sc}/10
@@ -721,74 +714,109 @@ quiz by @hawk_tyt`
             switchView('results');
         };
 
-        // --- ГЕНЕРАТОР СЕРТИФІКАТУ ---
+        // --- ГЕНЕРАТОР СЕРТИФІКАТУ З ОНОВЛЕНИМ ДИЗАЙНОМ ---
         const generateCertificate = async () => {
             try {
                 const canvas = document.createElement('canvas'); canvas.width = 1200; canvas.height = 630;
                 const ctx = canvas.getContext('2d');
 
-                // 1. ПОПЕРЕДНІЙ ФОН (як було раніше)
+                // Bg
                 ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                const g1 = ctx.createRadialGradient(200, 100, 0, 200, 100, 800); g1.addColorStop(0, 'rgba(184, 124, 255, 0.2)'); g1.addColorStop(1, 'transparent');
-                const g2 = ctx.createRadialGradient(1000, 500, 0, 1000, 500, 800); g2.addColorStop(0, 'rgba(81, 177, 254, 0.2)'); g2.addColorStop(1, 'transparent');
-                ctx.fillStyle = g1; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = g2; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = 'rgba(255,255,255,0.03)'; for(let i=0; i<1200; i+=40) for(let j=0; j<630; j+=40) { ctx.beginPath(); ctx.arc(i, j, 1, 0, Math.PI*2); ctx.fill(); }
-                
+                const g1 = ctx.createRadialGradient(200, 100, 0, 200, 100, 800); g1.addColorStop(0, 'rgba(184, 124, 255, 0.25)'); g1.addColorStop(1, 'transparent');
+                const g2 = ctx.createRadialGradient(1000, 500, 0, 1000, 500, 800); g2.addColorStop(0, 'rgba(81, 177, 254, 0.25)'); g2.addColorStop(1, 'transparent');
+                ctx.fillStyle = g1; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = g2; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Grid
+                ctx.fillStyle = 'rgba(255,255,255,0.05)';
+                for(let i=0; i<1200; i+=40) for(let j=0; j<630; j+=40) { ctx.beginPath(); ctx.arc(i, j, 1, 0, Math.PI*2); ctx.fill(); }
+
                 ctx.roundRect = function(x, y, w, h, r) { this.beginPath(); this.moveTo(x+r, y); this.arcTo(x+w, y, x+w, y+h, r); this.arcTo(x+w, y+h, x, y+h, r); this.arcTo(x, y+h, x, y, r); this.arcTo(x, y, x+w, y, r); this.closePath(); return this; };
+
                 const loadImage = (src) => new Promise((resolve, reject) => { const img = new Image(); img.crossOrigin="anonymous"; img.onload = () => resolve(img); img.onerror = reject; img.src = src; });
 
-                // Логотип (великий, по центру зверху)
+                // === ЛОГОТИП У ЛІВИЙ ВЕРХНІЙ КУТ ===
                 try {
                     const logoImg = await loadImage('./optimum-logo-white.webp');
-                    const lh = 70; 
-                    const lw = lh * (logoImg.width / logoImg.height);
-                    ctx.drawImage(logoImg, (canvas.width - lw)/2, 60, lw, lh);
-                } catch(e) { ctx.textAlign='center'; ctx.font = 'bold 50px sans-serif'; ctx.fillStyle = '#fff'; ctx.fillText('optimum', 600, 90); }
+                    const lh = 50; const lw = lh * (logoImg.width / logoImg.height);
+                    ctx.drawImage(logoImg, 60, 52, lw, lh);
+                } catch(e) {
+                    ctx.textAlign='left'; ctx.textBaseline='middle';
+                    ctx.font = 'bold 36px sans-serif'; ctx.fillStyle = '#fff'; ctx.fillText('optimum', 60, 77);
+                }
 
-                // 2. ВЕЛИКИЙ МАСКОТ СПРАВА (Не перекриває текст)
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+
+                // === МАСКОТ — ЗМІЩЕНИЙ ВПРАВО ===
                 try {
                     const mascotSrc = STATE.correctCount === 10 ? './mascot-win.png' : './mascot-cert.png';
                     const mascotImg = await loadImage(mascotSrc);
-                    // Збільшено розмір маскота на сертифікаті
-                    const mh = 550; 
-                    const mw = mh * (mascotImg.width/mascotImg.height);
-                    ctx.drawImage(mascotImg, canvas.width - mw - 40, canvas.height - mh, mw, mh);
-                } catch(e) {}
+                    // Розмір маскота як було минулого разу
+                    const mh = 600; const mw = mh * (mascotImg.width/mascotImg.height);
+                    const my = (canvas.height - mh) / 2 + 15;
+                    // Змістили ще правіше (зменшили відступ від правого краю)
+                    const mx = canvas.width - mw + 90;
+                    ctx.drawImage(mascotImg, mx, my, mw, mh);
+                } catch(e) { console.log("Mascot skip", e); }
 
-                // Плашка з результатами зліва
-                const cardX = 100, cardY = 200, cardW = 500, cardH = 260; 
-                ctx.fillStyle = 'rgba(15, 15, 20, 0.85)'; ctx.roundRect(cardX, cardY, cardW, cardH, 20); ctx.fill();
-                ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
+                // === ЦЕНТРАЛЬНА РАМКА З РЕЗУЛЬТАТАМИ ===
+                // Тепер відцентрована по X екрану
+                const cardW = 560, cardH = 320;
+                // Зсунули рамку ближче до центру (вона була на x=90)
+                const cardX = (canvas.width - cardW) / 2 - 100; // Трохи лівіше центру, щоб збалансувати маскота
+                const cardY = 150;
                 
+                ctx.fillStyle = 'rgba(15, 15, 20, 0.85)';
+                ctx.roundRect(cardX, cardY, cardW, cardH, 28); ctx.fill();
+                ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
+                // top accent line on card
+                const topG = ctx.createLinearGradient(cardX, 0, cardX+cardW, 0);
+                topG.addColorStop(0,'rgba(184,124,255,0)'); topG.addColorStop(.5,'rgba(184,124,255,0.8)'); topG.addColorStop(1,'rgba(81,177,254,0)');
+                ctx.fillStyle = topG; ctx.fillRect(cardX+40, cardY, cardW-80, 2);
+
                 const cardCx = cardX + cardW/2;
-                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-                
-                ctx.font = '600 20px monospace'; ctx.fillStyle = '#8e8e99';
-                ctx.fillText('OPTIMUM KNOWLEDGE QUIZ', cardCx, cardY + 50);
 
-                const gradText = ctx.createLinearGradient(cardX+100, 0, cardX+cardW-100, 0);
+                // Підпис QUIZ
+                ctx.font = '600 22px monospace'; ctx.fillStyle = '#8e8e99';
+                ctx.fillText('OPTIMUM KNOWLEDGE QUIZ', cardCx, cardY + 65);
+
+                // Цифри score
+                const gradText = ctx.createLinearGradient(cardX+120, 0, cardX+cardW-120, 0);
                 gradText.addColorStop(0, '#b87cff'); gradText.addColorStop(0.5, '#51b1fe'); gradText.addColorStop(1, '#64e27f');
-                ctx.font = '300 100px monospace'; ctx.fillStyle = gradText;
-                ctx.fillText(`${STATE.correctCount}/10`, cardCx, cardY + 140);
+                ctx.font = '300 120px monospace'; ctx.fillStyle = gradText;
+                ctx.fillText(`${STATE.correctCount}/10`, cardCx, cardY + 160);
 
+                // Ранг
                 let rankName = document.getElementById('res-rank-text').innerText;
                 let rankStr = `RANK: ${rankName.toUpperCase()}`;
-                let rankSize = 32; ctx.font = `bold ${rankSize}px sans-serif`;
-                while(ctx.measureText(rankStr).width > cardW - 40 && rankSize > 18){ rankSize -= 2; ctx.font = `bold ${rankSize}px sans-serif`; }
-                ctx.fillStyle = '#ffffff'; ctx.fillText(rankStr, cardCx, cardY + 220);
+                let rankSize = 36;
+                ctx.font = `bold ${rankSize}px sans-serif`;
+                while(ctx.measureText(rankStr).width > cardW - 60 && rankSize > 20){ rankSize -= 2; ctx.font = `bold ${rankSize}px sans-serif`; }
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(rankStr, cardCx, cardY + 250);
 
-                // Окремий блок "Built by Hawk" (Знизу по центру)
-                const creatorY = 550;
-                const creatorX = canvas.width / 2;
+                // === BUILT BY HAWK (по центру внизу одним рядком) ===
+                const bottomY = canvas.height - 40;
+                const bottomX = canvas.width / 2;
+                
                 try {
                     const pfpImg = await loadImage('./PFP.jpg');
-                    ctx.save(); ctx.beginPath(); ctx.arc(creatorX - 60, creatorY, 20, 0, Math.PI*2); ctx.clip();
-                    ctx.drawImage(pfpImg, creatorX - 80, creatorY - 20, 40, 40); ctx.restore();
+                    ctx.save(); ctx.beginPath(); ctx.arc(bottomX - 65, bottomY, 15, 0, Math.PI*2); ctx.clip();
+                    ctx.drawImage(pfpImg, bottomX - 80, bottomY - 15, 30, 30); ctx.restore();
                 } catch(e) {}
+                
                 ctx.textAlign='left';
-                ctx.font = '400 14px sans-serif'; ctx.fillStyle = '#8e8e99'; ctx.fillText('Built by', creatorX - 30, creatorY - 8);
-                ctx.font = 'bold 20px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.fillText('Hawk', creatorX - 30, creatorY + 12);
+                ctx.font = '400 16px sans-serif'; ctx.fillStyle = '#8e8e99'; 
+                ctx.fillText('Built by ', bottomX - 40, bottomY);
+                
+                // Вимірюємо ширину "Built by " щоб поставити Hawk одразу після нього
+                const builtByWidth = ctx.measureText('Built by ').width;
+                ctx.font = 'bold 18px sans-serif'; ctx.fillStyle = '#ffffff'; 
+                ctx.fillText('Hawk', bottomX - 40 + builtByWidth, bottomY);
+                
+                ctx.textAlign='center';
 
+                // Download
                 const link = document.createElement('a'); link.download = `Optimum_Quiz_Rank.png`; link.href = canvas.toDataURL('image/png'); link.click();
             } catch (e) { alert("Failed to generate image."); }
         };
