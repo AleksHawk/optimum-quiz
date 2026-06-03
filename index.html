@@ -231,16 +231,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;display:flex;ali
 
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script>
-console.log("OPTIMUM QUIZ v3 LOADED " + new Date().toISOString());
-window.addEventListener("DOMContentLoaded", function(){
-  var b = document.createElement("div");
-  b.textContent = "v3 ✓";
-  b.style.cssText = "position:fixed;bottom:8px;left:8px;font-size:10px;color:#444;z-index:99999;font-family:monospace";
-  document.body.appendChild(b);
-});
-</script>
 </head>
 <body>
 
@@ -597,6 +587,21 @@ function shareOnX(){
   window.open(url,'_blank','width=600,height=500');
 }
 
+// ─── LAZY-LOAD html2canvas (only when needed, avoids CSP/eval issues at startup) ───
+let _h2cPromise = null;
+function loadHtml2Canvas(){
+  if(window.html2canvas) return Promise.resolve();
+  if(_h2cPromise) return _h2cPromise;
+  _h2cPromise = new Promise((resolve,reject)=>{
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    s.onload=resolve;
+    s.onerror=reject;
+    document.head.appendChild(s);
+  });
+  return _h2cPromise;
+}
+
 // ─── CERTIFICATE ───
 function downloadCert(){
   const name=$('certname').value.trim()||'Anonymous';
@@ -614,16 +619,19 @@ function downloadCert(){
   $('cn-date').textContent=ds;
 
   $('loader').style.display='flex';
-  setTimeout(()=>{
-    html2canvas($('cert'),{width:1600,height:900,scale:1,useCORS:true,allowTaint:true,backgroundColor:'#0a0a0c',logging:false})
-    .then(cv=>{
-      $('loader').style.display='none';
-      const a=document.createElement('a');
-      a.download='optimum-cert-'+name.replace(/[^a-z0-9]/gi,'_').toLowerCase()+'.png';
-      a.href=cv.toDataURL('image/png');
-      a.click();
-    }).catch(()=>$('loader').style.display='none');
-  },200);
+  loadHtml2Canvas().then(()=>{
+    return html2canvas($('cert'),{width:1600,height:900,scale:1,useCORS:true,allowTaint:true,backgroundColor:'#0a0a0c',logging:false});
+  }).then(cv=>{
+    $('loader').style.display='none';
+    const a=document.createElement('a');
+    a.download='optimum-cert-'+name.replace(/[^a-z0-9]/gi,'_').toLowerCase()+'.png';
+    a.href=cv.toDataURL('image/png');
+    a.click();
+  }).catch(err=>{
+    $('loader').style.display='none';
+    alert('Certificate generation needs html2canvas. If you have a strict privacy extension blocking scripts, try disabling it for this page, or take a screenshot instead.');
+    console.error(err);
+  });
 }
 
 // ─── BACKGROUND ANIMATION ───
