@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimum Knowledge Challenge</title>
     <!-- Виправлено шлях до фавікону -->
-    <link rel="icon" type="image/webp" href="./favicon.webp">
+    <!-- Чіткий квадратний favicon (SVG, не розтягується) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23101013'/%3E%3Cg transform='translate(11,21) scale(0.047)'%3E%3Cpath d='M657.531 485C607.578 485 559.644 469.973 518.773 441.432C498.086 427.01 474.068 419.345 449.243 419.345C424.418 419.345 402.116 426.606 382.64 440.423C341.567 469.57 293.128 484.899 242.57 484.899C192.012 484.899 113.299 458.274 67.0797 409.764C20.8609 361.355 -2.85405 297.818 0.274301 230.751C3.09991 170.844 28.2276 114.266 71.0154 71.3028C113.904 28.4404 170.416 3.22727 230.359 0.302545C234.396 0.10084 238.433 0 242.469 0C292.422 0 340.356 15.027 381.227 43.5683C401.914 57.9902 425.932 65.655 450.757 65.655C475.582 65.655 497.884 58.3936 517.36 44.5768C558.433 15.4305 606.872 0.100859 657.43 0.100859C707.988 0.100859 786.701 26.7259 832.92 75.236C879.139 123.645 902.854 187.182 899.726 254.249C896.9 314.156 871.772 370.734 828.985 413.697C786.096 456.56 729.584 481.773 669.64 484.697C665.604 484.899 661.567 485 657.531 485ZM449.344 351.471C480.022 351.471 509.59 360.85 535.021 378.601C562.873 398.065 595.67 408.352 629.779 408.352C663.888 408.352 635.33 408.352 638.155 408.15C679.026 406.133 717.676 388.887 747.042 359.539C776.307 330.191 793.564 291.565 795.481 250.619C797.6 204.731 781.454 161.263 749.868 128.184C718.281 95.104 675.695 76.8497 629.88 76.8497C584.065 76.8497 562.167 87.3383 534.112 107.206C509.691 124.452 480.93 133.63 450.757 133.63C420.079 133.63 390.511 124.25 365.08 106.5C337.228 87.0358 304.431 76.7488 270.322 76.7488C236.212 76.7488 264.771 76.7488 261.946 76.9505C221.075 78.9675 182.425 96.2133 153.059 125.561C123.794 154.91 106.537 193.536 104.62 234.482C102.501 280.37 118.647 323.838 150.233 356.917C181.82 389.997 224.405 408.251 270.221 408.251C316.036 408.251 337.934 397.763 365.989 377.895C390.41 360.649 419.171 351.471 449.344 351.471Z' fill='%23b87cff'/%3E%3C/g%3E%3C/svg%3E">
     
     <!-- Open Graph Tags for X (Twitter) Preview -->
     <meta property="og:title" content="Optimum Knowledge Challenge">
@@ -123,10 +124,13 @@
             color: var(--text-main); background: rgba(255,255,255,0.05);
         }
         .nav-tab.disabled {
-            opacity: 0.4; filter: blur(3px); pointer-events: none; position: relative;
+            opacity: 0.6; pointer-events: none; position: relative; cursor: default;
         }
         .nav-tab.disabled::after {
-            content: "******"; font-size: 0.6rem; position: absolute; top: -5px; right: -5px; color: var(--accent-purple); filter: none;
+            content: "SOON"; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.08em;
+            position: absolute; top: -8px; right: -10px; color: var(--accent-purple);
+            background: rgba(184,124,255,0.12); border: 1px solid rgba(184,124,255,0.25);
+            padding: 1px 5px; border-radius: 6px;
         }
 
         .social-links { display: flex; align-items: center; gap: 1.5rem; }
@@ -167,12 +171,13 @@
         .intro-content { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
         .intro-text { flex: 1; }
         
-        /* Збільшений маскот БЕЗ анімації */
+        /* Великий маскот БЕЗ анімації */
         .mascot-hero { 
-            width: 320px; /* Збільшено в рази */
+            width: 520px;
+            max-width: 45vw;
             height: auto; 
             object-fit: contain; 
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6)); /* Додано солідну тінь */
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 40px rgba(184,124,255,0.15));
         }
 
         .ranks-container { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
@@ -274,6 +279,16 @@
         
         .action-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
+        /* TWEET SECTION */
+        .tweet-section { text-align: left; margin-bottom: 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.2rem 1.4rem; }
+        .tweet-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+        .tweet-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 600; }
+        .tweet-variants { display: flex; gap: 0.4rem; }
+        .tv-btn { width: 28px; height: 28px; border-radius: 7px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.8rem; font-weight: 600; transition: var(--transition-smooth); }
+        .tv-btn.active { background: var(--accent-purple); border-color: var(--accent-purple); color: #fff; }
+        .tv-btn:hover:not(.active) { border-color: rgba(255,255,255,0.3); color: var(--text-main); }
+        .tweet-preview { font-size: 0.9rem; line-height: 1.55; color: var(--text-main); white-space: pre-wrap; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem 1.1rem; font-family: inherit; }
+
         .creator-badge {
             position: fixed; bottom: 24px; right: 24px; display: flex; align-items: center; gap: 12px;
             background: rgba(10, 10, 12, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -289,7 +304,7 @@
             h1 { font-size: 2.5rem; }
             .intro-content { flex-direction: column-reverse; text-align: center; }
             .ranks-container { justify-content: center; }
-            .mascot-hero { width: 200px; } /* На мобільних трохи менше */
+            .mascot-hero { width: 280px; max-width: 70vw; } /* На мобільних */
             .glass-card { padding: 2rem 1.5rem; border-radius: 0; border-left: none; border-right: none; }
             header { padding: 1.5rem; flex-wrap: wrap; }
             .nav-tabs { width: 100%; order: 3; justify-content: center; margin-top: 1rem; }
@@ -318,8 +333,8 @@
         
         <div class="nav-tabs">
             <a href="#" class="nav-tab active hover-target">Quiz</a>
-            <span class="nav-tab disabled">******</span>
-            <span class="nav-tab disabled">******</span>
+            <span class="nav-tab disabled">Gallery</span>
+            <span class="nav-tab disabled">Leaderboard</span>
         </div>
 
         <div class="social-links">
@@ -412,10 +427,23 @@
                     </div>
                 </div>
 
+                <!-- TWEET PREVIEW + VARIANT SELECTOR -->
+                <div class="tweet-section">
+                    <div class="tweet-bar">
+                        <span class="tweet-label">Ready-to-post tweet</span>
+                        <div class="tweet-variants">
+                            <button class="tv-btn active hover-target" data-variant="0">1</button>
+                            <button class="tv-btn hover-target" data-variant="1">2</button>
+                            <button class="tv-btn hover-target" data-variant="2">3</button>
+                        </div>
+                    </div>
+                    <div id="tweet-preview" class="tweet-preview"></div>
+                </div>
+
                 <div class="action-buttons">
                     <a href="#" id="btn-share" target="_blank" class="btn-outline hover-target">
                         <svg viewBox="0 0 24 24" style="width: 16px; fill: currentColor;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        Share Rank
+                        Share on X
                     </a>
                     <button id="btn-download" class="btn-outline hover-target" style="border-color: rgba(255,255,255,0.4);">
                         <svg viewBox="0 0 24 24" style="width: 18px; fill: currentColor;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
@@ -467,12 +495,16 @@
         let soundEnabled = true;
 
         const initAudio = () => {
-            if (!audioCtx) audioCtx = new AudioContext();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+            try {
+                if (!AudioContext) return;
+                if (!audioCtx) audioCtx = new AudioContext();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+            } catch(e) { /* audio unavailable, ignore */ }
         };
 
         const playTone = (freq, type, duration, vol=0.1) => {
             if(!soundEnabled || !audioCtx) return;
+            try {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
@@ -480,6 +512,7 @@
             gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.start(); osc.stop(audioCtx.currentTime + duration);
+            } catch(e) { /* ignore audio errors */ }
         };
 
         const sounds = {
@@ -637,8 +670,43 @@
             }
 
             // TWITTER SHARING LOGIC
-            const tweetText = `just took the optimum knowledge challenge and scored ${STATE.correctCount}/10\n\nrank: ${rank.toLowerCase()}\n\nthink you know @get_optimum better than me? prove it:\nhttps://alekshawk.github.io/optimum-quiz/\n\nchallenge built by @hawk_tyt`;
-            DOM.res.btnShare.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+            // 3 ВАРІАНТИ ТВІТІВ зі змінними
+            const sc = STATE.correctCount;
+            const tr = rank.toLowerCase();
+            const tm = (typeof formatTime === 'function' && STATE.totalTime != null) ? formatTime(STATE.totalTime) : null;
+            const URL = 'https://alekshawk.github.io/optimum-quiz/';
+            STATE.tweets = [
+`just took the optimum knowledge quiz and scored ${sc}/10
+
+rank: ${tr}
+
+think you know @get_optimum better than me? prove it:
+${URL}
+
+quiz built by @hawk_tyt`,
+
+`${sc}/10 on the optimum knowledge quiz
+
+➤ rank: ${tr}
+
+tested my knowledge of RLNC, mump2p and the tech raising the ceiling for blockchain data movement
+
+your turn:
+${URL}
+
+made by @hawk_tyt`,
+
+`how well do you actually know @get_optimum?
+
+i scored ${sc}/10 (${tr})
+
+10 questions on RLNC, flexnodes, DeRAM and more. see if you can beat me:
+${URL}
+
+quiz by @hawk_tyt`
+            ];
+            STATE.tweetIndex = 0;
+            applyTweet();
 
             switchView('results');
         };
@@ -660,58 +728,70 @@
                 ctx.fillStyle = 'rgba(255,255,255,0.05)';
                 for(let i=0; i<1200; i+=40) for(let j=0; j<630; j+=40) { ctx.beginPath(); ctx.arc(i, j, 1, 0, Math.PI*2); ctx.fill(); }
 
-                // Card - Зменшена рамка, як просив
-                ctx.fillStyle = 'rgba(15, 15, 20, 0.8)';
                 ctx.roundRect = function(x, y, w, h, r) { this.beginPath(); this.moveTo(x+r, y); this.arcTo(x+w, y, x+w, y+h, r); this.arcTo(x+w, y+h, x, y+h, r); this.arcTo(x, y+h, x, y, r); this.arcTo(x, y, x+w, y, r); this.closePath(); return this; };
-                ctx.roundRect(100, 80, 1000, 470, 32); ctx.fill();
-                ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
 
-                // Text "OPTIMUM KNOWLEDGE CHALLENGE"
-                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-                ctx.font = '600 28px monospace'; ctx.fillStyle = '#8e8e99'; ctx.fillText('OPTIMUM KNOWLEDGE CHALLENGE', canvas.width / 2, 140);
-                
-                // Зменшені цифри
-                const gradText = ctx.createLinearGradient(400, 0, 800, 0); gradText.addColorStop(0, '#b87cff'); gradText.addColorStop(0.5, '#51b1fe'); gradText.addColorStop(1, '#64e27f');
-                ctx.font = '300 200px monospace'; ctx.fillStyle = gradText; ctx.fillText(`${STATE.correctCount}/10`, canvas.width / 2, 290);
-                
-                let rankName = document.getElementById('res-rank-text').innerText;
-                ctx.font = 'bold 48px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.fillText(`RANK: ${rankName.toUpperCase()}`, canvas.width / 2, 460);
-
-                // Load Images
                 const loadImage = (src) => new Promise((resolve, reject) => { const img = new Image(); img.crossOrigin="anonymous"; img.onload = () => resolve(img); img.onerror = reject; img.src = src; });
-                
+
+                // === ЛОГОТИП ПО ЦЕНТРУ ЗВЕРХУ (на основній картинці, не в рамці) ===
                 try {
-                    // Маскот - збільшено в 5 разів і зсунуто праворуч
+                    const logoImg = await loadImage('./optimum-logo-white.webp');
+                    const lh = 54; const lw = lh * (logoImg.width / logoImg.height);
+                    ctx.drawImage(logoImg, (canvas.width - lw) / 2, 48, lw, lh);
+                } catch(e) {
+                    ctx.textAlign='center'; ctx.textBaseline='middle';
+                    ctx.font = 'bold 40px sans-serif'; ctx.fillStyle = '#fff'; ctx.fillText('optimum', canvas.width/2, 75);
+                }
+
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+
+                // === МЕНША РАМКА З РЕЗУЛЬТАТАМИ ===
+                const cardX = 290, cardY = 165, cardW = 620, cardH = 360;
+                ctx.fillStyle = 'rgba(15, 15, 20, 0.85)';
+                ctx.roundRect(cardX, cardY, cardW, cardH, 28); ctx.fill();
+                ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
+                // top accent line on card
+                const topG = ctx.createLinearGradient(cardX, 0, cardX+cardW, 0);
+                topG.addColorStop(0,'rgba(184,124,255,0)'); topG.addColorStop(.5,'rgba(184,124,255,0.8)'); topG.addColorStop(1,'rgba(81,177,254,0)');
+                ctx.fillStyle = topG; ctx.fillRect(cardX+40, cardY, cardW-80, 2);
+
+                const cardCx = cardX + cardW/2;
+
+                // Підпис QUIZ (замість CHALLENGE)
+                ctx.font = '600 22px monospace'; ctx.fillStyle = '#8e8e99';
+                ctx.fillText('OPTIMUM KNOWLEDGE QUIZ', cardCx, cardY + 55);
+
+                // Менші цифри score
+                const gradText = ctx.createLinearGradient(cardX+150, 0, cardX+cardW-150, 0);
+                gradText.addColorStop(0, '#b87cff'); gradText.addColorStop(0.5, '#51b1fe'); gradText.addColorStop(1, '#64e27f');
+                ctx.font = '300 120px monospace'; ctx.fillStyle = gradText;
+                ctx.fillText(`${STATE.correctCount}/10`, cardCx, cardY + 150);
+
+                // Ранг
+                let rankName = document.getElementById('res-rank-text').innerText;
+                ctx.font = 'bold 38px sans-serif'; ctx.fillStyle = '#ffffff';
+                ctx.fillText(`RANK: ${rankName.toUpperCase()}`, cardCx, cardY + 250);
+
+                // Built by Hawk (всередині рамки, низ)
+                try {
+                    const pfpImg = await loadImage('./PFP.jpg');
+                    ctx.save(); ctx.beginPath(); ctx.arc(cardCx - 55, cardY + 312, 16, 0, Math.PI*2); ctx.clip();
+                    ctx.drawImage(pfpImg, cardCx - 71, cardY + 296, 32, 32); ctx.restore();
+                } catch(e) {}
+                ctx.textAlign='left';
+                ctx.font = '400 14px sans-serif'; ctx.fillStyle = '#8e8e99'; ctx.fillText('Built by', cardCx - 30, cardY + 305);
+                ctx.font = 'bold 18px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.fillText('Hawk', cardCx - 30, cardY + 322);
+                ctx.textAlign='center';
+
+                // === МАСКОТ — ВЕЛИКИЙ, поруч з рамкою справа ===
+                try {
                     const mascotSrc = STATE.correctCount === 10 ? './mascot-win.png' : './mascot-cert.png';
                     const mascotImg = await loadImage(mascotSrc);
-                    // Draw mascot significantly larger on the right side of the card
-                    ctx.drawImage(mascotImg, 820, 150, 250, 250 * (mascotImg.height/mascotImg.width));
+                    const mw = 340; const mh = mw * (mascotImg.height/mascotImg.width);
+                    ctx.drawImage(mascotImg, 850, 300 - mh/2, mw, mh);
                 } catch(e) { console.log("Mascot skip", e); }
 
-                try {
-                    // Логотип - тепер зліва зверху на самій картинці (картці)
-                    const logoImg = await loadImage('./optimum-logo-white.webp');
-                    const h = 50; const w = h * (logoImg.width / logoImg.height);
-                    ctx.drawImage(logoImg, 140, 100, w, h);
-                } catch(e) { ctx.font = 'bold 32px sans-serif'; ctx.fillText('OPTIMUM', 200, 120); }
-
-                try {
-                    // Твоя PFP та текст "Built by Hawk" внизу праворуч
-                    const pfpImg = await loadImage('./PFP.jpg');
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.arc(980, 500, 20, 0, Math.PI * 2);
-                    ctx.clip();
-                    ctx.drawImage(pfpImg, 960, 480, 40, 40);
-                    ctx.restore();
-                    
-                    ctx.textAlign = 'left';
-                    ctx.font = '400 16px sans-serif'; ctx.fillStyle = '#8e8e99'; ctx.fillText('Built by', 1010, 490);
-                    ctx.font = 'bold 20px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.fillText('Hawk', 1010, 510);
-                } catch(e) { console.log("PFP skip", e); }
-
                 // Download
-                const link = document.createElement('a'); link.download = `Optimum_Challenge_Rank.png`; link.href = canvas.toDataURL('image/png'); link.click();
+                const link = document.createElement('a'); link.download = `Optimum_Quiz_Rank.png`; link.href = canvas.toDataURL('image/png'); link.click();
             } catch (e) { alert("Failed to generate image."); }
         };
 
@@ -735,11 +815,30 @@
             });
         };
 
+        // Застосувати вибраний варіант твіту
+        function applyTweet(){
+            const i = STATE.tweetIndex || 0;
+            const txt = (STATE.tweets && STATE.tweets[i]) ? STATE.tweets[i] : '';
+            const prev = document.getElementById('tweet-preview');
+            if(prev) prev.textContent = txt;
+            if(DOM.res.btnShare) DOM.res.btnShare.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(txt)}`;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             initCursor(); attachCursorHovers();
             DOM.btnStart.addEventListener('click', initQuiz); DOM.quiz.btnNext.addEventListener('click', handleNext);
             DOM.res.btnRestart.addEventListener('click', () => { sounds.click(); switchView('intro'); });
             DOM.res.btnDownload.addEventListener('click', () => { sounds.click(); generateCertificate(); });
+            // Перемикач варіантів твіту
+            document.querySelectorAll('.tv-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if(typeof sounds!=='undefined' && sounds.click) sounds.click();
+                    document.querySelectorAll('.tv-btn').forEach(b=>b.classList.remove('active'));
+                    btn.classList.add('active');
+                    STATE.tweetIndex = parseInt(btn.dataset.variant, 10) || 0;
+                    applyTweet();
+                });
+            });
         });
     </script>
 </body>
