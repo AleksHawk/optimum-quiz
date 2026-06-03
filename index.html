@@ -144,7 +144,7 @@
             backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
             border: 1px solid var(--surface-border);
             border-radius: 16px; 
-            padding: 3.5rem; width: 100%; max-width: 1080px;
+            padding: 3.5rem; width: 100%; max-width: 800px;
             box-shadow: 0 40px 80px rgba(0,0,0,0.6);
             position: relative; z-index: 10;
         }
@@ -167,16 +167,22 @@
         h1 { font-size: 4rem; line-height: 1; margin-bottom: 1.5rem; font-weight: 800; letter-spacing: -0.04em; }
         p.subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; font-weight: 400; }
 
-        .intro-content { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
-        .intro-text { flex: 1; }
+        .intro-content { display: flex; justify-content: flex-start; align-items: center; gap: 2rem; position: relative; }
+        .intro-text { flex: 1; max-width: 480px; position: relative; z-index: 2; }
         
-        /* Великий маскот БЕЗ анімації */
+        /* Маскот винесений ЗА картку, абсолютно позиціонований - може бути великим */
         .mascot-hero { 
-            width: 680px;
-            max-width: 48vw;
+            position: absolute;
+            right: -340px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 600px;
             height: auto; 
             object-fit: contain; 
-            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 50px rgba(184,124,255,0.18));
+            flex-shrink: 0;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(184,124,255,0.2));
         }
 
         .ranks-container { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
@@ -194,23 +200,9 @@
             background: var(--text-main); color: var(--bg-color);
             border: none; padding: 1rem 3rem; border-radius: 100px;
             font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-            transition: var(--transition-smooth); position: relative; overflow: visible; z-index: 1;
+            transition: var(--transition-smooth); position: relative; overflow: hidden;
         }
-        /* Неоновий обідок що повільно крутиться */
-        .btn-primary::before {
-            content: ''; position: absolute; inset: -3px; border-radius: 100px; z-index: -1;
-            background: conic-gradient(from 0deg, var(--accent-purple), var(--accent-blue), var(--accent-green), var(--accent-purple));
-            animation: neon-spin 4s linear infinite;
-            filter: blur(6px); opacity: 0.9;
-        }
-        .btn-primary::after {
-            content: ''; position: absolute; inset: 0; border-radius: 100px; z-index: -1;
-            background: var(--text-main);
-        }
-        @keyframes neon-spin { to { transform: rotate(360deg); } }
-        .btn-primary:hover { transform: translateY(-2px); background: #f0f0f0; }
-        .btn-primary:hover::after { background: #f0f0f0; }
-        .btn-primary:hover::before { animation-duration: 1.5s; opacity: 1; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); background: #f0f0f0; }
 
         .btn-outline {
             background: transparent; border: 1px solid rgba(255,255,255,0.2);
@@ -317,7 +309,8 @@
             h1 { font-size: 2.5rem; }
             .intro-content { flex-direction: column-reverse; text-align: center; }
             .ranks-container { justify-content: center; }
-            .mascot-hero { width: 280px; max-width: 70vw; } /* На мобільних */
+            .intro-text { max-width: 100%; }
+            .mascot-hero { position: static; transform: none; right: auto; top: auto; width: 280px; max-width: 75vw; margin: 0 auto; } /* На мобільних в потоці */
             .glass-card { padding: 2rem 1.5rem; border-radius: 0; border-left: none; border-right: none; }
             header { padding: 1.5rem; flex-wrap: wrap; }
             .nav-tabs { width: 100%; order: 3; justify-content: center; margin-top: 1rem; }
@@ -761,7 +754,7 @@ quiz by @hawk_tyt`
                 ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
 
                 // === МЕНША РАМКА З РЕЗУЛЬТАТАМИ ===
-                const cardX = 90, cardY = 185, cardW = 560, cardH = 320;
+                const cardX = 90, cardY = 150, cardW = 560, cardH = 320;
                 ctx.fillStyle = 'rgba(15, 15, 20, 0.85)';
                 ctx.roundRect(cardX, cardY, cardW, cardH, 28); ctx.fill();
                 ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
@@ -802,15 +795,14 @@ quiz by @hawk_tyt`
                 ctx.font = 'bold 17px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.fillText('Hawk', cardCx - 32, cardY + 300);
                 ctx.textAlign='center';
 
-                // === МАСКОТ — ВЕЛИКИЙ ===
+                // === МАСКОТ — ВЕЛИКИЙ (розмір по ВИСОТІ, щоб голова не обрізалась) ===
                 try {
                     const mascotSrc = STATE.correctCount === 10 ? './mascot-win.png' : './mascot-cert.png';
                     const mascotImg = await loadImage(mascotSrc);
-                    const mw = 560; const mh = mw * (mascotImg.height/mascotImg.width);
-                    let top = 315 - mh/2;
-                    if(top < 5) top = 5;
-                    if(top + mh > 625) top = 625 - mh;
-                    ctx.drawImage(mascotImg, 640, top, mw, mh);
+                    const mh = 600; const mw = mh * (mascotImg.width/mascotImg.height);
+                    const my = (canvas.height - mh) / 2 + 15;  // вертикально по центру
+                    const mx = canvas.width - mw + 30;         // притиснутий до правого краю
+                    ctx.drawImage(mascotImg, mx, my, mw, mh);
                 } catch(e) { console.log("Mascot skip", e); }
 
                 // Download
