@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimum Knowledge Challenge</title>
-    <!-- Виправлено шлях до фавікону -->
-    <!-- Чіткий квадратний favicon (SVG, не розтягується) -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23101013'/%3E%3Cg transform='translate(11,21) scale(0.047)'%3E%3Cpath d='M657.531 485C607.578 485 559.644 469.973 518.773 441.432C498.086 427.01 474.068 419.345 449.243 419.345C424.418 419.345 402.116 426.606 382.64 440.423C341.567 469.57 293.128 484.899 242.57 484.899C192.012 484.899 113.299 458.274 67.0797 409.764C20.8609 361.355 -2.85405 297.818 0.274301 230.751C3.09991 170.844 28.2276 114.266 71.0154 71.3028C113.904 28.4404 170.416 3.22727 230.359 0.302545C234.396 0.10084 238.433 0 242.469 0C292.422 0 340.356 15.027 381.227 43.5683C401.914 57.9902 425.932 65.655 450.757 65.655C475.582 65.655 497.884 58.3936 517.36 44.5768C558.433 15.4305 606.872 0.100859 657.43 0.100859C707.988 0.100859 786.701 26.7259 832.92 75.236C879.139 123.645 902.854 187.182 899.726 254.249C896.9 314.156 871.772 370.734 828.985 413.697C786.096 456.56 729.584 481.773 669.64 484.697C665.604 484.899 661.567 485 657.531 485ZM449.344 351.471C480.022 351.471 509.59 360.85 535.021 378.601C562.873 398.065 595.67 408.352 629.779 408.352C663.888 408.352 635.33 408.352 638.155 408.15C679.026 406.133 717.676 388.887 747.042 359.539C776.307 330.191 793.564 291.565 795.481 250.619C797.6 204.731 781.454 161.263 749.868 128.184C718.281 95.104 675.695 76.8497 629.88 76.8497C584.065 76.8497 562.167 87.3383 534.112 107.206C509.691 124.452 480.93 133.63 450.757 133.63C420.079 133.63 390.511 124.25 365.08 106.5C337.228 87.0358 304.431 76.7488 270.322 76.7488C236.212 76.7488 264.771 76.7488 261.946 76.9505C221.075 78.9675 182.425 96.2133 153.059 125.561C123.794 154.91 106.537 193.536 104.62 234.482C102.501 280.37 118.647 323.838 150.233 356.917C181.82 389.997 224.405 408.251 270.221 408.251C316.036 408.251 337.934 397.763 365.989 377.895C390.41 360.649 419.171 351.471 449.344 351.471Z' fill='%23b87cff'/%3E%3C/g%3E%3C/svg%3E">
+    
+    <link rel="icon" type="image/webp" href="./favicon.webp">
     
     <!-- Open Graph Tags for X (Twitter) Preview -->
     <meta property="og:title" content="Optimum Knowledge Challenge">
@@ -108,28 +107,25 @@
             background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
         }
 
-        /* Виправлено розтягування логотипу */
         .logo-container img { height: 28px; width: auto; display: block; opacity: 0.9; object-fit: contain; }
 
         /* TABS */
-        .nav-tabs {
-            display: flex; gap: 2rem;
-        }
+        .nav-tabs { display: flex; gap: 2.5rem; }
         .nav-tab {
             color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500;
             transition: var(--transition-smooth); cursor: none;
-            padding: 0.5rem 1rem; border-radius: 8px;
+            padding: 0.5rem 1rem; border-radius: 8px; position: relative;
         }
-        .nav-tab.active {
-            color: var(--text-main); background: rgba(255,255,255,0.05);
-        }
+        .nav-tab.active { color: var(--text-main); background: rgba(255,255,255,0.05); }
+        
         .nav-tab.disabled {
-            opacity: 0.5; pointer-events: none; cursor: default; letter-spacing: 0.2em; position: relative;
+            opacity: 0.8; /* Зробив світлішим, щоб було видно */
+            pointer-events: none; cursor: default; letter-spacing: 0.2em; color: var(--text-muted);
         }
         .nav-tab.disabled::after {
-            content: "SOON"; font-size: 0.5rem; font-weight: 700; letter-spacing: 0.12em;
-            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-            color: var(--accent-purple); opacity: 0.9;
+            content: "SOON"; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.12em;
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            color: var(--accent-purple); opacity: 1; text-shadow: 0 0 5px rgba(184, 124, 255, 0.5);
         }
 
         .social-links { display: flex; align-items: center; gap: 1.5rem; }
@@ -137,7 +133,24 @@
         .social-links a:hover, .sound-toggle:hover { color: var(--text-main); transform: translateY(-2px); }
         .social-links svg, .sound-toggle svg { width: 20px; height: 20px; fill: currentColor; }
 
-        main { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 6rem 2rem 2rem 2rem; }
+        main { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 6rem 2rem 2rem 2rem; position: relative;}
+
+        /* ВИПРАВЛЕНО: Маскот більше не в картці, він збоку і величезний */
+        .mascot-hero-container {
+            position: fixed;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 65vh; /* Дуже великий */
+            z-index: 5; /* Позаду контенту, але перед фоном */
+            pointer-events: none;
+        }
+        .mascot-hero-container img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
+        }
 
         .glass-card {
             background: var(--surface-color);
@@ -147,6 +160,7 @@
             padding: 3.5rem; width: 100%; max-width: 800px;
             box-shadow: 0 40px 80px rgba(0,0,0,0.6);
             position: relative; z-index: 10;
+            margin-right: 20vw; /* Зсунув картку вліво, щоб дати місце маскоту */
         }
 
         .glass-card::before {
@@ -159,50 +173,26 @@
         .view.active { display: block; opacity: 1; transform: translateY(0); animation: viewEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes viewEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .text-gradient {
-            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue), var(--accent-green));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
+        .text-gradient { background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue), var(--accent-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
         h1 { font-size: 4rem; line-height: 1; margin-bottom: 1.5rem; font-weight: 800; letter-spacing: -0.04em; }
-        p.subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; font-weight: 400; }
-
-        .intro-content { display: flex; justify-content: flex-start; align-items: center; gap: 2rem; position: relative; }
-        .intro-text { flex: 1; max-width: 480px; position: relative; z-index: 2; }
-        
-        /* Маскот винесений ЗА картку, абсолютно позиціонований - може бути великим */
-        .mascot-hero { 
-            position: absolute;
-            right: -340px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 600px;
-            height: auto; 
-            object-fit: contain; 
-            flex-shrink: 0;
-            pointer-events: none;
-            z-index: 1;
-            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(184,124,255,0.2));
-        }
+        p.subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 600px; font-weight: 400; }
 
         .ranks-container { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
-        .rank-badge {
-            display: flex; align-items: center; gap: 0.8rem;
-            background: rgba(255,255,255,0.03); padding: 0.6rem 1rem;
-            border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);
-        }
+        .rank-badge { display: flex; align-items: center; gap: 0.8rem; background: rgba(255,255,255,0.03); padding: 0.6rem 1rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); }
         .rank-score { font-family: monospace; font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 4px; }
         .rank-name { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
         .rank-master { border-color: rgba(184, 124, 255, 0.3); background: rgba(184, 124, 255, 0.05); }
         .rank-master .rank-name { color: var(--accent-purple); }
 
+        /* ВИПРАВЛЕНО: Кнопка Start */
         .btn-primary {
             background: var(--text-main); color: var(--bg-color);
-            border: none; padding: 1rem 3rem; border-radius: 100px;
-            font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-            transition: var(--transition-smooth); position: relative; overflow: hidden;
+            border: none; padding: 1.2rem 3rem; border-radius: 100px;
+            font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+            transition: var(--transition-smooth); display: inline-block; cursor: none;
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); background: #f0f0f0; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,255,255,0.2); background: #f0f0f0; }
 
         .btn-outline {
             background: transparent; border: 1px solid rgba(255,255,255,0.2);
@@ -215,7 +205,6 @@
         .quiz-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
         .q-counter { font-family: monospace; font-size: 1rem; color: var(--text-muted); }
         .q-counter span { color: var(--text-main); font-size: 1.5rem; font-weight: 600; }
-        
         .score-box { text-align: right; }
         .score-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.2rem; }
         .score-val { font-family: monospace; font-size: 1.5rem; font-weight: 600; color: var(--accent-purple); }
@@ -224,9 +213,7 @@
         .timer-bar { height: 100%; width: 100%; background: var(--text-main); transition: width 0.1s linear, background-color 0.3s ease; }
         .timer-text { position: absolute; right: 0; top: 6px; font-family: monospace; font-size: 0.75rem; color: var(--text-muted); }
 
-        .question-meta {
-            display: inline-block; padding: 0.2rem 0; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid;
-        }
+        .question-meta { display: inline-block; padding: 0.2rem 0; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid; }
         .diff-easy { color: var(--accent-green); border-color: rgba(100, 226, 127, 0.3); }
         .diff-medium { color: var(--accent-blue); border-color: rgba(81, 177, 254, 0.3); }
         .diff-hard { color: var(--accent-purple); border-color: rgba(184, 124, 255, 0.3); }
@@ -234,15 +221,9 @@
         .question-text { font-size: 1.8rem; font-weight: 500; margin-bottom: 2.5rem; line-height: 1.4; letter-spacing: -0.01em; }
 
         .options-grid { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem; }
-        .option-btn {
-            background: transparent; border: 1px solid rgba(255,255,255,0.1);
-            padding: 1.2rem 1.5rem; border-radius: 8px; color: var(--text-muted);
-            font-size: 1rem; font-weight: 400; text-align: left;
-            transition: var(--transition-smooth); display: flex; justify-content: space-between; align-items: center;
-        }
+        .option-btn { background: transparent; border: 1px solid rgba(255,255,255,0.1); padding: 1.2rem 1.5rem; border-radius: 8px; color: var(--text-muted); font-size: 1rem; font-weight: 400; text-align: left; transition: var(--transition-smooth); display: flex; justify-content: space-between; align-items: center; }
         .option-btn:hover:not(:disabled) { border-color: rgba(255,255,255,0.4); color: var(--text-main); background: rgba(255,255,255,0.02); }
         .option-btn:disabled { cursor: default; }
-
         .option-btn.correct { border-color: var(--accent-green) !important; color: var(--text-main) !important; background: rgba(100, 226, 127, 0.05) !important; }
         .option-btn.wrong { border-color: var(--accent-red) !important; color: var(--text-main) !important; background: rgba(255, 77, 77, 0.05) !important; }
 
@@ -251,30 +232,20 @@
         .option-btn.correct .icon-svg { color: var(--accent-green); }
         .option-btn.wrong .icon-svg { color: var(--accent-red); }
 
-        .explanation-box {
-            background: transparent; border-left: 2px solid var(--accent-purple);
-            padding: 1rem 1.5rem; margin-bottom: 2rem; display: none; opacity: 0;
-            transition: opacity 0.4s ease;
-        }
+        .explanation-box { background: transparent; border-left: 2px solid var(--accent-purple); padding: 1rem 1.5rem; margin-bottom: 2rem; display: none; opacity: 0; transition: opacity 0.4s ease; }
         .explanation-box.show { display: block; opacity: 1; }
         .explanation-box.correct { border-color: var(--accent-green); }
         .explanation-box.wrong { border-color: var(--accent-red); }
 
         .next-btn-container { display: flex; justify-content: flex-end; }
-        .btn-next {
-            background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid transparent; padding: 0.8rem 2rem;
-            border-radius: 100px; font-weight: 600; display: none; transition: var(--transition-smooth);
-        }
+        .btn-next { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid transparent; padding: 0.8rem 2rem; border-radius: 100px; font-weight: 600; display: none; transition: var(--transition-smooth); }
         .btn-next.show { display: inline-block; }
         .btn-next:hover { background: var(--text-main); color: var(--bg-color); }
 
-        /* Маскот на екрані результатів без анімації */
         .results-container { text-align: center; }
         .mascot-result { height: 250px; margin-bottom: 1rem; filter: drop-shadow(0 0 30px rgba(184, 124, 255, 0.3)); }
-        
         .rank-label-sm { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.5rem; }
         .rank-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; letter-spacing: -0.02em; }
-        
         .score-display { font-family: monospace; font-size: 6rem; font-weight: 300; margin: 1rem 0; line-height: 1; letter-spacing: -0.05em; }
         
         .stats-grid { display: flex; justify-content: center; gap: 4rem; margin-bottom: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -284,7 +255,6 @@
         
         .action-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-        /* TWEET SECTION */
         .tweet-section { text-align: left; margin-bottom: 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.2rem 1.4rem; }
         .tweet-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
         .tweet-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 600; }
@@ -294,24 +264,20 @@
         .tv-btn:hover:not(.active) { border-color: rgba(255,255,255,0.3); color: var(--text-main); }
         .tweet-preview { font-size: 0.9rem; line-height: 1.55; color: var(--text-main); white-space: pre-wrap; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem 1.1rem; font-family: inherit; }
 
-        .creator-badge {
-            position: fixed; bottom: 24px; right: 24px; display: flex; align-items: center; gap: 12px;
-            background: rgba(10, 10, 12, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05); padding: 6px 16px 6px 6px; border-radius: 100px;
-            text-decoration: none; color: var(--text-main); font-size: 0.9rem; transition: var(--transition-smooth); z-index: 90;
-        }
+        .creator-badge { position: fixed; bottom: 24px; right: 24px; display: flex; align-items: center; gap: 12px; background: rgba(10, 10, 12, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); padding: 6px 16px 6px 6px; border-radius: 100px; text-decoration: none; color: var(--text-main); font-size: 0.9rem; transition: var(--transition-smooth); z-index: 90; }
         .creator-badge:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,0.2); }
         .creator-pfp { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
         .creator-text span { color: var(--text-muted); font-size: 0.7rem; display: block; line-height: 1; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
         .creator-text strong { font-weight: 600; font-size: 0.85rem; }
 
+        @media (max-width: 1100px) {
+            .glass-card { margin-right: 0; }
+            .mascot-hero-container { display: none; } /* Ховаємо великого маскота на малих екранах */
+        }
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
-            .intro-content { flex-direction: column-reverse; text-align: center; }
             .ranks-container { justify-content: center; }
-            .intro-text { max-width: 100%; }
-            .mascot-hero { position: static; transform: none; right: auto; top: auto; width: 280px; max-width: 75vw; margin: 0 auto; } /* На мобільних в потоці */
-            .glass-card { padding: 2rem 1.5rem; border-radius: 0; border-left: none; border-right: none; }
+            .glass-card { padding: 2rem 1.5rem; border-radius: 0; border-left: none; border-right: none; margin-top: 2rem; }
             header { padding: 1.5rem; flex-wrap: wrap; }
             .nav-tabs { width: 100%; order: 3; justify-content: center; margin-top: 1rem; }
             main { padding: 8rem 0 0 0; align-items: flex-start; }
@@ -361,123 +327,77 @@
     </header>
 
     <main>
+        
+        <!-- Окремий контейнер для маскота, щоб він не впливав на розмір картки -->
+        <div class="mascot-hero-container" id="mascot-hero-container">
+            <img src="./mascot-hero.png" alt="Optimum Mascot">
+        </div>
+
         <div class="glass-card" id="main-card">
-            
-            <!-- VIEW 1: INTRO -->
             <div id="view-intro" class="view active">
                 <p class="question-meta diff-medium" style="border: none; margin-bottom: 0;">Universal Data Acceleration Network</p>
-                <div class="intro-content">
-                    <div class="intro-text">
-                        <h1>how well do you know <span class="text-gradient">optimum?</span></h1>
-                        <p class="subtitle">Prove your knowledge of RLNC, mump2p, DeRAM, and the technology raising the ceiling for blockchain data movement.</p>
-                        
-                        <div class="ranks-container">
-                            <div class="rank-badge"><span class="rank-score">0-4</span> <span class="rank-name">Newcomer</span></div>
-                            <div class="rank-badge"><span class="rank-score">5-7</span> <span class="rank-name">Node Operator</span></div>
-                            <div class="rank-badge"><span class="rank-score">8-9</span> <span class="rank-name">Validator</span></div>
-                            <div class="rank-badge rank-master"><span class="rank-score">10</span> <span class="rank-name">Flexnode Master</span></div>
-                        </div>
-
-                        <button id="btn-start" class="btn-primary hover-target">Start Challenge</button>
-                    </div>
-                    <!-- Mascot Hero - Збільшений та без анімації левітації -->
-                    <img src="./mascot-hero.png" alt="Optimum Mascot" class="mascot-hero">
+                
+                <h1>how well do you know <span class="text-gradient">optimum?</span></h1>
+                <p class="subtitle">Prove your knowledge of RLNC, mump2p, DeRAM, and the technology raising the ceiling for blockchain data movement.</p>
+                
+                <div class="ranks-container">
+                    <div class="rank-badge"><span class="rank-score">0-4</span> <span class="rank-name">Newcomer</span></div>
+                    <div class="rank-badge"><span class="rank-score">5-7</span> <span class="rank-name">Node Operator</span></div>
+                    <div class="rank-badge"><span class="rank-score">8-9</span> <span class="rank-name">Validator</span></div>
+                    <div class="rank-badge rank-master"><span class="rank-score">10</span> <span class="rank-name">Flexnode Master</span></div>
                 </div>
+
+                <button id="btn-start" class="btn-primary hover-target">Start Challenge</button>
             </div>
 
             <!-- VIEW 2: QUIZ -->
             <div id="view-quiz" class="view">
-                
                 <div class="timer-container" id="ui-timer-container">
                     <div id="ui-timer-bar" class="timer-bar"></div>
                     <div id="ui-timer-text" class="timer-text">15s</div>
                 </div>
-
                 <div class="quiz-header">
                     <div class="q-counter">Q <span id="ui-q-current">1</span> / 10</div>
-                    <div class="score-box">
-                        <div class="score-label">Score</div>
-                        <div id="ui-score" class="score-val">0</div>
-                    </div>
+                    <div class="score-box"><div class="score-label">Score</div><div id="ui-score" class="score-val">0</div></div>
                 </div>
-                
                 <span id="ui-difficulty" class="question-meta diff-easy">EASY</span>
                 <h2 id="ui-question" class="question-text">Loading question...</h2>
-
                 <div id="ui-options" class="options-grid"></div>
-
-                <div id="ui-explanation" class="explanation-box">
-                    <strong style="display: block; margin-bottom: 0.5rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;" id="ui-exp-title">Explanation</strong>
-                    <p id="ui-exp-text" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;"></p>
-                </div>
-
-                <div class="next-btn-container">
-                    <button id="btn-next" class="btn-next hover-target">Next Question &rarr;</button>
-                </div>
+                <div id="ui-explanation" class="explanation-box"><strong style="display: block; margin-bottom: 0.5rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;" id="ui-exp-title">Explanation</strong><p id="ui-exp-text" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;"></p></div>
+                <div class="next-btn-container"><button id="btn-next" class="btn-next hover-target">Next Question &rarr;</button></div>
             </div>
 
             <!-- VIEW 3: RESULTS -->
             <div id="view-results" class="view results-container">
                 <img id="res-mascot" src="./mascot-cert.png" alt="Result Mascot" class="mascot-result">
-                
                 <div class="rank-label-sm">Final Rank Achieved</div>
                 <h2 id="res-rank-text" class="rank-title text-gradient">Flexnode Master</h2>
-                
                 <div class="score-display"><span id="res-score">10</span><span style="font-size: 3rem; color: var(--surface-border)">/10</span></div>
-                
                 <div class="stats-grid">
-                    <div class="stat-item">
-                        <span id="res-correct" class="stat-value" style="color: var(--accent-green);">10</span>
-                        <span class="stat-label">Correct</span>
-                    </div>
-                    <div class="stat-item">
-                        <span id="res-wrong" class="stat-value" style="color: var(--accent-red);">0</span>
-                        <span class="stat-label">Incorrect</span>
-                    </div>
+                    <div class="stat-item"><span id="res-correct" class="stat-value" style="color: var(--accent-green);">10</span><span class="stat-label">Correct</span></div>
+                    <div class="stat-item"><span id="res-wrong" class="stat-value" style="color: var(--accent-red);">0</span><span class="stat-label">Incorrect</span></div>
                 </div>
-
-                <!-- TWEET PREVIEW + VARIANT SELECTOR -->
+                
                 <div class="tweet-section">
-                    <div class="tweet-bar">
-                        <span class="tweet-label">Ready-to-post tweet</span>
-                        <div class="tweet-variants">
-                            <button class="tv-btn active hover-target" data-variant="0">1</button>
-                            <button class="tv-btn hover-target" data-variant="1">2</button>
-                            <button class="tv-btn hover-target" data-variant="2">3</button>
-                        </div>
-                    </div>
+                    <div class="tweet-bar"><span class="tweet-label">Ready-to-post tweet</span><div class="tweet-variants"><button class="tv-btn active hover-target" data-variant="0">1</button><button class="tv-btn hover-target" data-variant="1">2</button><button class="tv-btn hover-target" data-variant="2">3</button></div></div>
                     <div id="tweet-preview" class="tweet-preview"></div>
                 </div>
 
                 <div class="action-buttons">
-                    <a href="#" id="btn-share" target="_blank" class="btn-outline hover-target">
-                        <svg viewBox="0 0 24 24" style="width: 16px; fill: currentColor;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        Share on X
-                    </a>
-                    <button id="btn-download" class="btn-outline hover-target" style="border-color: rgba(255,255,255,0.4);">
-                        <svg viewBox="0 0 24 24" style="width: 18px; fill: currentColor;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                        Download Image
-                    </button>
-                    <button id="btn-restart" class="btn-outline hover-target">
-                        Try Again
-                    </button>
+                    <a href="#" id="btn-share" target="_blank" class="btn-outline hover-target"><svg viewBox="0 0 24 24" style="width: 16px; fill: currentColor;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Share on X</a>
+                    <button id="btn-download" class="btn-outline hover-target" style="border-color: rgba(255,255,255,0.4);"><svg viewBox="0 0 24 24" style="width: 18px; fill: currentColor;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>Download Image</button>
+                    <button id="btn-restart" class="btn-outline hover-target">Try Again</button>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <!-- Creator Badge -->
     <a href="https://x.com/hawk_tyt" target="_blank" class="creator-badge hover-target">
         <img src="./PFP.jpg" alt="Hawk" class="creator-pfp" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzUxYjFmZSIvPjx0ZXh0IHg9IjUwIiB5PSI2NCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjQwIiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5IPC90ZXh0Pjwvc3ZnPg=='">
-        <div class="creator-text">
-            <span>Built by</span>
-            <strong>Hawk</strong>
-        </div>
+        <div class="creator-text"><span>Built by</span><strong>Hawk</strong></div>
     </a>
 
     <script>
-        // QUESTION BANK
         const QUESTION_BANK = [
             {q:"What does RLNC stand for?", o:["Random Latency Network Coding","Random Linear Network Coding","Recursive Layer Network Consensus","Rapid Linear Node Communication"], a:1, d:"easy", e:"RLNC stands for Random Linear Network Coding, a core data encoding technique from MIT."},
             {q:"What is Optimum's primary role in the blockchain ecosystem?", o:["A new Layer 1 consensus mechanism","An Ethereum L2 rollup","A Universal Data Acceleration Network","A decentralized exchange protocol"], a:2, d:"easy", e:"Optimum is a Universal Data Acceleration Network designed for faster block propagation."},
@@ -485,242 +405,56 @@
             {q:"Which institution's research is the scientific foundation of Optimum?", o:["Stanford University","ETH Zurich","MIT","Carnegie Mellon"], a:2, d:"easy", e:"Optimum is built on award-winning research from MIT. Prof. Muriel Médard is a co-inventor."},
             {q:"What is mump2p?", o:["A multi-user messaging protocol","Optimum's RLNC-accelerated pub/sub layer","A memory pooling mechanism","A node monitoring tool"], a:1, d:"easy", e:"mump2p is Optimum's production product — an RLNC-accelerated pub/sub layer compatible with gossipsub."},
             {q:"Does Optimum require a blockchain to change its consensus rules to integrate?", o:["Yes, always a hard fork","No — it works at the propagation layer","Only with validator majority vote","Only for PoW chains"], a:1, d:"easy", e:"It is chain-agnostic by design and requires zero consensus modifications."},
-            
             {q:"What is a 'flexnode' in the Optimum network?", o:["A validator with MEV boost","A node that encodes, decodes, & forwards RLNC frames","A smart contract on Ethereum","A governance token holder"], a:1, d:"medium", e:"Flexnodes process RLNC frames, maintain coded buffers, and serve requests."},
             {q:"Optimum's DeRAM stands for:", o:["Decentralized Relay and Messaging","Distributed RAM for contracts","Decentralized Random Access Memory","Dynamic Resource Allocation Module"], a:2, d:"medium", e:"DeRAM (Decentralized Random Access Memory) provides shared-state memory with low-latency reads/writes."},
             {q:"How much faster can Optimum deliver blocks compared to standard gossipsub?", o:["2–3x faster","6–20x faster","50x faster","About the same speed"], a:1, d:"medium", e:"Optimum achieves 6–20x faster block and blob delivery compared to standard gossipsub."},
             {q:"Why does RLNC drastically improve loss tolerance?", o:["It sends packets twice","Nodes reconstruct data from any sufficient subset of coded fragments","It uses faster fiber optics","It heavily compresses data"], a:1, d:"medium", e:"Instead of waiting for specific missing packets, any new coded fragment helps reconstruct the data mathematically."},
             {q:"How do flexnodes interact with existing blockchain clients?", o:["They replace them completely","They interoperate seamlessly with them and libp2p/gossipsub","They shut them down","They only work via API calls"], a:1, d:"medium", e:"Flexnodes interoperate seamlessly with existing clients (like Ethereum execution nodes) as a drop-in network layer."},
-            
             {q:"What is the broad category Optimum positions itself in?", o:["A meme coin ecosystem","High-performance memory / data infrastructure for any blockchain","A centralized cloud provider","A hardware wallet manufacturer"], a:1, d:"hard", e:"Optimum builds the world's first high-performance memory infrastructure for any blockchain."},
             {q:"Under standard RLNC models, the dissemination strategy is described as:", o:["Experimental and unproven","Provably optimal for throughput and latency under loss","Slower but cryptographically secure","Testnet phase only"], a:1, d:"hard", e:"The mathematics of RLNC make the strategy provably optimal for throughput and latency under network contention."},
             {q:"What must a node collect to decode original data in RLNC?", o:["The exact original packets in order","Enough linearly independent coded fragments","A password from the sender","The full blockchain history"], a:1, d:"hard", e:"A node needs enough linearly independent coded fragments to mathematically solve and reconstruct the original data."},
             {q:"What does redundant transmission in standard networks cause?", o:["It makes tokens cheaper","It wastes bandwidth and slows propagation under load","It increases mining rewards","It has no real effect"], a:1, d:"hard", e:"Standard networks rely on redundant transmission that heavily wastes bandwidth and slows propagation under heavy load."}
         ];
 
-        // AUDIO SYSTEM (Web Audio API)
         const AudioContext = window.AudioContext || window.webkitAudioContext;
-        let audioCtx;
-        let soundEnabled = true;
-
-        const initAudio = () => {
-            try {
-                if (!AudioContext) return;
-                if (!audioCtx) audioCtx = new AudioContext();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-            } catch(e) { /* audio unavailable, ignore */ }
-        };
-
-        const playTone = (freq, type, duration, vol=0.1) => {
-            if(!soundEnabled || !audioCtx) return;
-            try {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + duration);
-            } catch(e) { /* ignore audio errors */ }
-        };
-
-        const sounds = {
-            click: () => playTone(600, 'sine', 0.1, 0.05),
-            correct: () => { playTone(523.25, 'sine', 0.1); setTimeout(() => playTone(659.25, 'sine', 0.2), 100); },
-            wrong: () => playTone(150, 'sawtooth', 0.3, 0.1),
-            fanfare: () => {
-                if(!soundEnabled) return;
-                [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
-                    setTimeout(() => playTone(f, 'sine', 0.2), i * 150);
-                });
-                setTimeout(() => playTone(1046.50, 'sine', 0.6), 600);
-            }
-        };
-
-        const toggleSound = () => {
-            initAudio();
-            soundEnabled = !soundEnabled;
-            document.getElementById('icon-sound-on').style.display = soundEnabled ? 'block' : 'none';
-            document.getElementById('icon-sound-off').style.display = soundEnabled ? 'none' : 'block';
-        };
+        let audioCtx, soundEnabled = true;
+        const initAudio = () => { try { if (!AudioContext) return; if (!audioCtx) audioCtx = new AudioContext(); if (audioCtx.state === 'suspended') audioCtx.resume(); } catch(e) {} };
+        const playTone = (f, t, d, v=0.1) => { if(!soundEnabled || !audioCtx) return; try { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = t; osc.frequency.setValueAtTime(f, audioCtx.currentTime); gain.gain.setValueAtTime(v, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + d); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + d); } catch(e) {} };
+        const sounds = { click: () => playTone(600, 'sine', 0.1, 0.05), correct: () => { playTone(523.25, 'sine', 0.1); setTimeout(() => playTone(659.25, 'sine', 0.2), 100); }, wrong: () => playTone(150, 'sawtooth', 0.3, 0.1), fanfare: () => { if(!soundEnabled) return; [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => { setTimeout(() => playTone(f, 'sine', 0.2), i * 150); }); setTimeout(() => playTone(1046.50, 'sine', 0.6), 600); } };
+        const toggleSound = () => { initAudio(); soundEnabled = !soundEnabled; document.getElementById('icon-sound-on').style.display = soundEnabled ? 'block' : 'none'; document.getElementById('icon-sound-off').style.display = soundEnabled ? 'none' : 'block'; };
         document.getElementById('btn-sound').addEventListener('click', toggleSound);
 
-        // STATE & DOM
         const STATE = { questions: [], currentIndex: 0, score: 0, correctCount: 0 };
-
-        const DOM = {
-            views: { intro: document.getElementById('view-intro'), quiz: document.getElementById('view-quiz'), results: document.getElementById('view-results') },
-            quiz: {
-                qNum: document.getElementById('ui-q-current'), score: document.getElementById('ui-score'),
-                timerContainer: document.getElementById('ui-timer-container'), timerText: document.getElementById('ui-timer-text'), timerBar: document.getElementById('ui-timer-bar'),
-                diff: document.getElementById('ui-difficulty'), text: document.getElementById('ui-question'), options: document.getElementById('ui-options'),
-                expBox: document.getElementById('ui-explanation'), expTitle: document.getElementById('ui-exp-title'), expText: document.getElementById('ui-exp-text'),
-                btnNext: document.getElementById('btn-next')
-            },
-            res: { mascot: document.getElementById('res-mascot'), rankText: document.getElementById('res-rank-text'), score: document.getElementById('res-score'), correct: document.getElementById('res-correct'), wrong: document.getElementById('res-wrong'), btnShare: document.getElementById('btn-share'), btnDownload: document.getElementById('btn-download'), btnRestart: document.getElementById('btn-restart') },
-            btnStart: document.getElementById('btn-start')
+        const DOM = { views: { intro: document.getElementById('view-intro'), quiz: document.getElementById('view-quiz'), results: document.getElementById('view-results') }, quiz: { qNum: document.getElementById('ui-q-current'), score: document.getElementById('ui-score'), timerContainer: document.getElementById('ui-timer-container'), timerText: document.getElementById('ui-timer-text'), timerBar: document.getElementById('ui-timer-bar'), diff: document.getElementById('ui-difficulty'), text: document.getElementById('ui-question'), options: document.getElementById('ui-options'), expBox: document.getElementById('ui-explanation'), expTitle: document.getElementById('ui-exp-title'), expText: document.getElementById('ui-exp-text'), btnNext: document.getElementById('btn-next') }, res: { mascot: document.getElementById('res-mascot'), rankText: document.getElementById('res-rank-text'), score: document.getElementById('res-score'), correct: document.getElementById('res-correct'), wrong: document.getElementById('res-wrong'), btnShare: document.getElementById('btn-share'), btnDownload: document.getElementById('btn-download'), btnRestart: document.getElementById('btn-restart') }, btnStart: document.getElementById('btn-start') };
+        const shuffle = (array) => { let c = array.length, r; while (c > 0) { r = Math.floor(Math.random() * c); c--; [array[c], array[r]] = [array[r], array[c]]; } return array; };
+        
+        const switchView = (v) => { 
+            Object.values(DOM.views).forEach(el => el.classList.remove('active')); 
+            DOM.views[v].classList.add('active'); 
+            // Керування великим маскотом
+            const heroMascot = document.getElementById('mascot-hero-container');
+            if(heroMascot) heroMascot.style.display = (v === 'intro') ? 'block' : 'none';
         };
 
-        const shuffle = (array) => {
-            let c = array.length, r;
-            while (c > 0) { r = Math.floor(Math.random() * c); c--; [array[c], array[r]] = [array[r], array[c]]; }
-            return array;
-        };
-
-        const switchView = (v) => { Object.values(DOM.views).forEach(el => el.classList.remove('active')); DOM.views[v].classList.add('active'); };
-
-        // TIMER
-        let timerInterval;
-        const TIME_LIMIT = 15;
-        let timeLeft = TIME_LIMIT;
-
-        const startTimer = (optionsMapped, explanation) => {
-            clearInterval(timerInterval);
-            timeLeft = TIME_LIMIT;
-            DOM.quiz.timerText.textContent = `${Math.ceil(timeLeft)}s`;
-            DOM.quiz.timerBar.style.width = '100%';
-            DOM.quiz.timerBar.style.background = 'var(--text-main)';
-            
-            let lastTime = Date.now();
-            timerInterval = setInterval(() => {
-                const dt = (Date.now() - lastTime) / 1000;
-                lastTime = Date.now();
-                timeLeft -= dt;
-                
-                if (timeLeft <= 0) {
-                    timeLeft = 0; clearInterval(timerInterval);
-                    handleAnswer(false, null, optionsMapped, explanation, true);
-                }
-                
-                DOM.quiz.timerText.textContent = `${Math.ceil(timeLeft)}s`;
-                const pct = (timeLeft / TIME_LIMIT) * 100;
-                DOM.quiz.timerBar.style.width = `${pct}%`;
-                
-                if (pct < 25) DOM.quiz.timerBar.style.background = 'var(--accent-red)';
-                else if (pct < 50) DOM.quiz.timerBar.style.background = 'var(--accent-orange)';
-            }, 50);
-        };
-
-        const initQuiz = () => {
-            initAudio(); sounds.click();
-            const easy = shuffle(QUESTION_BANK.filter(q => q.d === 'easy')).slice(0, 4);
-            const med = shuffle(QUESTION_BANK.filter(q => q.d === 'medium')).slice(0, 4);
-            const hard = shuffle(QUESTION_BANK.filter(q => q.d === 'hard')).slice(0, 2);
-            let selected = [...easy, ...med, ...hard];
-            if (selected.length < 10) selected = shuffle([...QUESTION_BANK]).slice(0, 10);
-            
-            STATE.questions = shuffle(selected); STATE.currentIndex = 0; STATE.score = 0; STATE.correctCount = 0;
-            DOM.quiz.score.textContent = '0';
-            switchView('quiz'); renderQuestion();
-        };
-
-        const renderQuestion = () => {
-            const q = STATE.questions[STATE.currentIndex];
-            DOM.quiz.qNum.textContent = STATE.currentIndex + 1;
-            DOM.quiz.diff.textContent = q.d; DOM.quiz.diff.className = `question-meta diff-${q.d}`;
-            DOM.quiz.text.textContent = q.q;
-            DOM.quiz.expBox.classList.remove('show', 'correct', 'wrong'); DOM.quiz.btnNext.classList.remove('show');
-            DOM.quiz.options.innerHTML = '';
-
-            let optionsMapped = shuffle(q.o.map((text, idx) => ({ text, isCorrect: idx === q.a })));
-            optionsMapped.forEach((opt) => {
-                const btn = document.createElement('button'); btn.className = 'option-btn hover-target';
-                const ts = document.createElement('span'); ts.textContent = opt.text;
-                const icon = document.createElement('div'); icon.innerHTML = `<svg class="icon-svg" viewBox="0 0 24 24"></svg>`;
-                btn.appendChild(ts); btn.appendChild(icon);
-                btn.addEventListener('click', () => handleAnswer(opt.isCorrect, btn, optionsMapped, q.e, false));
-                DOM.quiz.options.appendChild(btn);
-            });
-            attachCursorHovers(); startTimer(optionsMapped, q.e);
-        };
-
-        const handleAnswer = (isCorrect, btn, allOpts, exp, isTimeUp = false) => {
-            clearInterval(timerInterval);
-            const allBtns = DOM.quiz.options.querySelectorAll('button');
-            allBtns.forEach(b => b.disabled = true);
-            document.body.classList.remove('hovering');
-
-            if (isCorrect && !isTimeUp) {
-                sounds.correct();
-                STATE.score++; STATE.correctCount++; DOM.quiz.score.textContent = STATE.score;
-                if(btn) { btn.classList.add('correct'); btn.querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`; }
-                DOM.quiz.expBox.classList.add('correct'); DOM.quiz.expTitle.textContent = "Correct"; DOM.quiz.expTitle.style.color = "var(--accent-green)";
-            } else {
-                sounds.wrong();
-                if(btn) { btn.classList.add('wrong'); btn.querySelector('svg').innerHTML = `<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>`; }
-                const cIdx = allOpts.findIndex(o => o.isCorrect);
-                if(cIdx !== -1) { allBtns[cIdx].classList.add('correct'); allBtns[cIdx].querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`; }
-                DOM.quiz.expBox.classList.add('wrong'); DOM.quiz.expTitle.textContent = isTimeUp ? "Time's Up!" : "Incorrect"; DOM.quiz.expTitle.style.color = "var(--accent-red)";
-            }
-            DOM.quiz.expText.textContent = exp; DOM.quiz.expBox.classList.add('show'); DOM.quiz.btnNext.classList.add('show');
-        };
-
+        let timerInterval; const TIME_LIMIT = 15; let timeLeft = TIME_LIMIT;
+        const startTimer = (optionsMapped, explanation) => { clearInterval(timerInterval); timeLeft = TIME_LIMIT; DOM.quiz.timerText.textContent = `${Math.ceil(timeLeft)}s`; DOM.quiz.timerBar.style.width = '100%'; DOM.quiz.timerBar.style.background = 'var(--text-main)'; let lastTime = Date.now(); timerInterval = setInterval(() => { const dt = (Date.now() - lastTime) / 1000; lastTime = Date.now(); timeLeft -= dt; if (timeLeft <= 0) { timeLeft = 0; clearInterval(timerInterval); handleAnswer(false, null, optionsMapped, explanation, true); } DOM.quiz.timerText.textContent = `${Math.ceil(timeLeft)}s`; const pct = (timeLeft / TIME_LIMIT) * 100; DOM.quiz.timerBar.style.width = `${pct}%`; if (pct < 25) DOM.quiz.timerBar.style.background = 'var(--accent-red)'; else if (pct < 50) DOM.quiz.timerBar.style.background = 'var(--accent-orange)'; }, 50); };
+        
+        const initQuiz = () => { initAudio(); sounds.click(); const easy = shuffle(QUESTION_BANK.filter(q => q.d === 'easy')).slice(0, 4); const med = shuffle(QUESTION_BANK.filter(q => q.d === 'medium')).slice(0, 4); const hard = shuffle(QUESTION_BANK.filter(q => q.d === 'hard')).slice(0, 2); let selected = [...easy, ...med, ...hard]; if (selected.length < 10) selected = shuffle([...QUESTION_BANK]).slice(0, 10); STATE.questions = shuffle(selected); STATE.currentIndex = 0; STATE.score = 0; STATE.correctCount = 0; DOM.quiz.score.textContent = '0'; switchView('quiz'); renderQuestion(); };
+        const renderQuestion = () => { const q = STATE.questions[STATE.currentIndex]; DOM.quiz.qNum.textContent = STATE.currentIndex + 1; DOM.quiz.diff.textContent = q.d; DOM.quiz.diff.className = `question-meta diff-${q.d}`; DOM.quiz.text.textContent = q.q; DOM.quiz.expBox.classList.remove('show', 'correct', 'wrong'); DOM.quiz.btnNext.classList.remove('show'); DOM.quiz.options.innerHTML = ''; let optionsMapped = shuffle(q.o.map((text, idx) => ({ text, isCorrect: idx === q.a }))); optionsMapped.forEach((opt) => { const btn = document.createElement('button'); btn.className = 'option-btn hover-target'; const ts = document.createElement('span'); ts.textContent = opt.text; const icon = document.createElement('div'); icon.innerHTML = `<svg class="icon-svg" viewBox="0 0 24 24"></svg>`; btn.appendChild(ts); btn.appendChild(icon); btn.addEventListener('click', () => handleAnswer(opt.isCorrect, btn, optionsMapped, q.e, false)); DOM.quiz.options.appendChild(btn); }); attachCursorHovers(); startTimer(optionsMapped, q.e); };
+        const handleAnswer = (isCorrect, btn, allOpts, exp, isTimeUp = false) => { clearInterval(timerInterval); const allBtns = DOM.quiz.options.querySelectorAll('button'); allBtns.forEach(b => b.disabled = true); document.body.classList.remove('hovering'); if (isCorrect && !isTimeUp) { sounds.correct(); STATE.score++; STATE.correctCount++; DOM.quiz.score.textContent = STATE.score; if(btn) { btn.classList.add('correct'); btn.querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`; } DOM.quiz.expBox.classList.add('correct'); DOM.quiz.expTitle.textContent = "Correct"; DOM.quiz.expTitle.style.color = "var(--accent-green)"; } else { sounds.wrong(); if(btn) { btn.classList.add('wrong'); btn.querySelector('svg').innerHTML = `<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>`; } const cIdx = allOpts.findIndex(o => o.isCorrect); if(cIdx !== -1) { allBtns[cIdx].classList.add('correct'); allBtns[cIdx].querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`; } DOM.quiz.expBox.classList.add('wrong'); DOM.quiz.expTitle.textContent = isTimeUp ? "Time's Up!" : "Incorrect"; DOM.quiz.expTitle.style.color = "var(--accent-red)"; } DOM.quiz.expText.textContent = exp; DOM.quiz.expBox.classList.add('show'); DOM.quiz.btnNext.classList.add('show'); };
         const handleNext = () => { sounds.click(); STATE.currentIndex++; STATE.currentIndex < 10 ? renderQuestion() : showResults(); };
-
+        
         const showResults = () => {
-            DOM.res.score.textContent = STATE.correctCount;
-            DOM.res.correct.textContent = STATE.correctCount;
-            DOM.res.wrong.textContent = 10 - STATE.correctCount;
-
-            let rank = "";
-            if (STATE.correctCount <= 4) rank = "Newcomer";
-            else if (STATE.correctCount <= 7) rank = "Node Operator";
-            else if (STATE.correctCount <= 9) rank = "Validator";
-            else rank = "Flexnode Master";
-
-            DOM.res.rankText.textContent = rank;
-            DOM.res.rankText.style.color = STATE.correctCount === 10 ? "var(--accent-purple)" : "var(--text-main)";
-
-            if(STATE.correctCount === 10) {
-                DOM.res.mascot.src = "./mascot-win.png";
-                sounds.fanfare();
-            } else {
-                DOM.res.mascot.src = "./mascot-cert.png";
-            }
-
-            // TWITTER SHARING LOGIC
-            // 3 ВАРІАНТИ ТВІТІВ зі змінними
-            const sc = STATE.correctCount;
-            const tr = rank.toLowerCase();
-            const tm = (typeof formatTime === 'function' && STATE.totalTime != null) ? formatTime(STATE.totalTime) : null;
-            const URL = 'https://alekshawk.github.io/optimum-quiz/';
-            STATE.tweets = [
-`just took the optimum knowledge quiz and scored ${sc}/10
-
-rank: ${tr}
-
-think you know @get_optimum better than me? prove it:
-${URL}
-
-quiz built by @hawk_tyt`,
-
-`${sc}/10 on the optimum knowledge quiz
-
-➤ rank: ${tr}
-
-tested my knowledge of RLNC, mump2p and the tech raising the ceiling for blockchain data movement
-
-your turn:
-${URL}
-
-made by @hawk_tyt`,
-
-`how well do you actually know @get_optimum?
-
-i scored ${sc}/10 (${tr})
-
-10 questions on RLNC, flexnodes, DeRAM and more. see if you can beat me:
-${URL}
-
-quiz by @hawk_tyt`
-            ];
-            STATE.tweetIndex = 0;
-            applyTweet();
-
-            switchView('results');
+            DOM.res.score.textContent = STATE.correctCount; DOM.res.correct.textContent = STATE.correctCount; DOM.res.wrong.textContent = 10 - STATE.correctCount;
+            let rank = ""; if (STATE.correctCount <= 4) rank = "Newcomer"; else if (STATE.correctCount <= 7) rank = "Node Operator"; else if (STATE.correctCount <= 9) rank = "Validator"; else rank = "Flexnode Master";
+            DOM.res.rankText.textContent = rank; DOM.res.rankText.style.color = STATE.correctCount === 10 ? "var(--accent-purple)" : "var(--text-main)";
+            if(STATE.correctCount === 10) { DOM.res.mascot.src = "./mascot-win.png"; sounds.fanfare(); } else { DOM.res.mascot.src = "./mascot-cert.png"; }
+            const sc = STATE.correctCount; const tr = rank.toLowerCase(); const URL = 'https://alekshawk.github.io/optimum-quiz/';
+            STATE.tweets = [ `just took the optimum knowledge quiz and scored ${sc}/10\n\nrank: ${tr}\n\nthink you know @get_optimum better than me? prove it:\n${URL}\n\nquiz built by @hawk_tyt`, `${sc}/10 on the optimum knowledge quiz\n\n➤ rank: ${tr}\n\ntested my knowledge of RLNC, mump2p and the tech raising the ceiling for blockchain data movement\n\nyour turn:\n${URL}\n\nmade by @hawk_tyt`, `how well do you actually know @get_optimum?\n\ni scored ${sc}/10 (${tr})\n\n10 questions on RLNC, flexnodes, DeRAM and more. see if you can beat me:\n${URL}\n\nquiz by @hawk_tyt` ];
+            STATE.tweetIndex = 0; applyTweet(); switchView('results');
         };
 
-        // --- ГЕНЕРАТОР СЕРТИФІКАТУ З ОНОВЛЕНИМ ДИЗАЙНОМ ---
+        // --- ГЕНЕРАТОР СЕРТИФІКАТУ (ВЕРСІЯ 3.0 - ІДЕАЛЬНА) ---
         const generateCertificate = async () => {
             try {
                 const canvas = document.createElement('canvas'); canvas.width = 1200; canvas.height = 630;
@@ -728,135 +462,79 @@ quiz by @hawk_tyt`
 
                 // Bg
                 ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                const g1 = ctx.createRadialGradient(200, 100, 0, 200, 100, 800); g1.addColorStop(0, 'rgba(184, 124, 255, 0.25)'); g1.addColorStop(1, 'transparent');
-                const g2 = ctx.createRadialGradient(1000, 500, 0, 1000, 500, 800); g2.addColorStop(0, 'rgba(81, 177, 254, 0.25)'); g2.addColorStop(1, 'transparent');
-                ctx.fillStyle = g1; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = g2; ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Grid
-                ctx.fillStyle = 'rgba(255,255,255,0.05)';
-                for(let i=0; i<1200; i+=40) for(let j=0; j<630; j+=40) { ctx.beginPath(); ctx.arc(i, j, 1, 0, Math.PI*2); ctx.fill(); }
-
+                const g1 = ctx.createRadialGradient(200, 100, 0, 200, 100, 800); g1.addColorStop(0, 'rgba(184, 124, 255, 0.2)'); g1.addColorStop(1, 'transparent');
+                const g2 = ctx.createRadialGradient(1000, 500, 0, 1000, 500, 800); g2.addColorStop(0, 'rgba(81, 177, 254, 0.2)'); g2.addColorStop(1, 'transparent');
+                ctx.fillStyle = g1; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = g2; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'rgba(255,255,255,0.03)'; for(let i=0; i<1200; i+=40) for(let j=0; j<630; j+=40) { ctx.beginPath(); ctx.arc(i, j, 1, 0, Math.PI*2); ctx.fill(); }
                 ctx.roundRect = function(x, y, w, h, r) { this.beginPath(); this.moveTo(x+r, y); this.arcTo(x+w, y, x+w, y+h, r); this.arcTo(x+w, y+h, x, y+h, r); this.arcTo(x, y+h, x, y, r); this.arcTo(x, y, x+w, y, r); this.closePath(); return this; };
-
                 const loadImage = (src) => new Promise((resolve, reject) => { const img = new Image(); img.crossOrigin="anonymous"; img.onload = () => resolve(img); img.onerror = reject; img.src = src; });
 
-                // === ЛОГОТИП У ЛІВИЙ ВЕРХНІЙ КУТ ===
+                // 1. ВЕЛИКИЙ ЛОГОТИП ПО ЦЕНТРУ ЗВЕРХУ
                 try {
                     const logoImg = await loadImage('./optimum-logo-white.webp');
-                    const lh = 50; const lw = lh * (logoImg.width / logoImg.height);
-                    ctx.drawImage(logoImg, 60, 52, lw, lh);
-                } catch(e) {
-                    ctx.textAlign='left'; ctx.textBaseline='middle';
-                    ctx.font = 'bold 36px sans-serif'; ctx.fillStyle = '#fff'; ctx.fillText('optimum', 60, 77);
-                }
+                    const lh = 70; // Збільшено вдвічі
+                    const lw = lh * (logoImg.width / logoImg.height);
+                    ctx.drawImage(logoImg, (canvas.width - lw)/2, 60, lw, lh);
+                } catch(e) { ctx.textAlign='center'; ctx.font = 'bold 50px sans-serif'; ctx.fillStyle = '#fff'; ctx.fillText('optimum', 600, 90); }
 
-                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-
-                // === МЕНША РАМКА З РЕЗУЛЬТАТАМИ ===
-                const cardX = 90, cardY = 150, cardW = 560, cardH = 320;
-                ctx.fillStyle = 'rgba(15, 15, 20, 0.85)';
-                ctx.roundRect(cardX, cardY, cardW, cardH, 28); ctx.fill();
-                ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
-                // top accent line on card
-                const topG = ctx.createLinearGradient(cardX, 0, cardX+cardW, 0);
-                topG.addColorStop(0,'rgba(184,124,255,0)'); topG.addColorStop(.5,'rgba(184,124,255,0.8)'); topG.addColorStop(1,'rgba(81,177,254,0)');
-                ctx.fillStyle = topG; ctx.fillRect(cardX+40, cardY, cardW-80, 2);
-
-                const cardCx = cardX + cardW/2;
-
-                // Підпис QUIZ (замість CHALLENGE)
-                ctx.font = '600 22px monospace'; ctx.fillStyle = '#8e8e99';
-                ctx.fillText('OPTIMUM KNOWLEDGE QUIZ', cardCx, cardY + 55);
-
-                // Менші цифри score
-                const gradText = ctx.createLinearGradient(cardX+120, 0, cardX+cardW-120, 0);
-                gradText.addColorStop(0, '#b87cff'); gradText.addColorStop(0.5, '#51b1fe'); gradText.addColorStop(1, '#64e27f');
-                ctx.font = '300 110px monospace'; ctx.fillStyle = gradText;
-                ctx.fillText(`${STATE.correctCount}/10`, cardCx, cardY + 145);
-
-                // Ранг (авто-зменшення якщо задовге)
-                let rankName = document.getElementById('res-rank-text').innerText;
-                let rankStr = `RANK: ${rankName.toUpperCase()}`;
-                let rankSize = 36;
-                ctx.font = `bold ${rankSize}px sans-serif`;
-                while(ctx.measureText(rankStr).width > cardW - 60 && rankSize > 20){ rankSize -= 2; ctx.font = `bold ${rankSize}px sans-serif`; }
-                ctx.fillStyle = '#ffffff';
-                ctx.fillText(rankStr, cardCx, cardY + 230);
-
-                // Built by Hawk (всередині рамки, низ)
-                try {
-                    const pfpImg = await loadImage('./PFP.jpg');
-                    ctx.save(); ctx.beginPath(); ctx.arc(cardCx - 55, cardY + 290, 15, 0, Math.PI*2); ctx.clip();
-                    ctx.drawImage(pfpImg, cardCx - 70, cardY + 275, 30, 30); ctx.restore();
-                } catch(e) {}
-                ctx.textAlign='left';
-                ctx.font = '400 13px sans-serif'; ctx.fillStyle = '#8e8e99'; ctx.fillText('Built by', cardCx - 32, cardY + 284);
-                ctx.font = 'bold 17px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.fillText('Hawk', cardCx - 32, cardY + 300);
-                ctx.textAlign='center';
-
-                // === МАСКОТ — ВЕЛИКИЙ (розмір по ВИСОТІ, щоб голова не обрізалась) ===
+                // 2. ВЕЛИКИЙ МАСКОТ СПРАВА (Не перекриває текст)
                 try {
                     const mascotSrc = STATE.correctCount === 10 ? './mascot-win.png' : './mascot-cert.png';
                     const mascotImg = await loadImage(mascotSrc);
-                    const mh = 600; const mw = mh * (mascotImg.width/mascotImg.height);
-                    const my = (canvas.height - mh) / 2 + 15;  // вертикально по центру
-                    const mx = canvas.width - mw + 30;         // притиснутий до правого краю
-                    ctx.drawImage(mascotImg, mx, my, mw, mh);
-                } catch(e) { console.log("Mascot skip", e); }
+                    const mh = 500; // Дуже великий
+                    const mw = mh * (mascotImg.width/mascotImg.height);
+                    ctx.drawImage(mascotImg, canvas.width - mw - 50, canvas.height - mh, mw, mh); // Притиснутий вправо і вниз
+                } catch(e) {}
 
-                // Download
+                // 3. ПЛАШКА З РЕЗУЛЬТАТАМИ ЗЛІВА
+                const cardX = 100, cardY = 200, cardW = 500, cardH = 260; // Компактна
+                ctx.fillStyle = 'rgba(15, 15, 20, 0.85)'; ctx.roundRect(cardX, cardY, cardW, cardH, 20); ctx.fill();
+                ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
+                
+                const cardCx = cardX + cardW/2;
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                
+                ctx.font = '600 20px monospace'; ctx.fillStyle = '#8e8e99';
+                ctx.fillText('OPTIMUM KNOWLEDGE QUIZ', cardCx, cardY + 50);
+
+                const gradText = ctx.createLinearGradient(cardX+100, 0, cardX+cardW-100, 0);
+                gradText.addColorStop(0, '#b87cff'); gradText.addColorStop(0.5, '#51b1fe'); gradText.addColorStop(1, '#64e27f');
+                ctx.font = '300 100px monospace'; ctx.fillStyle = gradText;
+                ctx.fillText(`${STATE.correctCount}/10`, cardCx, cardY + 140);
+
+                let rankName = document.getElementById('res-rank-text').innerText;
+                let rankStr = `RANK: ${rankName.toUpperCase()}`;
+                let rankSize = 32; ctx.font = `bold ${rankSize}px sans-serif`;
+                while(ctx.measureText(rankStr).width > cardW - 40 && rankSize > 18){ rankSize -= 2; ctx.font = `bold ${rankSize}px sans-serif`; }
+                ctx.fillStyle = '#ffffff'; ctx.fillText(rankStr, cardCx, cardY + 220);
+
+                // 4. ОКРЕМИЙ БЛОК "BUILT BY HAWK" (Знизу по центру)
+                const creatorY = 550;
+                const creatorX = canvas.width / 2;
+                try {
+                    const pfpImg = await loadImage('./PFP.jpg');
+                    ctx.save(); ctx.beginPath(); ctx.arc(creatorX - 60, creatorY, 20, 0, Math.PI*2); ctx.clip();
+                    ctx.drawImage(pfpImg, creatorX - 80, creatorY - 20, 40, 40); ctx.restore();
+                } catch(e) {}
+                ctx.textAlign='left';
+                ctx.font = '400 14px sans-serif'; ctx.fillStyle = '#8e8e99'; ctx.fillText('Built by', creatorX - 30, creatorY - 8);
+                ctx.font = 'bold 20px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.fillText('Hawk', creatorX - 30, creatorY + 12);
+
                 const link = document.createElement('a'); link.download = `Optimum_Quiz_Rank.png`; link.href = canvas.toDataURL('image/png'); link.click();
             } catch (e) { alert("Failed to generate image."); }
         };
 
-        // CURSOR
-        const initCursor = () => {
-            const dot = document.getElementById('cursor-dot'); const ring = document.getElementById('cursor-ring');
-            if(!dot || !ring) return;
-            let mX = window.innerWidth/2, mY = window.innerHeight/2, rX = mX, rY = mY;
-            window.addEventListener('mousemove', (e) => { mX = e.clientX; mY = e.clientY; dot.style.transform = `translate(calc(${mX}px - 50%), calc(${mY}px - 50%))`; });
-            const renderRing = () => { rX += (mX - rX) * 0.3; rY += (mY - rY) * 0.3; ring.style.transform = `translate(calc(${rX}px - 50%), calc(${rY}px - 50%))`; requestAnimationFrame(renderRing); };
-            requestAnimationFrame(renderRing);
-        };
-
-        const attachCursorHovers = () => {
-            document.querySelectorAll('.hover-target, button, a').forEach(el => {
-                if(!el.dataset.cursorAttached) {
-                    el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-                    el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-                    el.dataset.cursorAttached = "true";
-                }
-            });
-        };
-
-        // Застосувати вибраний варіант твіту
-        function applyTweet(){
-            const i = STATE.tweetIndex || 0;
-            const txt = (STATE.tweets && STATE.tweets[i]) ? STATE.tweets[i] : '';
-            const prev = document.getElementById('tweet-preview');
-            if(prev) prev.textContent = txt;
-            if(DOM.res.btnShare) DOM.res.btnShare.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(txt)}`;
-        }
+        const initCursor = () => { const dot = document.getElementById('cursor-dot'); const ring = document.getElementById('cursor-ring'); if(!dot || !ring) return; let mX = window.innerWidth/2, mY = window.innerHeight/2, rX = mX, rY = mY; window.addEventListener('mousemove', (e) => { mX = e.clientX; mY = e.clientY; dot.style.transform = `translate(calc(${mX}px - 50%), calc(${mY}px - 50%))`; }); const renderRing = () => { rX += (mX - rX) * 0.3; rY += (mY - rY) * 0.3; ring.style.transform = `translate(calc(${rX}px - 50%), calc(${rY}px - 50%))`; requestAnimationFrame(renderRing); }; requestAnimationFrame(renderRing); };
+        const attachCursorHovers = () => { document.querySelectorAll('.hover-target, button, a').forEach(el => { if(!el.dataset.cursorAttached) { el.addEventListener('mouseenter', () => document.body.classList.add('hovering')); el.addEventListener('mouseleave', () => document.body.classList.remove('hovering')); el.dataset.cursorAttached = "true"; } }); };
+        function applyTweet(){ const i = STATE.tweetIndex || 0; const txt = (STATE.tweets && STATE.tweets[i]) ? STATE.tweets[i] : ''; const prev = document.getElementById('tweet-preview'); if(prev) prev.textContent = txt; if(DOM.res.btnShare) DOM.res.btnShare.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(txt)}`; }
 
         document.addEventListener('DOMContentLoaded', () => {
             initCursor(); attachCursorHovers();
             DOM.btnStart.addEventListener('click', initQuiz); DOM.quiz.btnNext.addEventListener('click', handleNext);
             DOM.res.btnRestart.addEventListener('click', () => { sounds.click(); switchView('intro'); });
-            // Клік на лого -> на початок
-            const logoHome = document.getElementById('logo-home');
-            if(logoHome) logoHome.addEventListener('click', () => { sounds.click(); switchView('intro'); });
+            const logoHome = document.getElementById('logo-home'); if(logoHome) logoHome.addEventListener('click', () => { sounds.click(); switchView('intro'); });
             DOM.res.btnDownload.addEventListener('click', () => { sounds.click(); generateCertificate(); });
-            // Перемикач варіантів твіту
-            document.querySelectorAll('.tv-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if(typeof sounds!=='undefined' && sounds.click) sounds.click();
-                    document.querySelectorAll('.tv-btn').forEach(b=>b.classList.remove('active'));
-                    btn.classList.add('active');
-                    STATE.tweetIndex = parseInt(btn.dataset.variant, 10) || 0;
-                    applyTweet();
-                });
-            });
+            document.querySelectorAll('.tv-btn').forEach(btn => { btn.addEventListener('click', () => { if(typeof sounds!=='undefined' && sounds.click) sounds.click(); document.querySelectorAll('.tv-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); STATE.tweetIndex = parseInt(btn.dataset.variant, 10) || 0; applyTweet(); }); });
         });
     </script>
 </body>
