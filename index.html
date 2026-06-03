@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimum Knowledge Challenge</title>
+    <link rel="icon" type="image/png" href="./favicon.png">
     
     <style>
         :root {
-            --bg-color: #0a0a0c;
-            --surface-color: rgba(20, 20, 25, 0.4);
+            --bg-color: #050505; /* Deep dark */
+            --surface-color: rgba(15, 15, 20, 0.4);
             --surface-border: rgba(255, 255, 255, 0.08);
             
             --text-main: #ffffff;
@@ -18,16 +19,16 @@
             --accent-blue: #51b1fe;
             --accent-green: #64e27f;
             --accent-orange: #fea158;
+            --accent-red: #ff4d4d;
             
-            --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            --font-main: "Inter", system-ui, -apple-system, sans-serif;
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* Hiding default cursor for custom cursor */
+        body, button, a, input { cursor: none !important; }
 
         body {
             background-color: var(--bg-color);
@@ -39,300 +40,256 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        .bg-container {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: -3;
-            background: var(--bg-color);
-            overflow: hidden;
+        /* 1. Animated Gradient Layer */
+        .bg-gradient {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -4;
+            background: linear-gradient(-45deg, #0a0a0c, #130a24, #081222, #07170c);
+            background-size: 400% 400%;
+            animation: gradientFlow 20s ease infinite;
         }
 
-        .blob {
-            position: absolute;
-            filter: blur(120px);
-            opacity: 0.5;
-            border-radius: 50%;
-            animation: float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 2. Tech Grid Overlay */
+        .bg-grid {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -3;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
+        /* 3. Cinematic Noise/Grain Overlay */
+        .bg-noise {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -2;
+            opacity: 0.03; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        #cursor-dot {
+            position: fixed; top: 0; left: 0; width: 6px; height: 6px;
+            background-color: var(--text-main); border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        #cursor-ring {
+            position: fixed; top: 0; left: 0; width: 36px; height: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
+            pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
             will-change: transform;
         }
 
-        .blob-1 { background: var(--accent-purple); width: 60vw; height: 60vw; top: -20%; left: -10%; animation-duration: 25s; }
-        .blob-2 { background: var(--accent-blue); width: 50vw; height: 50vw; bottom: -20%; right: -10%; animation-duration: 22s; animation-direction: alternate-reverse; }
-        .blob-3 { background: var(--accent-green); width: 40vw; height: 40vw; top: 30%; left: 30%; animation-duration: 28s; opacity: 0.3; }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(10%, 15%) scale(1.1); }
-            100% { transform: translate(-5%, -10%) scale(0.9); }
-        }
-
-        #mouse-glow {
-            position: fixed;
-            width: 800px; height: 800px;
-            background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 60%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: -1;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.3s;
-            opacity: 0;
-        }
-
-        body:hover #mouse-glow {
-            opacity: 1;
-        }
+        /* Cursor Hover States */
+        body.hovering #cursor-dot { background-color: var(--accent-purple); transform: translate(-50%, -50%) scale(0.5); }
+        body.hovering #cursor-ring { width: 50px; height: 50px; background-color: rgba(184, 124, 255, 0.1); border-color: transparent; }
 
         header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            padding: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
+            position: fixed; top: 0; left: 0; right: 0;
+            padding: 2rem; display: flex; justify-content: space-between; align-items: center;
+            z-index: 100; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
         }
 
-        .logo-container img {
-            height: 36px;
-            width: auto;
-            display: block;
-        }
+        .logo-container img { height: 28px; width: auto; display: block; opacity: 0.9; }
 
-        .social-links {
-            display: flex; gap: 1.5rem;
-        }
+        .social-links { display: flex; gap: 1.5rem; }
+        .social-links a { color: var(--text-muted); transition: var(--transition-smooth); }
+        .social-links a:hover { color: var(--text-main); transform: translateY(-2px); }
+        .social-links svg { width: 20px; height: 20px; fill: currentColor; }
 
-        .social-links a {
-            color: var(--text-muted);
-            transition: var(--transition-smooth);
-        }
-
-        .social-links a:hover {
-            color: var(--text-main); transform: translateY(-2px);
-        }
-
-        .social-links svg {
-            width: 24px; height: 24px; fill: currentColor;
-        }
-
-        main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 6rem 2rem 2rem 2rem;
-        }
+        main { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 6rem 2rem 2rem 2rem; }
 
         .glass-card {
             background: var(--surface-color);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
             border: 1px solid var(--surface-border);
-            border-radius: 24px;
-            padding: 3.5rem;
-            width: 100%;
-            max-width: 800px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
-            position: relative;
-            z-index: 10;
+            border-radius: 16px; /* slightly sharper corners for tech look */
+            padding: 3.5rem; width: 100%; max-width: 800px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            position: relative; z-index: 10;
         }
 
-        .view {
-            display: none;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+        /* Sleek top highlight line */
+        .glass-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            border-radius: 16px 16px 0 0;
         }
 
-        .view.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-            animation: viewEnter 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-
-        @keyframes viewEnter {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .view { display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .view.active { display: block; opacity: 1; transform: translateY(0); animation: viewEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes viewEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .text-gradient {
             background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue), var(--accent-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
 
-        h1 {
-            font-size: 4rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 800; letter-spacing: -0.02em;
-        }
+        h1 { font-size: 4.5rem; line-height: 1; margin-bottom: 1.5rem; font-weight: 800; letter-spacing: -0.04em; }
+        p.subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 3rem; max-width: 600px; font-weight: 400; }
 
-        p.subtitle {
-            font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 600px;
+        /* Sleek Rank Badges instead of Emojis */
+        .ranks-container { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .rank-badge {
+            display: flex; align-items: center; gap: 0.8rem;
+            background: rgba(255,255,255,0.03); padding: 0.6rem 1rem;
+            border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);
         }
+        .rank-score { font-family: monospace; font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rank-name { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .rank-master { border-color: rgba(184, 124, 255, 0.3); background: rgba(184, 124, 255, 0.05); }
+        .rank-master .rank-name { color: var(--accent-purple); }
 
+        /* Buttons */
         .btn-primary {
-            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
-            border: none; padding: 1rem 2.5rem; border-radius: 100px;
-            color: #fff; font-size: 1.1rem; font-weight: 600; cursor: pointer;
-            position: relative; overflow: hidden; z-index: 1;
-            box-shadow: 0 10px 20px rgba(184, 124, 255, 0.2);
-            transition: var(--transition-smooth);
+            background: var(--text-main); color: var(--bg-color);
+            border: none; padding: 1rem 3rem; border-radius: 100px;
+            font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+            transition: var(--transition-smooth); position: relative; overflow: hidden;
         }
-
-        .btn-primary::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
-            z-index: -1; opacity: 0; transition: opacity 0.4s ease;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px); box-shadow: 0 15px 30px rgba(184, 124, 255, 0.4);
-        }
-        .btn-primary:hover::before { opacity: 1; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); background: #f0f0f0; }
 
         .btn-outline {
-            background: transparent; border: 1px solid var(--text-muted);
-            padding: 1rem 2rem; border-radius: 12px; color: var(--text-main);
-            font-weight: 600; cursor: pointer; transition: var(--transition-smooth);
+            background: transparent; border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.8rem 2rem; border-radius: 100px; color: var(--text-main);
+            font-size: 0.9rem; font-weight: 600; transition: var(--transition-smooth);
             display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;
         }
+        .btn-outline:hover { border-color: var(--text-main); background: rgba(255,255,255,0.05); }
 
-        .btn-outline:hover {
-            border-color: var(--text-main); background: rgba(255,255,255,0.05);
-        }
+        .quiz-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
+        .q-counter { font-family: monospace; font-size: 1rem; color: var(--text-muted); }
+        .q-counter span { color: var(--text-main); font-size: 1.5rem; font-weight: 600; }
+        
+        .score-box { text-align: right; }
+        .score-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.2rem; }
+        .score-val { font-family: monospace; font-size: 1.5rem; font-weight: 600; color: var(--accent-purple); }
 
-        .quiz-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 1rem; font-size: 0.9rem; font-weight: 600;
-        }
-
-        .progress-bar-container {
-            width: 100%; height: 4px; background: rgba(255,255,255,0.1);
-            border-radius: 4px; margin-bottom: 2.5rem; overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
-            transition: width 0.5s ease-out;
-        }
+        /* Minimalist Thin Timer */
+        .timer-container { width: 100%; height: 2px; background: rgba(255,255,255,0.1); margin-bottom: 2rem; position: relative; }
+        .timer-bar { height: 100%; width: 100%; background: var(--text-main); transition: width 0.1s linear, background-color 0.3s ease; }
+        .timer-text { position: absolute; right: 0; top: 6px; font-family: monospace; font-size: 0.75rem; color: var(--text-muted); }
 
         .question-meta {
-            display: inline-block; padding: 0.3rem 1rem; background: rgba(255,255,255,0.05);
-            border-radius: 100px; font-size: 0.75rem; text-transform: uppercase;
-            letter-spacing: 0.1em; margin-bottom: 1.5rem; border: 1px solid var(--surface-border);
+            display: inline-block; padding: 0.2rem 0; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid;
         }
-        .diff-easy { color: var(--accent-green); }
-        .diff-medium { color: var(--accent-blue); }
-        .diff-hard { color: var(--accent-purple); }
+        .diff-easy { color: var(--accent-green); border-color: rgba(100, 226, 127, 0.3); }
+        .diff-medium { color: var(--accent-blue); border-color: rgba(81, 177, 254, 0.3); }
+        .diff-hard { color: var(--accent-purple); border-color: rgba(184, 124, 255, 0.3); }
 
-        .question-text {
-            font-size: 1.8rem; font-weight: 500; margin-bottom: 2.5rem; line-height: 1.4;
-        }
+        .question-text { font-size: 1.8rem; font-weight: 500; margin-bottom: 2.5rem; line-height: 1.4; letter-spacing: -0.01em; }
 
-        .options-grid {
-            display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;
-        }
-
+        /* Minimal Options */
+        .options-grid { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem; }
         .option-btn {
-            background: rgba(255,255,255,0.02); border: 1px solid var(--surface-border);
-            padding: 1.2rem 1.5rem; border-radius: 16px; color: var(--text-main);
-            font-size: 1rem; font-weight: 500; text-align: left; cursor: pointer;
+            background: transparent; border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.2rem 1.5rem; border-radius: 8px; color: var(--text-muted);
+            font-size: 1rem; font-weight: 400; text-align: left;
             transition: var(--transition-smooth); display: flex; justify-content: space-between; align-items: center;
         }
+        .option-btn:hover:not(:disabled) { border-color: rgba(255,255,255,0.4); color: var(--text-main); background: rgba(255,255,255,0.02); }
+        .option-btn:disabled { cursor: default; }
 
-        .option-btn:hover:not(:disabled) {
-            background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); transform: translateX(4px);
-        }
+        .option-btn.correct { border-color: var(--accent-green) !important; color: var(--text-main) !important; background: rgba(100, 226, 127, 0.05) !important; }
+        .option-btn.wrong { border-color: var(--accent-red) !important; color: var(--text-main) !important; background: rgba(255, 77, 77, 0.05) !important; }
 
-        .option-btn:disabled { opacity: 0.5; cursor: default; }
-
-        .option-btn.correct {
-            background: rgba(100, 226, 127, 0.1) !important; border-color: var(--accent-green) !important;
-            opacity: 1 !important; color: var(--accent-green);
-        }
-
-        .option-btn.wrong {
-            background: rgba(254, 161, 88, 0.1) !important; border-color: var(--accent-orange) !important;
-            opacity: 1 !important; color: var(--accent-orange);
-        }
-
-        .icon-svg { width: 20px; height: 20px; fill: currentColor; opacity: 0; transition: opacity 0.3s; }
+        .icon-svg { width: 18px; height: 18px; fill: currentColor; opacity: 0; transition: opacity 0.3s; }
         .option-btn.correct .icon-svg, .option-btn.wrong .icon-svg { opacity: 1; }
+        .option-btn.correct .icon-svg { color: var(--accent-green); }
+        .option-btn.wrong .icon-svg { color: var(--accent-red); }
 
         .explanation-box {
-            background: rgba(0,0,0,0.3); border-left: 4px solid var(--accent-purple);
-            padding: 1.5rem; border-radius: 0 12px 12px 0; margin-bottom: 2rem;
-            display: none; animation: slideIn 0.4s ease forwards;
+            background: transparent; border-left: 2px solid var(--accent-purple);
+            padding: 1rem 1.5rem; margin-bottom: 2rem; display: none; opacity: 0;
+            transition: opacity 0.4s ease;
         }
-
-        .explanation-box.show { display: block; }
+        .explanation-box.show { display: block; opacity: 1; }
         .explanation-box.correct { border-color: var(--accent-green); }
-        .explanation-box.wrong { border-color: var(--accent-orange); }
-
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+        .explanation-box.wrong { border-color: var(--accent-red); }
 
         .next-btn-container { display: flex; justify-content: flex-end; }
         .btn-next {
-            background: #fff; color: #000; border: none; padding: 0.8rem 2rem;
-            border-radius: 100px; font-weight: 600; cursor: pointer; display: none; transition: transform 0.2s, background 0.2s;
+            background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid transparent; padding: 0.8rem 2rem;
+            border-radius: 100px; font-weight: 600; display: none; transition: var(--transition-smooth);
         }
         .btn-next.show { display: inline-block; }
-        .btn-next:hover { transform: translateX(4px); background: #f0f0f0; }
+        .btn-next:hover { background: var(--text-main); color: var(--bg-color); }
 
         .results-container { text-align: center; }
-        .rank-icon { font-size: 4.5rem; margin-bottom: 1rem; filter: drop-shadow(0 0 20px rgba(184, 124, 255, 0.4)); }
-        .score-display { font-size: 5rem; font-weight: 900; margin: 1rem 0; line-height: 1; }
-        .stats-grid {
-            display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);
-        }
+        .rank-label-sm { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .rank-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; letter-spacing: -0.02em; }
+        
+        .score-display { font-family: monospace; font-size: 6rem; font-weight: 300; margin: 1rem 0; line-height: 1; letter-spacing: -0.05em; }
+        
+        .stats-grid { display: flex; justify-content: center; gap: 4rem; margin-bottom: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .stat-item { display: flex; flex-direction: column; }
-        .stat-value { font-size: 1.5rem; font-weight: 700; }
-        .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.2rem;}
+        .stat-value { font-family: monospace; font-size: 1.8rem; font-weight: 400; }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem;}
         
         .action-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        
-        .btn-download { background: rgba(255,255,255,0.1); border-color: transparent; }
-        .btn-download:hover { background: rgba(255,255,255,0.2); }
+
+        /* Creator Badge */
+        .creator-badge {
+            position: fixed; bottom: 24px; right: 24px; display: flex; align-items: center; gap: 12px;
+            background: rgba(10, 10, 12, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05); padding: 6px 16px 6px 6px; border-radius: 100px;
+            text-decoration: none; color: var(--text-main); font-size: 0.9rem; transition: var(--transition-smooth); z-index: 90;
+        }
+        .creator-badge:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,0.2); }
+        .creator-pfp { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+        .creator-text span { color: var(--text-muted); font-size: 0.7rem; display: block; line-height: 1; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .creator-text strong { font-weight: 600; font-size: 0.85rem; }
 
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
-            .glass-card { padding: 2rem 1.5rem; }
+            .glass-card { padding: 2rem 1.5rem; border-radius: 0; border-left: none; border-right: none; }
             header { padding: 1.5rem; }
-            main { padding-top: 7rem; }
-            .action-buttons { flex-direction: column; }
+            main { padding: 6rem 0 0 0; align-items: flex-start; }
+            .action-buttons { flex-direction: column; width: 100%; }
+            .action-buttons a, .action-buttons button { width: 100%; justify-content: center; }
+            .creator-badge { bottom: 16px; right: 50%; transform: translateX(50%); width: max-content; }
+            /* Turn off custom cursor for mobile */
+            body, button, a, input { cursor: auto !important; }
+            #cursor-dot, #cursor-ring { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Animated Gradient Background -->
-    <div class="bg-container">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
+    <!-- Premium Background Layers -->
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-noise"></div>
 
-    <!-- Mouse Spotlight Glow -->
-    <div id="mouse-glow"></div>
+    <!-- Custom Cursor Elements -->
+    <div id="cursor-ring"></div>
+    <div id="cursor-dot"></div>
 
     <header>
         <div class="logo-container">
-            <!-- 
-               Ваш ЛОГОТИП! 
-               Покладіть файл "optimum-logo-white.webp" у ту саму папку 
-            -->
             <img src="./optimum-logo-white.webp" alt="Optimum Logo">
         </div>
 
         <div class="social-links">
-            <a href="https://www.getoptimum.xyz/" target="_blank" aria-label="Website">
+            <a href="https://www.getoptimum.xyz/" target="_blank" class="hover-target" aria-label="Website">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
             </a>
-            <a href="https://x.com/get_optimum" target="_blank" aria-label="X (Twitter)">
+            <a href="https://x.com/get_optimum" target="_blank" class="hover-target" aria-label="X (Twitter)">
                 <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             </a>
-            <a href="https://docs.getoptimum.xyz/" target="_blank" aria-label="Documentation">
+            <a href="https://docs.getoptimum.xyz/" target="_blank" class="hover-target" aria-label="Documentation">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
             </a>
         </div>
@@ -343,31 +300,36 @@
             
             <!-- VIEW 1: INTRO -->
             <div id="view-intro" class="view active">
-                <p class="question-meta diff-medium" style="background: transparent; border-color: var(--accent-purple); color: var(--accent-purple);">Universal Data Acceleration Network</p>
-                <h1>know <span class="text-gradient">optimum?</span></h1>
-                <p class="subtitle">Prove your knowledge of RLNC, mump2p, DeRAM, and the technology raising the ceiling for blockchain data movement. Score points to earn your rank and digital certificate.</p>
+                <p class="question-meta diff-medium" style="border: none; margin-bottom: 0;">Universal Data Acceleration Network</p>
+                <h1>how well do you know <span class="text-gradient">optimum?</span></h1>
+                <p class="subtitle">Prove your knowledge of RLNC, mump2p, DeRAM, and the technology raising the ceiling for blockchain data movement.</p>
                 
-                <div style="display: flex; gap: 0.8rem; margin-bottom: 2.5rem; flex-wrap: wrap;">
-                    <div style="background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.1);">🌱 0-4: Newcomer</div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.1);">⚙️ 5-7: Node Operator</div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.1);">🛡️ 8-9: Validator</div>
-                    <div style="background: rgba(184, 124, 255, 0.1); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; border: 1px solid var(--accent-purple); color: #fff;">👑 10: Flexnode Master</div>
+                <div class="ranks-container">
+                    <div class="rank-badge"><span class="rank-score">0-4</span> <span class="rank-name">Newcomer</span></div>
+                    <div class="rank-badge"><span class="rank-score">5-7</span> <span class="rank-name">Node Operator</span></div>
+                    <div class="rank-badge"><span class="rank-score">8-9</span> <span class="rank-name">Validator</span></div>
+                    <div class="rank-badge rank-master"><span class="rank-score">10</span> <span class="rank-name">Flexnode Master</span></div>
                 </div>
 
-                <button id="btn-start" class="btn-primary">Start Challenge</button>
+                <button id="btn-start" class="btn-primary hover-target">Start Challenge</button>
             </div>
 
             <!-- VIEW 2: QUIZ -->
             <div id="view-quiz" class="view">
-                <div class="quiz-header">
-                    <div>Question <span id="ui-q-current" style="color: #fff;">1</span>/10</div>
-                    <div>Score: <span id="ui-score" style="color: var(--accent-purple);">0</span></div>
-                </div>
                 
-                <div class="progress-bar-container">
-                    <div id="ui-progress" class="progress-bar"></div>
+                <div class="timer-container" id="ui-timer-container">
+                    <div id="ui-timer-bar" class="timer-bar"></div>
+                    <div id="ui-timer-text" class="timer-text">15s</div>
                 </div>
 
+                <div class="quiz-header">
+                    <div class="q-counter">Q <span id="ui-q-current">1</span> / 10</div>
+                    <div class="score-box">
+                        <div class="score-label">Score</div>
+                        <div id="ui-score" class="score-val">0</div>
+                    </div>
+                </div>
+                
                 <span id="ui-difficulty" class="question-meta diff-easy">EASY</span>
                 <h2 id="ui-question" class="question-text">Loading question...</h2>
 
@@ -376,22 +338,21 @@
                 </div>
 
                 <div id="ui-explanation" class="explanation-box">
-                    <strong style="display: block; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;" id="ui-exp-title">Explanation</strong>
-                    <p id="ui-exp-text" style="color: var(--text-muted); font-size: 0.95rem;"></p>
+                    <strong style="display: block; margin-bottom: 0.5rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;" id="ui-exp-title">Explanation</strong>
+                    <p id="ui-exp-text" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;"></p>
                 </div>
 
                 <div class="next-btn-container">
-                    <button id="btn-next" class="btn-next">Next Question &rarr;</button>
+                    <button id="btn-next" class="btn-next hover-target">Next Question &rarr;</button>
                 </div>
             </div>
 
             <!-- VIEW 3: RESULTS -->
             <div id="view-results" class="view results-container">
-                <div id="res-icon" class="rank-icon">👑</div>
-                <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">Challenge Complete</h2>
-                <p id="res-rank-text" style="color: var(--text-muted); margin-bottom: 1rem; font-size: 1.2rem;">Rank: Flexnode Master</p>
+                <div class="rank-label-sm">Final Rank Achieved</div>
+                <h2 id="res-rank-text" class="rank-title text-gradient">Flexnode Master</h2>
                 
-                <div class="score-display text-gradient"><span id="res-score">10</span><span style="font-size: 2.5rem; color: var(--surface-border)">/10</span></div>
+                <div class="score-display"><span id="res-score">10</span><span style="font-size: 3rem; color: var(--surface-border)">/10</span></div>
                 
                 <div class="stats-grid">
                     <div class="stat-item">
@@ -399,21 +360,21 @@
                         <span class="stat-label">Correct</span>
                     </div>
                     <div class="stat-item">
-                        <span id="res-wrong" class="stat-value" style="color: var(--accent-orange);">0</span>
+                        <span id="res-wrong" class="stat-value" style="color: var(--accent-red);">0</span>
                         <span class="stat-label">Incorrect</span>
                     </div>
                 </div>
 
                 <div class="action-buttons">
-                    <a href="#" id="btn-share" target="_blank" class="btn-outline">
-                        <svg viewBox="0 0 24 24" style="width: 18px; fill: currentColor;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        Share on X
+                    <a href="#" id="btn-share" target="_blank" class="btn-outline hover-target">
+                        <svg viewBox="0 0 24 24" style="width: 16px; fill: currentColor;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        Share Rank
                     </a>
-                    <button id="btn-download" class="btn-outline btn-download">
+                    <button id="btn-download" class="btn-outline hover-target" style="border-color: rgba(255,255,255,0.4);">
                         <svg viewBox="0 0 24 24" style="width: 18px; fill: currentColor;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                        Download Result
+                        Download Image
                     </button>
-                    <button id="btn-restart" class="btn-outline">
+                    <button id="btn-restart" class="btn-outline hover-target">
                         Try Again
                     </button>
                 </div>
@@ -422,54 +383,35 @@
         </div>
     </main>
 
+    <!-- Creator Badge -->
+    <a href="https://x.com/hawk_tyt" target="_blank" class="creator-badge hover-target">
+        <img src="./hawk-pfp.jpg" alt="Hawk" class="creator-pfp" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzUxYjFmZSIvPjx0ZXh0IHg9IjUwIiB5PSI2NCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjQwIiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5IPC90ZXh0Pjwvc3ZnPg=='">
+        <div class="creator-text">
+            <span>Built by</span>
+            <strong>Hawk</strong>
+        </div>
+    </a>
+
     <script>
-        // ТУТ ВАШІ ПИТАННЯ!
+        // QUESTION BANK
         const QUESTION_BANK = [
-            // EASY (1-15)
-            {q:"What does RLNC stand for?", o:["Random Latency Network Coding","Random Linear Network Coding","Recursive Layer Network Consensus","Rapid Linear Node Communication"], a:1, d:"easy", e:"RLNC — Random Linear Network Coding — core data encoding technique from MIT."},
-            {q:"What is Optimum's primary role in the blockchain ecosystem?", o:["A new Layer 1 consensus mechanism","An Ethereum L2 rollup","A Universal Data Acceleration Network for faster block propagation","A decentralized exchange protocol"], a:2, d:"easy", e:"Optimum is the Universal Data Acceleration Network. It accelerates data movement between nodes without touching consensus."},
-            {q:"Compared to gossipsub, Optimum achieves approximately how much bandwidth reduction?", o:["20–30%","50–60%","90–95%","99%+"], a:2, d:"easy", e:"~90–95% bandwidth reduction vs gossipsub by eliminating redundant transmission via RLNC-coded frames."},
-            {q:"Which institution's research is the scientific foundation of Optimum?", o:["Stanford University","ETH Zurich","MIT","Carnegie Mellon University"], a:2, d:"easy", e:"Built on award-winning MIT research. Prof. Muriel Médard from MIT EECS is co-inventor of RLNC."},
-            {q:"Who is the co-inventor of RLNC and a key figure behind Optimum?", o:["Vitalik Buterin","Prof. Muriel Médard","Satoshi Nakamoto","Anatoly Yakovenko"], a:1, d:"easy", e:"Prof. Muriel Médard, NEC Chair at MIT EECS, ranked #1 globally in Network Coding, co-invented RLNC and is Optimum's CEO."},
-            {q:"What is mump2p?", o:["A multi-user messaging protocol","Optimum's RLNC-accelerated, gossipsub-compatible pub/sub layer","A memory pooling mechanism for MEV","A node uptime monitoring tool"], a:1, d:"easy", e:"mump2p is Optimum's first production product — RLNC-accelerated pub/sub, fully libp2p/gossipsub compatible."},
-            {q:"What kind of network does Optimum operate as?", o:["A closed, permissioned consortium","A permissionless network anyone can operate nodes on","A single centralized server cluster","A private validator-only club"], a:1, d:"easy", e:"Optimum runs as a permissionless network of flexnodes that anyone can operate alongside existing clients."},
-            {q:"Does Optimum require a blockchain to change its consensus rules to integrate?", o:["Yes, always a hard fork","No — it works at the propagation layer with no consensus changes","Only with validator majority vote","Only for proof-of-work chains"], a:1, d:"easy", e:"Chain-agnostic by design, zero consensus modifications."},
-            {q:"Optimum is designed to be:", o:["Compatible only with Ethereum","Compatible only with Solana","Chain-agnostic, integrating with any blockchain","Compatible only with Bitcoin"], a:2, d:"easy", e:"Chain-agnostic by design — integrates with any blockchain without requiring protocol rewrites."},
-            {q:"What does Optimum primarily optimize?", o:["Smart contract execution speed","Data movement and propagation between nodes","Token minting fees","Wallet UX"], a:1, d:"easy", e:"Data movement sets the ceiling. Optimum optimizes how data propagates across the network."},
-            {q:"Faster block and blob delivery with Optimum primarily helps which group?", o:["NFT artists","Validators (fewer missed slots, better MEV capture)","Centralized exchange traders","Stablecoin issuers"], a:1, d:"easy", e:"More successful attestations, better MEV capture, fewer missed proposals → measurable revenue gains for validators."},
-            {q:"What is the \"ceiling\" that Optimum claims to raise?", o:["Gas fees","Token price","Data movement performance","Validator count"], a:2, d:"easy", e:"\"Data movement sets the ceiling. Optimum raises it.\" — the core tagline."},
-            {q:"Optimum's technology works alongside scaling solutions by:", o:["Replacing all execution layers","Complementing execution while improving network performance","Forcing chains to merge","Removing the need for validators"], a:1, d:"easy", e:"Complementary to scaling — works alongside execution, enabling network scaling while improving performance."},
-            {q:"What problem does most blockchain networking waste resources on?", o:["Mining difficulty","Redundant data transmission","Token swaps","Wallet signatures"], a:1, d:"easy", e:"Most networking burns time and bandwidth on redundant transmission."},
-            {q:"mump2p is compatible with which existing P2P stack?", o:["BitTorrent","libp2p / gossipsub","IPFS only","None — it's fully proprietary"], a:1, d:"easy", e:"mump2p is libp2p/gossipsub-compatible, so it slots into existing infrastructure."},
-
-            // MEDIUM (16-30)
-            {q:"What is a \"flexnode\" in the Optimum network?", o:["A validator with MEV boost enabled","An operator-run node that encodes, decodes, and forwards RLNC-coded gossip frames","A smart contract on Ethereum","A governance token holder"], a:1, d:"medium", e:"Flexnodes encode/decode RLNC frames, maintain coded buffers, and serve DeRAM/DeROM requests."},
-            {q:"Optimum's DeRAM stands for:", o:["Decentralized Relay and Messaging","Distributed RAM for smart contracts","Decentralized Random Access Memory","Dynamic Resource Allocation Module"], a:2, d:"medium", e:"DeRAM — Decentralized Random Access Memory — shared-state memory layer with low-latency read-write semantics."},
-            {q:"How much faster can Optimum deliver blocks and blobs vs gossipsub?", o:["2–3x faster","6–20x faster","50x faster","About the same speed"], a:1, d:"medium", e:"6–20x faster block and blob delivery vs gossipsub."},
-            {q:"What is the relationship between DeRAM and DeROM?", o:["They are competing protocols","DeRAM is read-write memory; DeROM is read-only/append-oriented memory","DeROM replaces DeRAM","They are the same product"], a:1, d:"medium", e:"DeRAM is read-write; DeROM is read-only/append-oriented, optimized for broadcast and caching."},
-            {q:"What does a flexnode maintain to recover loss and smooth tail latency?", o:["A mempool of pending transactions","Bounded coded buffers","A full archive of chain history","A list of all validators"], a:1, d:"medium", e:"Flexnodes maintain bounded coded buffers to recover loss and smooth tail latency."},
-            {q:"Why does RLNC improve loss tolerance?", o:["It retransmits every packet twice","Coded fragments let nodes reconstruct data from any sufficient subset, not specific packets","It uses a faster internet connection","It compresses data with zip"], a:1, d:"medium", e:"RLNC encodes data so any sufficient number of coded fragments can reconstruct the original."},
-            {q:"Under standard RLNC models, the dissemination strategy is described as:", o:["Experimental and unproven","Provably optimal for throughput/latency under loss and contention","Slower but more secure","Only viable on testnets"], a:1, d:"medium", e:"Under standard RLNC models, the strategy is provably optimal for throughput/latency under loss and contention."},
-            {q:"Which product does Optimum recommend builders adopt NOW for measurable latency gains?", o:["DeROM","DeRAM","mump2p","A native token"], a:2, d:"medium", e:"Builders and operators can adopt mump2p now; DeRAM and DeROM are next."},
-            {q:"What types of data does mump2p propagate?", o:["Only NFT metadata","Blocks, blobs, and transactions","Only validator signatures","Only smart contract bytecode"], a:1, d:"medium", e:"mump2p provides fast, resilient propagation of blocks, blobs, and transactions."},
-            {q:"DeROM is optimized for:", o:["High-frequency trading only","Broadcast and caching (read-only/append-oriented)","Private key storage","Token bridging"], a:1, d:"medium", e:"DeROM — Decentralized Read-Only Memory — is read-only/append-oriented, optimized for broadcast and caching."},
-            {q:"What makes Optimum's integration \"zero-setup\" for operators?", o:["It requires buying special hardware","No infrastructure changes, no additional hardware, no consensus modifications","It needs a 6-month migration","It requires rewriting the client from scratch"], a:1, d:"medium", e:"Permissionless, zero-setup integration — no infrastructure changes, no extra hardware, no consensus mods."},
-            {q:"How do flexnodes interact with existing clients?", o:["They replace all existing clients","They interoperate with existing clients and libp2p/gossipsub","They require clients to shut down","They only work in isolation"], a:1, d:"medium", e:"Flexnodes interoperate with existing clients and libp2p/gossipsub where applicable."},
-            {q:"Which best describes Optimum's approach to the \"memory layer\"?", o:["It ignores memory entirely","It optimizes the memory layer for accelerated data propagation and real-time access","It only stores data on-chain","It deletes old memory to save space"], a:1, d:"medium", e:"Optimum's innovative approach to memory layer optimization through RLNC accelerates data propagation and improves real-time access."},
-            {q:"For validators, faster propagation primarily reduces the risk of:", o:["Wallet hacks","Missed slots / missed proposals","Token inflation","Smart contract bugs"], a:1, d:"medium", e:"Lower latency → lower missed-slot risk → APY/MEV uplift for validators."},
-            {q:"What does the Optimum docs describe mump2p as accelerating?", o:["Token minting","Low-latency gossip across geographically distributed nodes","Database backups","Front-end rendering"], a:1, d:"medium", e:"Optimum accelerates low-latency gossip across geographically distributed nodes to scale data access and reduce congestion."},
-
-            // HARD (31-40)
-            {q:"Which user type does NOT directly benefit from Optimum per its documentation?", o:["L1/L2 teams needing faster blob propagation","Validators seeking lower missed-slot risk","dApp developers wanting faster tx inclusion","Fiat currency traders on centralized exchanges"], a:3, d:"hard", e:"Documented users: L1/L2 teams, validators, node operators, builders, dApp devs. CEX traders are outside scope."},
-            {q:"What is the name for the technique Optimum applies to gossip to reduce redundancy?", o:["Sharding","Random Linear Network Coding (RLNC)","Merkle proofs","Zero-knowledge rollups"], a:1, d:"hard", e:"By applying RLNC to gossip, Optimum reduces redundancy and improves loss tolerance."},
-            {q:"Optimum is described in its docs as the fastest decentralized internet protocol for:", o:["Gaming","Web3","Video streaming","Email"], a:1, d:"hard", e:"\"Optimum is the fastest decentralized internet protocol for web3.\""},
-            {q:"Which of these is a current testnet/partner metric Optimum highlights?", o:["1 million TPS","40+ testnet partners and counting","500 validators max","10-second block times"], a:1, d:"hard", e:"The site highlights 40 testnet partners & counting, and $24b ETH stake connected."},
-            {q:"What is \"DeROM\" short for?", o:["Decentralized Routing Module","Decentralized Read-Only Memory","Distributed Relay Output Mesh","Dynamic Read Operation Manager"], a:1, d:"hard", e:"DeROM — Decentralized Read-Only Memory — read-only/append-oriented memory for broadcast and caching."},
-            {q:"Why is reducing redundant transmission important under network load?", o:["It makes tokens cheaper","Redundant transmission wastes bandwidth and slows propagation under load","It increases mining rewards","It has no real effect"], a:1, d:"hard", e:"Most networks rely on redundant transmission that wastes bandwidth and slows propagation under load."},
-            {q:"What does Optimum claim about MEV for validators?", o:["It eliminates MEV entirely","Faster propagation can improve MEV capture potential","It bans MEV","MEV is irrelevant to Optimum"], a:1, d:"hard", e:"Faster inclusion, lower bandwidth costs, and improved MEV capture potential."},
-            {q:"In RLNC, what must a node collect to decode the original data?", o:["The exact original packets in order","Enough linearly independent coded fragments","A password from the sender","The full blockchain history"], a:1, d:"hard", e:"A node needs enough linearly independent coded fragments to reconstruct the original data."},
-            {q:"Optimum's DeRAM exposes what kind of semantics across nodes?", o:["Write-once, read-never","Low-latency shared-state read-write semantics","Encrypted-only storage","Single-node local cache"], a:1, d:"hard", e:"DeRAM exposes low-latency shared-state read-write semantics across nodes."},
-            {q:"What is the broad category Optimum positions itself in?", o:["A meme coin","High-performance memory / data infrastructure for any blockchain","A centralized cloud provider","A hardware wallet maker"], a:1, d:"hard", e:"\"The world's first high-performance memory infrastructure for any blockchain.\""}
+            {q:"What does RLNC stand for?", o:["Random Latency Network Coding","Random Linear Network Coding","Recursive Layer Network Consensus","Rapid Linear Node Communication"], a:1, d:"easy", e:"RLNC stands for Random Linear Network Coding, a core data encoding technique from MIT."},
+            {q:"What is Optimum's primary role in the blockchain ecosystem?", o:["A new Layer 1 consensus mechanism","An Ethereum L2 rollup","A Universal Data Acceleration Network","A decentralized exchange protocol"], a:2, d:"easy", e:"Optimum is a Universal Data Acceleration Network designed for faster block propagation."},
+            {q:"Compared to gossipsub, Optimum achieves approx how much bandwidth reduction?", o:["20–30%","50–60%","90–95%","99%+"], a:2, d:"easy", e:"Optimum achieves ~90–95% bandwidth reduction vs gossipsub by eliminating redundant transmissions."},
+            {q:"Which institution's research is the scientific foundation of Optimum?", o:["Stanford University","ETH Zurich","MIT","Carnegie Mellon"], a:2, d:"easy", e:"Optimum is built on award-winning research from MIT. Prof. Muriel Médard is a co-inventor."},
+            {q:"What is mump2p?", o:["A multi-user messaging protocol","Optimum's RLNC-accelerated pub/sub layer","A memory pooling mechanism","A node monitoring tool"], a:1, d:"easy", e:"mump2p is Optimum's production product — an RLNC-accelerated pub/sub layer compatible with gossipsub."},
+            {q:"Does Optimum require a blockchain to change its consensus rules to integrate?", o:["Yes, always a hard fork","No — it works at the propagation layer","Only with validator majority vote","Only for PoW chains"], a:1, d:"easy", e:"It is chain-agnostic by design and requires zero consensus modifications."},
+            
+            {q:"What is a 'flexnode' in the Optimum network?", o:["A validator with MEV boost","A node that encodes, decodes, & forwards RLNC frames","A smart contract on Ethereum","A governance token holder"], a:1, d:"medium", e:"Flexnodes process RLNC frames, maintain coded buffers, and serve requests."},
+            {q:"Optimum's DeRAM stands for:", o:["Decentralized Relay and Messaging","Distributed RAM for contracts","Decentralized Random Access Memory","Dynamic Resource Allocation Module"], a:2, d:"medium", e:"DeRAM (Decentralized Random Access Memory) provides shared-state memory with low-latency reads/writes."},
+            {q:"How much faster can Optimum deliver blocks compared to standard gossipsub?", o:["2–3x faster","6–20x faster","50x faster","About the same speed"], a:1, d:"medium", e:"Optimum achieves 6–20x faster block and blob delivery compared to standard gossipsub."},
+            {q:"Why does RLNC drastically improve loss tolerance?", o:["It sends packets twice","Nodes reconstruct data from any sufficient subset of coded fragments","It uses faster fiber optics","It heavily compresses data"], a:1, d:"medium", e:"Instead of waiting for specific missing packets, any new coded fragment helps reconstruct the data mathematically."},
+            {q:"How do flexnodes interact with existing blockchain clients?", o:["They replace them completely","They interoperate seamlessly with them and libp2p/gossipsub","They shut them down","They only work via API calls"], a:1, d:"medium", e:"Flexnodes interoperate seamlessly with existing clients (like Ethereum execution nodes) as a drop-in network layer."},
+            
+            {q:"What is the broad category Optimum positions itself in?", o:["A meme coin ecosystem","High-performance memory / data infrastructure for any blockchain","A centralized cloud provider","A hardware wallet manufacturer"], a:1, d:"hard", e:"Optimum builds the world's first high-performance memory infrastructure for any blockchain."},
+            {q:"Under standard RLNC models, the dissemination strategy is described as:", o:["Experimental and unproven","Provably optimal for throughput and latency under loss","Slower but cryptographically secure","Testnet phase only"], a:1, d:"hard", e:"The mathematics of RLNC make the strategy provably optimal for throughput and latency under network contention."},
+            {q:"What must a node collect to decode original data in RLNC?", o:["The exact original packets in order","Enough linearly independent coded fragments","A password from the sender","The full blockchain history"], a:1, d:"hard", e:"A node needs enough linearly independent coded fragments to mathematically solve and reconstruct the original data."},
+            {q:"What does redundant transmission in standard networks cause?", o:["It makes tokens cheaper","It wastes bandwidth and slows propagation under load","It increases mining rewards","It has no real effect"], a:1, d:"hard", e:"Standard networks rely on redundant transmission that heavily wastes bandwidth and slows propagation under heavy load."}
         ];
 
         const STATE = { questions: [], currentIndex: 0, score: 0, correctCount: 0 };
@@ -483,7 +425,9 @@
             quiz: {
                 qNum: document.getElementById('ui-q-current'),
                 score: document.getElementById('ui-score'),
-                progress: document.getElementById('ui-progress'),
+                timerContainer: document.getElementById('ui-timer-container'),
+                timerText: document.getElementById('ui-timer-text'),
+                timerBar: document.getElementById('ui-timer-bar'),
                 diff: document.getElementById('ui-difficulty'),
                 text: document.getElementById('ui-question'),
                 options: document.getElementById('ui-options'),
@@ -493,7 +437,6 @@
                 btnNext: document.getElementById('btn-next')
             },
             res: {
-                icon: document.getElementById('res-icon'),
                 rankText: document.getElementById('res-rank-text'),
                 score: document.getElementById('res-score'),
                 correct: document.getElementById('res-correct'),
@@ -520,36 +463,62 @@
             DOM.views[viewName].classList.add('active');
         };
 
-        const initQuiz = () => {
-            try {
-                // Mix: 4 easy, 4 med, 2 hard
-                const easy = shuffle(QUESTION_BANK.filter(q => q.d === 'easy')).slice(0, 4);
-                const med = shuffle(QUESTION_BANK.filter(q => q.d === 'medium')).slice(0, 4);
-                const hard = shuffle(QUESTION_BANK.filter(q => q.d === 'hard')).slice(0, 2);
-                let selected = [...easy, ...med, ...hard];
-                if (selected.length < 10) selected = shuffle([...QUESTION_BANK]).slice(0, 10);
+        let timerInterval;
+        const TIME_LIMIT = 15;
+        let timeLeft = TIME_LIMIT;
+
+        const startTimer = (optionsMapped, explanation) => {
+            clearInterval(timerInterval);
+            timeLeft = TIME_LIMIT;
+            
+            DOM.quiz.timerText.textContent = `${Math.ceil(timeLeft)}s`;
+            DOM.quiz.timerBar.style.width = '100%';
+            DOM.quiz.timerBar.style.background = 'var(--text-main)';
+            
+            let lastTime = Date.now();
+            
+            timerInterval = setInterval(() => {
+                const now = Date.now();
+                const dt = (now - lastTime) / 1000;
+                lastTime = now;
+                timeLeft -= dt;
                 
-                STATE.questions = shuffle(selected);
-                STATE.currentIndex = 0;
-                STATE.score = 0;
-                STATE.correctCount = 0;
+                if (timeLeft <= 0) {
+                    timeLeft = 0;
+                    clearInterval(timerInterval);
+                    handleAnswer(false, null, optionsMapped, explanation, true);
+                }
+                
+                DOM.quiz.timerText.textContent = `${Math.ceil(timeLeft)}s`;
+                const percentage = (timeLeft / TIME_LIMIT) * 100;
+                DOM.quiz.timerBar.style.width = `${percentage}%`;
+                
+                if (percentage < 25) { DOM.quiz.timerBar.style.background = 'var(--accent-red)'; } 
+                else if (percentage < 50) { DOM.quiz.timerBar.style.background = 'var(--accent-orange)'; }
+            }, 50);
+        };
 
-                DOM.quiz.score.textContent = '0';
-                DOM.quiz.progress.style.width = '0%';
+        const initQuiz = () => {
+            const easy = shuffle(QUESTION_BANK.filter(q => q.d === 'easy')).slice(0, 4);
+            const med = shuffle(QUESTION_BANK.filter(q => q.d === 'medium')).slice(0, 4);
+            const hard = shuffle(QUESTION_BANK.filter(q => q.d === 'hard')).slice(0, 2);
+            let selected = [...easy, ...med, ...hard];
+            if (selected.length < 10) selected = shuffle([...QUESTION_BANK]).slice(0, 10);
+            
+            STATE.questions = shuffle(selected);
+            STATE.currentIndex = 0;
+            STATE.score = 0;
+            STATE.correctCount = 0;
 
-                switchView('quiz');
-                renderQuestion();
-            } catch (e) {
-                console.error("Error init:", e);
-            }
+            DOM.quiz.score.textContent = '0';
+            switchView('quiz');
+            renderQuestion();
         };
 
         const renderQuestion = () => {
             const q = STATE.questions[STATE.currentIndex];
             DOM.quiz.qNum.textContent = STATE.currentIndex + 1;
-            DOM.quiz.progress.style.width = `${(STATE.currentIndex / 10) * 100}%`;
-            
-            DOM.quiz.diff.textContent = q.d.toUpperCase();
+            DOM.quiz.diff.textContent = q.d;
             DOM.quiz.diff.className = `question-meta diff-${q.d}`;
             DOM.quiz.text.textContent = q.q;
             
@@ -557,70 +526,68 @@
             DOM.quiz.btnNext.classList.remove('show');
             DOM.quiz.options.innerHTML = '';
 
-            let optionsMapped = q.o.map((text, idx) => ({ text, isCorrect: idx === q.a }));
-            optionsMapped = shuffle(optionsMapped);
+            let optionsMapped = shuffle(q.o.map((text, idx) => ({ text, isCorrect: idx === q.a })));
 
             optionsMapped.forEach((opt) => {
                 const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                
+                btn.className = 'option-btn hover-target';
                 const textSpan = document.createElement('span');
                 textSpan.textContent = opt.text;
-                
                 const iconSvg = document.createElement('div');
                 iconSvg.innerHTML = `<svg class="icon-svg" viewBox="0 0 24 24"></svg>`;
                 
                 btn.appendChild(textSpan);
                 btn.appendChild(iconSvg);
-
-                btn.addEventListener('click', () => handleAnswer(opt.isCorrect, btn, optionsMapped, q.e));
+                btn.addEventListener('click', () => handleAnswer(opt.isCorrect, btn, optionsMapped, q.e, false));
                 DOM.quiz.options.appendChild(btn);
             });
+            
+            attachCursorHovers();
+            startTimer(optionsMapped, q.e);
         };
 
-        const handleAnswer = (isCorrect, selectedBtn, allOptionsMapped, explanation) => {
+        const handleAnswer = (isCorrect, selectedBtn, allOptionsMapped, explanation, isTimeout = false) => {
+            clearInterval(timerInterval);
             const allBtns = DOM.quiz.options.querySelectorAll('button');
             allBtns.forEach(b => b.disabled = true);
+            document.body.classList.remove('hovering'); // reset cursor if disabled on click
 
-            if (isCorrect) {
+            if (isCorrect && !isTimeout) {
                 STATE.score += 1;
                 STATE.correctCount += 1;
                 DOM.quiz.score.textContent = STATE.score;
                 
-                selectedBtn.classList.add('correct');
-                selectedBtn.querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`;
-                
+                if(selectedBtn) {
+                    selectedBtn.classList.add('correct');
+                    selectedBtn.querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`;
+                }
                 DOM.quiz.expBox.classList.add('correct');
                 DOM.quiz.expTitle.textContent = "Correct";
                 DOM.quiz.expTitle.style.color = "var(--accent-green)";
             } else {
-                selectedBtn.classList.add('wrong');
-                selectedBtn.querySelector('svg').innerHTML = `<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>`;
-                
+                if(selectedBtn) {
+                    selectedBtn.classList.add('wrong');
+                    selectedBtn.querySelector('svg').innerHTML = `<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>`;
+                }
                 const correctIdx = allOptionsMapped.findIndex(o => o.isCorrect);
                 if(correctIdx !== -1) {
                     allBtns[correctIdx].classList.add('correct');
                     allBtns[correctIdx].querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`;
                 }
-
                 DOM.quiz.expBox.classList.add('wrong');
-                DOM.quiz.expTitle.textContent = "Incorrect";
-                DOM.quiz.expTitle.style.color = "var(--accent-orange)";
+                DOM.quiz.expTitle.textContent = isTimeout ? "Time's Up!" : "Incorrect";
+                DOM.quiz.expTitle.style.color = "var(--accent-red)";
             }
 
             DOM.quiz.expText.textContent = explanation;
             DOM.quiz.expBox.classList.add('show');
             DOM.quiz.btnNext.classList.add('show');
-            DOM.quiz.progress.style.width = `${((STATE.currentIndex + 1) / 10) * 100}%`;
         };
 
         const handleNext = () => {
             STATE.currentIndex++;
-            if (STATE.currentIndex < 10) {
-                renderQuestion();
-            } else {
-                showResults();
-            }
+            if (STATE.currentIndex < 10) renderQuestion();
+            else showResults();
         };
 
         const showResults = () => {
@@ -629,15 +596,14 @@
             DOM.res.wrong.textContent = 10 - STATE.correctCount;
 
             let rank = "";
-            let icon = "";
-            
-            if (STATE.correctCount <= 4) { rank = "Newcomer"; icon = "🌱"; } 
-            else if (STATE.correctCount <= 7) { rank = "Node Operator"; icon = "⚙️"; } 
-            else if (STATE.correctCount <= 9) { rank = "Validator"; icon = "🛡️"; } 
-            else { rank = "Flexnode Master"; icon = "👑"; }
+            if (STATE.correctCount <= 4) rank = "Newcomer";
+            else if (STATE.correctCount <= 7) rank = "Node Operator";
+            else if (STATE.correctCount <= 9) rank = "Validator";
+            else rank = "Flexnode Master";
 
-            DOM.res.icon.textContent = icon;
-            DOM.res.rankText.textContent = `Rank: ${rank}`;
+            DOM.res.rankText.textContent = rank;
+            if(STATE.correctCount === 10) { DOM.res.rankText.style.color = "var(--accent-purple)"; }
+            else { DOM.res.rankText.style.color = "var(--text-main)"; }
 
             const tweetText = `just scored ${STATE.correctCount}/10 on the optimum knowledge challenge ➤ rank: ${rank.toLowerCase()}. think you can match it?`;
             const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=https://www.getoptimum.xyz/`;
@@ -649,15 +615,14 @@
         const generateCertificate = () => {
             try {
                 const canvas = document.createElement('canvas');
-                canvas.width = 1200;
-                canvas.height = 630; // Twitter card format
+                canvas.width = 1200; canvas.height = 630;
                 const ctx = canvas.getContext('2d');
 
                 // Draw Dark Background
-                ctx.fillStyle = '#0a0a0c';
+                ctx.fillStyle = '#050505';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // Draw Gradient Blobs
+                // Draw Gradient Blobs for premium tech feel
                 const drawBlob = (x, y, r, color) => {
                     const gradient = ctx.createRadialGradient(x, y, 0, x, y, r);
                     gradient.addColorStop(0, color);
@@ -665,52 +630,49 @@
                     ctx.fillStyle = gradient;
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                 };
-                drawBlob(0, 0, 800, 'rgba(184, 124, 255, 0.4)'); // Purple top left
-                drawBlob(1200, 630, 800, 'rgba(81, 177, 254, 0.4)'); // Blue bottom right
+                drawBlob(200, 100, 800, 'rgba(184, 124, 255, 0.15)'); // Purple top left
+                drawBlob(1000, 500, 800, 'rgba(81, 177, 254, 0.15)'); // Blue bottom right
 
-                // Add glassmorphism panel
-                ctx.fillStyle = 'rgba(20, 20, 25, 0.7)';
+                // Add Grid Pattern (Dots)
+                ctx.fillStyle = 'rgba(255,255,255,0.03)';
+                for(let i=0; i<1200; i+=40) {
+                    for(let j=0; j<630; j+=40) {
+                        ctx.beginPath(); ctx.arc(i, j, 1, 0, Math.PI*2); ctx.fill();
+                    }
+                }
+
+                // Add Glassmorphism Panel
+                ctx.fillStyle = 'rgba(15, 15, 20, 0.7)';
                 ctx.roundRect = function(x, y, w, h, r) {
                     if (w < 2 * r) r = w / 2; if (h < 2 * r) r = h / 2;
                     this.beginPath(); this.moveTo(x+r, y); this.arcTo(x+w, y, x+w, y+h, r);
                     this.arcTo(x+w, y+h, x, y+h, r); this.arcTo(x, y+h, x, y, r);
                     this.arcTo(x, y, x+w, y, r); this.closePath(); return this;
                 };
-                ctx.roundRect(100, 100, 1000, 430, 30);
+                ctx.roundRect(150, 100, 900, 430, 24);
                 ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-                ctx.stroke();
+                ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
 
-                // Typography
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
+                // Typography setup
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
 
                 // Title
-                ctx.font = 'bold 30px sans-serif';
-                ctx.fillStyle = '#8e8e99';
+                ctx.font = '600 24px monospace'; ctx.fillStyle = '#8e8e99';
                 ctx.fillText('OPTIMUM KNOWLEDGE CHALLENGE', canvas.width / 2, 170);
 
                 // Score
-                ctx.font = 'bold 160px sans-serif';
-                
-                // Create gradient text for score
+                ctx.font = '300 160px monospace';
                 const gradient = ctx.createLinearGradient(450, 0, 750, 0);
-                gradient.addColorStop(0, '#b87cff');
-                gradient.addColorStop(0.5, '#51b1fe');
-                gradient.addColorStop(1, '#64e27f');
+                gradient.addColorStop(0, '#b87cff'); gradient.addColorStop(0.5, '#51b1fe'); gradient.addColorStop(1, '#64e27f');
                 ctx.fillStyle = gradient;
-                
                 ctx.fillText(`${STATE.correctCount}/10`, canvas.width / 2, 320);
 
                 // Rank
                 let rankName = document.getElementById('res-rank-text').innerText;
-                let icon = document.getElementById('res-icon').innerText;
-                ctx.font = 'bold 45px sans-serif';
-                ctx.fillStyle = '#ffffff';
-                ctx.fillText(`${icon} ${rankName.toUpperCase()}`, canvas.width / 2, 450);
+                ctx.font = 'bold 40px sans-serif'; ctx.fillStyle = '#ffffff';
+                ctx.fillText(`RANK: ${rankName.toUpperCase()}`, canvas.width / 2, 460);
 
-                // Logo/Footer
+                // Export logic
                 const saveCanvas = () => {
                     const link = document.createElement('a');
                     link.download = `Optimum_Challenge_Rank.png`;
@@ -718,21 +680,19 @@
                     link.click();
                 };
 
-                // Try loading image, otherwise fallback to text
                 const img = new Image();
                 img.crossOrigin = "anonymous";
                 img.onload = () => {
-                    const h = 40; const w = h * (img.width / img.height);
-                    ctx.drawImage(img, (canvas.width - w)/2, 530, w, h);
+                    const h = 32; const w = h * (img.width / img.height);
+                    ctx.drawImage(img, (canvas.width - w)/2, 550, w, h);
                     saveCanvas();
                 };
                 img.onerror = () => {
-                    ctx.font = 'bold 30px sans-serif';
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillText('OPTIMUM', canvas.width / 2, 550);
+                    ctx.font = 'bold 24px sans-serif'; ctx.fillStyle = '#ffffff';
+                    ctx.fillText('OPTIMUM', canvas.width / 2, 560);
                     saveCanvas();
                 };
-                img.src = './optimum-logo-white.webp'; // Must be in same folder
+                img.src = './optimum-logo-white.webp';
                 
             } catch (e) {
                 console.error("Canvas export failed:", e);
@@ -740,22 +700,51 @@
             }
         };
 
+        const initCursor = () => {
+            const dot = document.getElementById('cursor-dot');
+            const ring = document.getElementById('cursor-ring');
+            if(!dot || !ring) return;
+
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let ringX = mouseX;
+            let ringY = mouseY;
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                // Instantly move dot
+                dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+            });
+
+            // Smoothly ease ring
+            const renderRing = () => {
+                ringX += (mouseX - ringX) * 0.15; // easing factor
+                ringY += (mouseY - ringY) * 0.15;
+                ring.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
+                requestAnimationFrame(renderRing);
+            };
+            requestAnimationFrame(renderRing);
+        };
+
+        const attachCursorHovers = () => {
+            document.querySelectorAll('.hover-target').forEach(el => {
+                if(!el.dataset.cursorAttached) {
+                    el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                    el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+                    el.dataset.cursorAttached = "true";
+                }
+            });
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
+            initCursor();
+            attachCursorHovers();
+            
             DOM.btnStart.addEventListener('click', initQuiz);
             DOM.quiz.btnNext.addEventListener('click', handleNext);
             DOM.res.btnRestart.addEventListener('click', () => switchView('intro'));
             DOM.res.btnDownload.addEventListener('click', generateCertificate);
-            
-            // Mouse glow effect logic
-            const glow = document.getElementById('mouse-glow');
-            window.addEventListener('mousemove', (e) => {
-                requestAnimationFrame(() => {
-                    glow.style.left = `${e.clientX}px`;
-                    glow.style.top = `${e.clientY}px`;
-                });
-            });
         });
-
     </script>
 </body>
 </html>
