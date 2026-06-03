@@ -124,7 +124,12 @@
             color: var(--text-main); background: rgba(255,255,255,0.05);
         }
         .nav-tab.disabled {
-            opacity: 0.5; pointer-events: none; cursor: default; letter-spacing: 0.2em;
+            opacity: 0.5; pointer-events: none; cursor: default; letter-spacing: 0.2em; position: relative;
+        }
+        .nav-tab.disabled::after {
+            content: "SOON"; font-size: 0.5rem; font-weight: 700; letter-spacing: 0.12em;
+            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+            color: var(--accent-purple); opacity: 0.9;
         }
 
         .social-links { display: flex; align-items: center; gap: 1.5rem; }
@@ -139,7 +144,7 @@
             backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
             border: 1px solid var(--surface-border);
             border-radius: 16px; 
-            padding: 3.5rem; width: 100%; max-width: 800px;
+            padding: 3.5rem; width: 100%; max-width: 1080px;
             box-shadow: 0 40px 80px rgba(0,0,0,0.6);
             position: relative; z-index: 10;
         }
@@ -167,11 +172,11 @@
         
         /* Великий маскот БЕЗ анімації */
         .mascot-hero { 
-            width: 520px;
-            max-width: 45vw;
+            width: 680px;
+            max-width: 48vw;
             height: auto; 
             object-fit: contain; 
-            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 40px rgba(184,124,255,0.15));
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 50px rgba(184,124,255,0.18));
         }
 
         .ranks-container { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
@@ -189,9 +194,23 @@
             background: var(--text-main); color: var(--bg-color);
             border: none; padding: 1rem 3rem; border-radius: 100px;
             font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-            transition: var(--transition-smooth); position: relative; overflow: hidden;
+            transition: var(--transition-smooth); position: relative; overflow: visible; z-index: 1;
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); background: #f0f0f0; }
+        /* Неоновий обідок що повільно крутиться */
+        .btn-primary::before {
+            content: ''; position: absolute; inset: -3px; border-radius: 100px; z-index: -1;
+            background: conic-gradient(from 0deg, var(--accent-purple), var(--accent-blue), var(--accent-green), var(--accent-purple));
+            animation: neon-spin 4s linear infinite;
+            filter: blur(6px); opacity: 0.9;
+        }
+        .btn-primary::after {
+            content: ''; position: absolute; inset: 0; border-radius: 100px; z-index: -1;
+            background: var(--text-main);
+        }
+        @keyframes neon-spin { to { transform: rotate(360deg); } }
+        .btn-primary:hover { transform: translateY(-2px); background: #f0f0f0; }
+        .btn-primary:hover::after { background: #f0f0f0; }
+        .btn-primary:hover::before { animation-duration: 1.5s; opacity: 1; }
 
         .btn-outline {
             background: transparent; border: 1px solid rgba(255,255,255,0.2);
@@ -742,7 +761,7 @@ quiz by @hawk_tyt`
                 ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
 
                 // === МЕНША РАМКА З РЕЗУЛЬТАТАМИ ===
-                const cardX = 150, cardY = 175, cardW = 580, cardH = 340;
+                const cardX = 90, cardY = 185, cardW = 560, cardH = 320;
                 ctx.fillStyle = 'rgba(15, 15, 20, 0.85)';
                 ctx.roundRect(cardX, cardY, cardW, cardH, 28); ctx.fill();
                 ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
@@ -758,37 +777,40 @@ quiz by @hawk_tyt`
                 ctx.fillText('OPTIMUM KNOWLEDGE QUIZ', cardCx, cardY + 55);
 
                 // Менші цифри score
-                const gradText = ctx.createLinearGradient(cardX+150, 0, cardX+cardW-150, 0);
+                const gradText = ctx.createLinearGradient(cardX+120, 0, cardX+cardW-120, 0);
                 gradText.addColorStop(0, '#b87cff'); gradText.addColorStop(0.5, '#51b1fe'); gradText.addColorStop(1, '#64e27f');
-                ctx.font = '300 120px monospace'; ctx.fillStyle = gradText;
-                ctx.fillText(`${STATE.correctCount}/10`, cardCx, cardY + 150);
+                ctx.font = '300 110px monospace'; ctx.fillStyle = gradText;
+                ctx.fillText(`${STATE.correctCount}/10`, cardCx, cardY + 145);
 
-                // Ранг
+                // Ранг (авто-зменшення якщо задовге)
                 let rankName = document.getElementById('res-rank-text').innerText;
-                ctx.font = 'bold 38px sans-serif'; ctx.fillStyle = '#ffffff';
-                ctx.fillText(`RANK: ${rankName.toUpperCase()}`, cardCx, cardY + 250);
+                let rankStr = `RANK: ${rankName.toUpperCase()}`;
+                let rankSize = 36;
+                ctx.font = `bold ${rankSize}px sans-serif`;
+                while(ctx.measureText(rankStr).width > cardW - 60 && rankSize > 20){ rankSize -= 2; ctx.font = `bold ${rankSize}px sans-serif`; }
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(rankStr, cardCx, cardY + 230);
 
                 // Built by Hawk (всередині рамки, низ)
                 try {
                     const pfpImg = await loadImage('./PFP.jpg');
-                    ctx.save(); ctx.beginPath(); ctx.arc(cardCx - 55, cardY + 312, 16, 0, Math.PI*2); ctx.clip();
-                    ctx.drawImage(pfpImg, cardCx - 71, cardY + 296, 32, 32); ctx.restore();
+                    ctx.save(); ctx.beginPath(); ctx.arc(cardCx - 55, cardY + 290, 15, 0, Math.PI*2); ctx.clip();
+                    ctx.drawImage(pfpImg, cardCx - 70, cardY + 275, 30, 30); ctx.restore();
                 } catch(e) {}
                 ctx.textAlign='left';
-                ctx.font = '400 14px sans-serif'; ctx.fillStyle = '#8e8e99'; ctx.fillText('Built by', cardCx - 30, cardY + 305);
-                ctx.font = 'bold 18px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.fillText('Hawk', cardCx - 30, cardY + 322);
+                ctx.font = '400 13px sans-serif'; ctx.fillStyle = '#8e8e99'; ctx.fillText('Built by', cardCx - 32, cardY + 284);
+                ctx.font = 'bold 17px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.fillText('Hawk', cardCx - 32, cardY + 300);
                 ctx.textAlign='center';
 
-                // === МАСКОТ — ВЕЛИКИЙ, більший за рамку результатів ===
+                // === МАСКОТ — ВЕЛИКИЙ ===
                 try {
                     const mascotSrc = STATE.correctCount === 10 ? './mascot-win.png' : './mascot-cert.png';
                     const mascotImg = await loadImage(mascotSrc);
-                    const mw = 440; const mh = mw * (mascotImg.height/mascotImg.width);
-                    // right edge 740+440=1180 fits canvas(1200); centered vertically at y=350
-                    let top = 350 - mh/2;
-                    if(top < 20) top = 20;
-                    if(top + mh > 615) top = 615 - mh;
-                    ctx.drawImage(mascotImg, 740, top, mw, mh);
+                    const mw = 560; const mh = mw * (mascotImg.height/mascotImg.width);
+                    let top = 315 - mh/2;
+                    if(top < 5) top = 5;
+                    if(top + mh > 625) top = 625 - mh;
+                    ctx.drawImage(mascotImg, 640, top, mw, mh);
                 } catch(e) { console.log("Mascot skip", e); }
 
                 // Download
