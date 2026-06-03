@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimum Knowledge Challenge</title>
-    <link rel="icon" type="image/png" href="./favicon.png">
+    <!-- Виправлено шлях до фавікону -->
+    <link rel="icon" type="image/webp" href="./favicon.webp">
     
     <style>
         :root {
-            --bg-color: #050505; /* Deep dark */
+            --bg-color: #050505;
             --surface-color: rgba(15, 15, 20, 0.4);
             --surface-border: rgba(255, 255, 255, 0.08);
             
@@ -27,7 +28,6 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Hiding default cursor for custom cursor */
         body, button, a, input { cursor: none !important; }
 
         body {
@@ -40,7 +40,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 1. Animated Gradient Layer */
+        /* Background Layer */
         .bg-gradient {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -4;
             background: linear-gradient(-45deg, #0a0a0c, #130a24, #081222, #07170c);
@@ -54,7 +54,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 2. Tech Grid Overlay */
         .bg-grid {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -3;
             background-image: 
@@ -66,13 +65,13 @@
             -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
         }
 
-        /* 3. Cinematic Noise/Grain Overlay */
         .bg-noise {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -2;
             opacity: 0.03; pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
+        /* Cursor */
         #cursor-dot {
             position: fixed; top: 0; left: 0; width: 6px; height: 6px;
             background-color: var(--text-main); border-radius: 50%;
@@ -90,7 +89,6 @@
             will-change: transform;
         }
 
-        /* Cursor Hover States */
         body.hovering #cursor-dot { background-color: var(--accent-purple); transform: translate(-50%, -50%) scale(0.5); }
         body.hovering #cursor-ring { width: 50px; height: 50px; background-color: rgba(184, 124, 255, 0.1); border-color: transparent; }
 
@@ -104,10 +102,29 @@
 
         .logo-container img { height: 28px; width: auto; display: block; opacity: 0.9; }
 
-        .social-links { display: flex; gap: 1.5rem; }
-        .social-links a { color: var(--text-muted); transition: var(--transition-smooth); }
-        .social-links a:hover { color: var(--text-main); transform: translateY(-2px); }
-        .social-links svg { width: 20px; height: 20px; fill: currentColor; }
+        /* TABS */
+        .nav-tabs {
+            display: flex; gap: 2rem;
+        }
+        .nav-tab {
+            color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500;
+            transition: var(--transition-smooth); cursor: none;
+            padding: 0.5rem 1rem; border-radius: 8px;
+        }
+        .nav-tab.active {
+            color: var(--text-main); background: rgba(255,255,255,0.05);
+        }
+        .nav-tab.disabled {
+            opacity: 0.4; filter: blur(1px); pointer-events: none; position: relative;
+        }
+        .nav-tab.disabled::after {
+            content: "(soon)"; font-size: 0.6rem; position: absolute; top: -5px; right: -5px; color: var(--accent-purple);
+        }
+
+        .social-links { display: flex; align-items: center; gap: 1.5rem; }
+        .social-links a, .sound-toggle { color: var(--text-muted); transition: var(--transition-smooth); background: none; border: none; }
+        .social-links a:hover, .sound-toggle:hover { color: var(--text-main); transform: translateY(-2px); }
+        .social-links svg, .sound-toggle svg { width: 20px; height: 20px; fill: currentColor; }
 
         main { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 6rem 2rem 2rem 2rem; }
 
@@ -115,13 +132,12 @@
             background: var(--surface-color);
             backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
             border: 1px solid var(--surface-border);
-            border-radius: 16px; /* slightly sharper corners for tech look */
+            border-radius: 16px; 
             padding: 3.5rem; width: 100%; max-width: 800px;
             box-shadow: 0 40px 80px rgba(0,0,0,0.6);
             position: relative; z-index: 10;
         }
 
-        /* Sleek top highlight line */
         .glass-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
@@ -137,10 +153,14 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
 
-        h1 { font-size: 4.5rem; line-height: 1; margin-bottom: 1.5rem; font-weight: 800; letter-spacing: -0.04em; }
-        p.subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 3rem; max-width: 600px; font-weight: 400; }
+        h1 { font-size: 4rem; line-height: 1; margin-bottom: 1.5rem; font-weight: 800; letter-spacing: -0.04em; }
+        p.subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; font-weight: 400; }
 
-        /* Sleek Rank Badges instead of Emojis */
+        .intro-content { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+        .intro-text { flex: 1; }
+        .mascot-hero { width: 180px; height: auto; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+
         .ranks-container { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
         .rank-badge {
             display: flex; align-items: center; gap: 0.8rem;
@@ -152,7 +172,6 @@
         .rank-master { border-color: rgba(184, 124, 255, 0.3); background: rgba(184, 124, 255, 0.05); }
         .rank-master .rank-name { color: var(--accent-purple); }
 
-        /* Buttons */
         .btn-primary {
             background: var(--text-main); color: var(--bg-color);
             border: none; padding: 1rem 3rem; border-radius: 100px;
@@ -177,7 +196,6 @@
         .score-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.2rem; }
         .score-val { font-family: monospace; font-size: 1.5rem; font-weight: 600; color: var(--accent-purple); }
 
-        /* Minimalist Thin Timer */
         .timer-container { width: 100%; height: 2px; background: rgba(255,255,255,0.1); margin-bottom: 2rem; position: relative; }
         .timer-bar { height: 100%; width: 100%; background: var(--text-main); transition: width 0.1s linear, background-color 0.3s ease; }
         .timer-text { position: absolute; right: 0; top: 6px; font-family: monospace; font-size: 0.75rem; color: var(--text-muted); }
@@ -191,7 +209,6 @@
 
         .question-text { font-size: 1.8rem; font-weight: 500; margin-bottom: 2.5rem; line-height: 1.4; letter-spacing: -0.01em; }
 
-        /* Minimal Options */
         .options-grid { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem; }
         .option-btn {
             background: transparent; border: 1px solid rgba(255,255,255,0.1);
@@ -228,6 +245,7 @@
         .btn-next:hover { background: var(--text-main); color: var(--bg-color); }
 
         .results-container { text-align: center; }
+        .mascot-result { height: 120px; margin-bottom: 1rem; animation: float 4s ease-in-out infinite; }
         .rank-label-sm { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.5rem; }
         .rank-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; letter-spacing: -0.02em; }
         
@@ -240,7 +258,6 @@
         
         .action-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-        /* Creator Badge */
         .creator-badge {
             position: fixed; bottom: 24px; right: 24px; display: flex; align-items: center; gap: 12px;
             background: rgba(10, 10, 12, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -254,13 +271,16 @@
 
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
+            .intro-content { flex-direction: column-reverse; text-align: center; }
+            .ranks-container { justify-content: center; }
+            .mascot-hero { width: 120px; }
             .glass-card { padding: 2rem 1.5rem; border-radius: 0; border-left: none; border-right: none; }
-            header { padding: 1.5rem; }
-            main { padding: 6rem 0 0 0; align-items: flex-start; }
+            header { padding: 1.5rem; flex-wrap: wrap; }
+            .nav-tabs { width: 100%; order: 3; justify-content: center; margin-top: 1rem; }
+            main { padding: 8rem 0 0 0; align-items: flex-start; }
             .action-buttons { flex-direction: column; width: 100%; }
             .action-buttons a, .action-buttons button { width: 100%; justify-content: center; }
             .creator-badge { bottom: 16px; right: 50%; transform: translateX(50%); width: max-content; }
-            /* Turn off custom cursor for mobile */
             body, button, a, input { cursor: auto !important; }
             #cursor-dot, #cursor-ring { display: none; }
         }
@@ -268,12 +288,10 @@
 </head>
 <body>
 
-    <!-- Premium Background Layers -->
     <div class="bg-gradient"></div>
     <div class="bg-grid"></div>
     <div class="bg-noise"></div>
 
-    <!-- Custom Cursor Elements -->
     <div id="cursor-ring"></div>
     <div id="cursor-dot"></div>
 
@@ -281,16 +299,23 @@
         <div class="logo-container">
             <img src="./optimum-logo-white.webp" alt="Optimum Logo">
         </div>
+        
+        <div class="nav-tabs">
+            <a href="#" class="nav-tab active hover-target">Challenge</a>
+            <span class="nav-tab disabled">Leaderboard</span>
+            <span class="nav-tab disabled">Gallery</span>
+        </div>
 
         <div class="social-links">
+            <button id="btn-sound" class="sound-toggle hover-target" aria-label="Toggle Sound">
+                <svg id="icon-sound-on" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                <svg id="icon-sound-off" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+            </button>
             <a href="https://www.getoptimum.xyz/" target="_blank" class="hover-target" aria-label="Website">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
             </a>
             <a href="https://x.com/get_optimum" target="_blank" class="hover-target" aria-label="X (Twitter)">
                 <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a href="https://docs.getoptimum.xyz/" target="_blank" class="hover-target" aria-label="Documentation">
-                <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
             </a>
         </div>
     </header>
@@ -301,17 +326,23 @@
             <!-- VIEW 1: INTRO -->
             <div id="view-intro" class="view active">
                 <p class="question-meta diff-medium" style="border: none; margin-bottom: 0;">Universal Data Acceleration Network</p>
-                <h1>how well do you know <span class="text-gradient">optimum?</span></h1>
-                <p class="subtitle">Prove your knowledge of RLNC, mump2p, DeRAM, and the technology raising the ceiling for blockchain data movement.</p>
-                
-                <div class="ranks-container">
-                    <div class="rank-badge"><span class="rank-score">0-4</span> <span class="rank-name">Newcomer</span></div>
-                    <div class="rank-badge"><span class="rank-score">5-7</span> <span class="rank-name">Node Operator</span></div>
-                    <div class="rank-badge"><span class="rank-score">8-9</span> <span class="rank-name">Validator</span></div>
-                    <div class="rank-badge rank-master"><span class="rank-score">10</span> <span class="rank-name">Flexnode Master</span></div>
-                </div>
+                <div class="intro-content">
+                    <div class="intro-text">
+                        <h1>how well do you know <span class="text-gradient">optimum?</span></h1>
+                        <p class="subtitle">Prove your knowledge of RLNC, mump2p, DeRAM, and the technology raising the ceiling for blockchain data movement.</p>
+                        
+                        <div class="ranks-container">
+                            <div class="rank-badge"><span class="rank-score">0-4</span> <span class="rank-name">Newcomer</span></div>
+                            <div class="rank-badge"><span class="rank-score">5-7</span> <span class="rank-name">Node Operator</span></div>
+                            <div class="rank-badge"><span class="rank-score">8-9</span> <span class="rank-name">Validator</span></div>
+                            <div class="rank-badge rank-master"><span class="rank-score">10</span> <span class="rank-name">Flexnode Master</span></div>
+                        </div>
 
-                <button id="btn-start" class="btn-primary hover-target">Start Challenge</button>
+                        <button id="btn-start" class="btn-primary hover-target">Start Challenge</button>
+                    </div>
+                    <!-- Mascot Hero -->
+                    <img src="./mascot-hero.png" alt="Optimum Mascot" class="mascot-hero">
+                </div>
             </div>
 
             <!-- VIEW 2: QUIZ -->
@@ -333,9 +364,7 @@
                 <span id="ui-difficulty" class="question-meta diff-easy">EASY</span>
                 <h2 id="ui-question" class="question-text">Loading question...</h2>
 
-                <div id="ui-options" class="options-grid">
-                    <!-- Options injected via JS -->
-                </div>
+                <div id="ui-options" class="options-grid"></div>
 
                 <div id="ui-explanation" class="explanation-box">
                     <strong style="display: block; margin-bottom: 0.5rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;" id="ui-exp-title">Explanation</strong>
@@ -349,6 +378,8 @@
 
             <!-- VIEW 3: RESULTS -->
             <div id="view-results" class="view results-container">
+                <img id="res-mascot" src="./mascot-cert.png" alt="Result Mascot" class="mascot-result">
+                
                 <div class="rank-label-sm">Final Rank Achieved</div>
                 <h2 id="res-rank-text" class="rank-title text-gradient">Flexnode Master</h2>
                 
@@ -414,55 +445,73 @@
             {q:"What does redundant transmission in standard networks cause?", o:["It makes tokens cheaper","It wastes bandwidth and slows propagation under load","It increases mining rewards","It has no real effect"], a:1, d:"hard", e:"Standard networks rely on redundant transmission that heavily wastes bandwidth and slows propagation under heavy load."}
         ];
 
+        // AUDIO SYSTEM (Web Audio API)
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        let soundEnabled = true;
+
+        const initAudio = () => {
+            if (!audioCtx) audioCtx = new AudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        };
+
+        const playTone = (freq, type, duration, vol=0.1) => {
+            if(!soundEnabled || !audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        };
+
+        const sounds = {
+            click: () => playTone(600, 'sine', 0.1, 0.05),
+            correct: () => { playTone(523.25, 'sine', 0.1); setTimeout(() => playTone(659.25, 'sine', 0.2), 100); },
+            wrong: () => playTone(150, 'sawtooth', 0.3, 0.1),
+            fanfare: () => {
+                if(!soundEnabled) return;
+                [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                    setTimeout(() => playTone(f, 'sine', 0.2), i * 150);
+                });
+                setTimeout(() => playTone(1046.50, 'sine', 0.6), 600);
+            }
+        };
+
+        const toggleSound = () => {
+            initAudio();
+            soundEnabled = !soundEnabled;
+            document.getElementById('icon-sound-on').style.display = soundEnabled ? 'block' : 'none';
+            document.getElementById('icon-sound-off').style.display = soundEnabled ? 'none' : 'block';
+        };
+        document.getElementById('btn-sound').addEventListener('click', toggleSound);
+
+        // STATE & DOM
         const STATE = { questions: [], currentIndex: 0, score: 0, correctCount: 0 };
 
         const DOM = {
-            views: {
-                intro: document.getElementById('view-intro'),
-                quiz: document.getElementById('view-quiz'),
-                results: document.getElementById('view-results')
-            },
+            views: { intro: document.getElementById('view-intro'), quiz: document.getElementById('view-quiz'), results: document.getElementById('view-results') },
             quiz: {
-                qNum: document.getElementById('ui-q-current'),
-                score: document.getElementById('ui-score'),
-                timerContainer: document.getElementById('ui-timer-container'),
-                timerText: document.getElementById('ui-timer-text'),
-                timerBar: document.getElementById('ui-timer-bar'),
-                diff: document.getElementById('ui-difficulty'),
-                text: document.getElementById('ui-question'),
-                options: document.getElementById('ui-options'),
-                expBox: document.getElementById('ui-explanation'),
-                expTitle: document.getElementById('ui-exp-title'),
-                expText: document.getElementById('ui-exp-text'),
+                qNum: document.getElementById('ui-q-current'), score: document.getElementById('ui-score'),
+                timerContainer: document.getElementById('ui-timer-container'), timerText: document.getElementById('ui-timer-text'), timerBar: document.getElementById('ui-timer-bar'),
+                diff: document.getElementById('ui-difficulty'), text: document.getElementById('ui-question'), options: document.getElementById('ui-options'),
+                expBox: document.getElementById('ui-explanation'), expTitle: document.getElementById('ui-exp-title'), expText: document.getElementById('ui-exp-text'),
                 btnNext: document.getElementById('btn-next')
             },
-            res: {
-                rankText: document.getElementById('res-rank-text'),
-                score: document.getElementById('res-score'),
-                correct: document.getElementById('res-correct'),
-                wrong: document.getElementById('res-wrong'),
-                btnShare: document.getElementById('btn-share'),
-                btnDownload: document.getElementById('btn-download'),
-                btnRestart: document.getElementById('btn-restart')
-            },
+            res: { mascot: document.getElementById('res-mascot'), rankText: document.getElementById('res-rank-text'), score: document.getElementById('res-score'), correct: document.getElementById('res-correct'), wrong: document.getElementById('res-wrong'), btnShare: document.getElementById('btn-share'), btnDownload: document.getElementById('btn-download'), btnRestart: document.getElementById('btn-restart') },
             btnStart: document.getElementById('btn-start')
         };
 
         const shuffle = (array) => {
-            let currentIndex = array.length, randomIndex;
-            while (currentIndex > 0) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
-                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-            }
+            let c = array.length, r;
+            while (c > 0) { r = Math.floor(Math.random() * c); c--; [array[c], array[r]] = [array[r], array[c]]; }
             return array;
         };
 
-        const switchView = (viewName) => {
-            Object.values(DOM.views).forEach(v => v.classList.remove('active'));
-            DOM.views[viewName].classList.add('active');
-        };
+        const switchView = (v) => { Object.values(DOM.views).forEach(el => el.classList.remove('active')); DOM.views[v].classList.add('active'); };
 
+        // TIMER
         let timerInterval;
         const TIME_LIMIT = 15;
         let timeLeft = TIME_LIMIT;
@@ -470,125 +519,85 @@
         const startTimer = (optionsMapped, explanation) => {
             clearInterval(timerInterval);
             timeLeft = TIME_LIMIT;
-            
             DOM.quiz.timerText.textContent = `${Math.ceil(timeLeft)}s`;
             DOM.quiz.timerBar.style.width = '100%';
             DOM.quiz.timerBar.style.background = 'var(--text-main)';
             
             let lastTime = Date.now();
-            
             timerInterval = setInterval(() => {
-                const now = Date.now();
-                const dt = (now - lastTime) / 1000;
-                lastTime = now;
+                const dt = (Date.now() - lastTime) / 1000;
+                lastTime = Date.now();
                 timeLeft -= dt;
                 
                 if (timeLeft <= 0) {
-                    timeLeft = 0;
-                    clearInterval(timerInterval);
+                    timeLeft = 0; clearInterval(timerInterval);
                     handleAnswer(false, null, optionsMapped, explanation, true);
                 }
                 
                 DOM.quiz.timerText.textContent = `${Math.ceil(timeLeft)}s`;
-                const percentage = (timeLeft / TIME_LIMIT) * 100;
-                DOM.quiz.timerBar.style.width = `${percentage}%`;
+                const pct = (timeLeft / TIME_LIMIT) * 100;
+                DOM.quiz.timerBar.style.width = `${pct}%`;
                 
-                if (percentage < 25) { DOM.quiz.timerBar.style.background = 'var(--accent-red)'; } 
-                else if (percentage < 50) { DOM.quiz.timerBar.style.background = 'var(--accent-orange)'; }
+                if (pct < 25) DOM.quiz.timerBar.style.background = 'var(--accent-red)';
+                else if (pct < 50) DOM.quiz.timerBar.style.background = 'var(--accent-orange)';
             }, 50);
         };
 
         const initQuiz = () => {
+            initAudio(); sounds.click();
             const easy = shuffle(QUESTION_BANK.filter(q => q.d === 'easy')).slice(0, 4);
             const med = shuffle(QUESTION_BANK.filter(q => q.d === 'medium')).slice(0, 4);
             const hard = shuffle(QUESTION_BANK.filter(q => q.d === 'hard')).slice(0, 2);
             let selected = [...easy, ...med, ...hard];
             if (selected.length < 10) selected = shuffle([...QUESTION_BANK]).slice(0, 10);
             
-            STATE.questions = shuffle(selected);
-            STATE.currentIndex = 0;
-            STATE.score = 0;
-            STATE.correctCount = 0;
-
+            STATE.questions = shuffle(selected); STATE.currentIndex = 0; STATE.score = 0; STATE.correctCount = 0;
             DOM.quiz.score.textContent = '0';
-            switchView('quiz');
-            renderQuestion();
+            switchView('quiz'); renderQuestion();
         };
 
         const renderQuestion = () => {
             const q = STATE.questions[STATE.currentIndex];
             DOM.quiz.qNum.textContent = STATE.currentIndex + 1;
-            DOM.quiz.diff.textContent = q.d;
-            DOM.quiz.diff.className = `question-meta diff-${q.d}`;
+            DOM.quiz.diff.textContent = q.d; DOM.quiz.diff.className = `question-meta diff-${q.d}`;
             DOM.quiz.text.textContent = q.q;
-            
-            DOM.quiz.expBox.classList.remove('show', 'correct', 'wrong');
-            DOM.quiz.btnNext.classList.remove('show');
+            DOM.quiz.expBox.classList.remove('show', 'correct', 'wrong'); DOM.quiz.btnNext.classList.remove('show');
             DOM.quiz.options.innerHTML = '';
 
             let optionsMapped = shuffle(q.o.map((text, idx) => ({ text, isCorrect: idx === q.a })));
-
             optionsMapped.forEach((opt) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn hover-target';
-                const textSpan = document.createElement('span');
-                textSpan.textContent = opt.text;
-                const iconSvg = document.createElement('div');
-                iconSvg.innerHTML = `<svg class="icon-svg" viewBox="0 0 24 24"></svg>`;
-                
-                btn.appendChild(textSpan);
-                btn.appendChild(iconSvg);
+                const btn = document.createElement('button'); btn.className = 'option-btn hover-target';
+                const ts = document.createElement('span'); ts.textContent = opt.text;
+                const icon = document.createElement('div'); icon.innerHTML = `<svg class="icon-svg" viewBox="0 0 24 24"></svg>`;
+                btn.appendChild(ts); btn.appendChild(icon);
                 btn.addEventListener('click', () => handleAnswer(opt.isCorrect, btn, optionsMapped, q.e, false));
                 DOM.quiz.options.appendChild(btn);
             });
-            
-            attachCursorHovers();
-            startTimer(optionsMapped, q.e);
+            attachCursorHovers(); startTimer(optionsMapped, q.e);
         };
 
-        const handleAnswer = (isCorrect, selectedBtn, allOptionsMapped, explanation, isTimeout = false) => {
+        const handleAnswer = (isCorrect, btn, allOpts, exp, isTimeUp = false) => {
             clearInterval(timerInterval);
             const allBtns = DOM.quiz.options.querySelectorAll('button');
             allBtns.forEach(b => b.disabled = true);
-            document.body.classList.remove('hovering'); // reset cursor if disabled on click
+            document.body.classList.remove('hovering');
 
-            if (isCorrect && !isTimeout) {
-                STATE.score += 1;
-                STATE.correctCount += 1;
-                DOM.quiz.score.textContent = STATE.score;
-                
-                if(selectedBtn) {
-                    selectedBtn.classList.add('correct');
-                    selectedBtn.querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`;
-                }
-                DOM.quiz.expBox.classList.add('correct');
-                DOM.quiz.expTitle.textContent = "Correct";
-                DOM.quiz.expTitle.style.color = "var(--accent-green)";
+            if (isCorrect && !isTimeUp) {
+                sounds.correct();
+                STATE.score++; STATE.correctCount++; DOM.quiz.score.textContent = STATE.score;
+                if(btn) { btn.classList.add('correct'); btn.querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`; }
+                DOM.quiz.expBox.classList.add('correct'); DOM.quiz.expTitle.textContent = "Correct"; DOM.quiz.expTitle.style.color = "var(--accent-green)";
             } else {
-                if(selectedBtn) {
-                    selectedBtn.classList.add('wrong');
-                    selectedBtn.querySelector('svg').innerHTML = `<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>`;
-                }
-                const correctIdx = allOptionsMapped.findIndex(o => o.isCorrect);
-                if(correctIdx !== -1) {
-                    allBtns[correctIdx].classList.add('correct');
-                    allBtns[correctIdx].querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`;
-                }
-                DOM.quiz.expBox.classList.add('wrong');
-                DOM.quiz.expTitle.textContent = isTimeout ? "Time's Up!" : "Incorrect";
-                DOM.quiz.expTitle.style.color = "var(--accent-red)";
+                sounds.wrong();
+                if(btn) { btn.classList.add('wrong'); btn.querySelector('svg').innerHTML = `<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>`; }
+                const cIdx = allOpts.findIndex(o => o.isCorrect);
+                if(cIdx !== -1) { allBtns[cIdx].classList.add('correct'); allBtns[cIdx].querySelector('svg').innerHTML = `<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>`; }
+                DOM.quiz.expBox.classList.add('wrong'); DOM.quiz.expTitle.textContent = isTimeUp ? "Time's Up!" : "Incorrect"; DOM.quiz.expTitle.style.color = "var(--accent-red)";
             }
-
-            DOM.quiz.expText.textContent = explanation;
-            DOM.quiz.expBox.classList.add('show');
-            DOM.quiz.btnNext.classList.add('show');
+            DOM.quiz.expText.textContent = exp; DOM.quiz.expBox.classList.add('show'); DOM.quiz.btnNext.classList.add('show');
         };
 
-        const handleNext = () => {
-            STATE.currentIndex++;
-            if (STATE.currentIndex < 10) renderQuestion();
-            else showResults();
-        };
+        const handleNext = () => { sounds.click(); STATE.currentIndex++; STATE.currentIndex < 10 ? renderQuestion() : showResults(); };
 
         const showResults = () => {
             DOM.res.score.textContent = STATE.correctCount;
@@ -602,132 +611,87 @@
             else rank = "Flexnode Master";
 
             DOM.res.rankText.textContent = rank;
-            if(STATE.correctCount === 10) { DOM.res.rankText.style.color = "var(--accent-purple)"; }
-            else { DOM.res.rankText.style.color = "var(--text-main)"; }
+            DOM.res.rankText.style.color = STATE.correctCount === 10 ? "var(--accent-purple)" : "var(--text-main)";
 
-            const tweetText = `just scored ${STATE.correctCount}/10 on the optimum knowledge challenge ➤ rank: ${rank.toLowerCase()}. think you can match it?`;
-            const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=https://www.getoptimum.xyz/`;
-            DOM.res.btnShare.href = tweetUrl;
+            if(STATE.correctCount === 10) {
+                DOM.res.mascot.src = "./mascot-win.png";
+                sounds.fanfare();
+            } else {
+                DOM.res.mascot.src = "./mascot-cert.png";
+            }
+
+            // TWITTER SHARING LOGIC
+            const tweetText = `just took the optimum knowledge challenge and scored ${STATE.correctCount}/10\n\nrank: ${rank.toLowerCase()}\n\nthink you know @get_optimum better than me? prove it:\nhttps://alekshawk.github.io/optimum-quiz/\n\nchallenge built by @hawk_tyt`;
+            DOM.res.btnShare.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
             switchView('results');
         };
 
-        const generateCertificate = () => {
+        const generateCertificate = async () => {
             try {
-                const canvas = document.createElement('canvas');
-                canvas.width = 1200; canvas.height = 630;
+                const canvas = document.createElement('canvas'); canvas.width = 1200; canvas.height = 630;
                 const ctx = canvas.getContext('2d');
 
-                // Draw Dark Background
-                ctx.fillStyle = '#050505';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                // Bg
+                ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                const g1 = ctx.createRadialGradient(200, 100, 0, 200, 100, 800); g1.addColorStop(0, 'rgba(184, 124, 255, 0.15)'); g1.addColorStop(1, 'transparent');
+                const g2 = ctx.createRadialGradient(1000, 500, 0, 1000, 500, 800); g2.addColorStop(0, 'rgba(81, 177, 254, 0.15)'); g2.addColorStop(1, 'transparent');
+                ctx.fillStyle = g1; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = g2; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // Draw Gradient Blobs for premium tech feel
-                const drawBlob = (x, y, r, color) => {
-                    const gradient = ctx.createRadialGradient(x, y, 0, x, y, r);
-                    gradient.addColorStop(0, color);
-                    gradient.addColorStop(1, 'transparent');
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                };
-                drawBlob(200, 100, 800, 'rgba(184, 124, 255, 0.15)'); // Purple top left
-                drawBlob(1000, 500, 800, 'rgba(81, 177, 254, 0.15)'); // Blue bottom right
-
-                // Add Grid Pattern (Dots)
+                // Grid
                 ctx.fillStyle = 'rgba(255,255,255,0.03)';
-                for(let i=0; i<1200; i+=40) {
-                    for(let j=0; j<630; j+=40) {
-                        ctx.beginPath(); ctx.arc(i, j, 1, 0, Math.PI*2); ctx.fill();
-                    }
-                }
+                for(let i=0; i<1200; i+=40) for(let j=0; j<630; j+=40) { ctx.beginPath(); ctx.arc(i, j, 1, 0, Math.PI*2); ctx.fill(); }
 
-                // Add Glassmorphism Panel
+                // Card
                 ctx.fillStyle = 'rgba(15, 15, 20, 0.7)';
-                ctx.roundRect = function(x, y, w, h, r) {
-                    if (w < 2 * r) r = w / 2; if (h < 2 * r) r = h / 2;
-                    this.beginPath(); this.moveTo(x+r, y); this.arcTo(x+w, y, x+w, y+h, r);
-                    this.arcTo(x+w, y+h, x, y+h, r); this.arcTo(x, y+h, x, y, r);
-                    this.arcTo(x, y, x+w, y, r); this.closePath(); return this;
-                };
-                ctx.roundRect(150, 100, 900, 430, 24);
-                ctx.fill();
+                ctx.roundRect = function(x, y, w, h, r) { this.beginPath(); this.moveTo(x+r, y); this.arcTo(x+w, y, x+w, y+h, r); this.arcTo(x+w, y+h, x, y+h, r); this.arcTo(x, y+h, x, y, r); this.arcTo(x, y, x+w, y, r); this.closePath(); return this; };
+                ctx.roundRect(150, 100, 900, 430, 24); ctx.fill();
                 ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
 
-                // Typography setup
+                // Text
                 ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-
-                // Title
-                ctx.font = '600 24px monospace'; ctx.fillStyle = '#8e8e99';
-                ctx.fillText('OPTIMUM KNOWLEDGE CHALLENGE', canvas.width / 2, 170);
-
-                // Score
-                ctx.font = '300 160px monospace';
-                const gradient = ctx.createLinearGradient(450, 0, 750, 0);
-                gradient.addColorStop(0, '#b87cff'); gradient.addColorStop(0.5, '#51b1fe'); gradient.addColorStop(1, '#64e27f');
-                ctx.fillStyle = gradient;
-                ctx.fillText(`${STATE.correctCount}/10`, canvas.width / 2, 320);
-
-                // Rank
-                let rankName = document.getElementById('res-rank-text').innerText;
-                ctx.font = 'bold 40px sans-serif'; ctx.fillStyle = '#ffffff';
-                ctx.fillText(`RANK: ${rankName.toUpperCase()}`, canvas.width / 2, 460);
-
-                // Export logic
-                const saveCanvas = () => {
-                    const link = document.createElement('a');
-                    link.download = `Optimum_Challenge_Rank.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                };
-
-                const img = new Image();
-                img.crossOrigin = "anonymous";
-                img.onload = () => {
-                    const h = 32; const w = h * (img.width / img.height);
-                    ctx.drawImage(img, (canvas.width - w)/2, 550, w, h);
-                    saveCanvas();
-                };
-                img.onerror = () => {
-                    ctx.font = 'bold 24px sans-serif'; ctx.fillStyle = '#ffffff';
-                    ctx.fillText('OPTIMUM', canvas.width / 2, 560);
-                    saveCanvas();
-                };
-                img.src = './optimum-logo-white.webp';
+                ctx.font = '600 24px monospace'; ctx.fillStyle = '#8e8e99'; ctx.fillText('OPTIMUM KNOWLEDGE CHALLENGE', canvas.width / 2, 160);
                 
-            } catch (e) {
-                console.error("Canvas export failed:", e);
-                alert("Failed to generate image. Try screenshotting instead!");
-            }
+                const gradText = ctx.createLinearGradient(450, 0, 750, 0); gradText.addColorStop(0, '#b87cff'); gradText.addColorStop(0.5, '#51b1fe'); gradText.addColorStop(1, '#64e27f');
+                ctx.font = '300 160px monospace'; ctx.fillStyle = gradText; ctx.fillText(`${STATE.correctCount}/10`, canvas.width / 2, 290);
+                
+                let rankName = document.getElementById('res-rank-text').innerText;
+                ctx.font = 'bold 40px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.fillText(`RANK: ${rankName.toUpperCase()}`, canvas.width / 2, 430);
+
+                // Load Logo & Mascot
+                const loadImage = (src) => new Promise((resolve, reject) => { const img = new Image(); img.crossOrigin="anonymous"; img.onload = () => resolve(img); img.onerror = reject; img.src = src; });
+                
+                try {
+                    const mascotSrc = STATE.correctCount === 10 ? './mascot-win.png' : './mascot-cert.png';
+                    const mascotImg = await loadImage(mascotSrc);
+                    // Draw mascot on the right side of the card
+                    ctx.drawImage(mascotImg, 800, 180, 200, 200 * (mascotImg.height/mascotImg.width));
+                } catch(e) { console.log("Mascot skip", e); }
+
+                try {
+                    const logoImg = await loadImage('./optimum-logo-white.webp');
+                    const h = 32; const w = h * (logoImg.width / logoImg.height);
+                    ctx.drawImage(logoImg, (canvas.width - w)/2, 560, w, h);
+                } catch(e) { ctx.font = 'bold 24px sans-serif'; ctx.fillText('OPTIMUM', canvas.width / 2, 570); }
+
+                // Download
+                const link = document.createElement('a'); link.download = `Optimum_Challenge_Rank.png`; link.href = canvas.toDataURL('image/png'); link.click();
+            } catch (e) { alert("Failed to generate image."); }
         };
 
+        // CURSOR
         const initCursor = () => {
-            const dot = document.getElementById('cursor-dot');
-            const ring = document.getElementById('cursor-ring');
+            const dot = document.getElementById('cursor-dot'); const ring = document.getElementById('cursor-ring');
             if(!dot || !ring) return;
-
-            let mouseX = window.innerWidth / 2;
-            let mouseY = window.innerHeight / 2;
-            let ringX = mouseX;
-            let ringY = mouseY;
-
-            window.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX; mouseY = e.clientY;
-                // Instantly move dot
-                dot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
-            });
-
-            // Smoothly ease ring
-            const renderRing = () => {
-                ringX += (mouseX - ringX) * 0.15; // easing factor
-                ringY += (mouseY - ringY) * 0.15;
-                ring.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
-                requestAnimationFrame(renderRing);
-            };
+            let mX = window.innerWidth/2, mY = window.innerHeight/2, rX = mX, rY = mY;
+            window.addEventListener('mousemove', (e) => { mX = e.clientX; mY = e.clientY; dot.style.transform = `translate(calc(${mX}px - 50%), calc(${mY}px - 50%))`; });
+            const renderRing = () => { rX += (mX - rX) * 0.3; rY += (mY - rY) * 0.3; ring.style.transform = `translate(calc(${rX}px - 50%), calc(${rY}px - 50%))`; requestAnimationFrame(renderRing); };
             requestAnimationFrame(renderRing);
         };
 
         const attachCursorHovers = () => {
-            document.querySelectorAll('.hover-target').forEach(el => {
+            document.querySelectorAll('.hover-target, button, a').forEach(el => {
                 if(!el.dataset.cursorAttached) {
                     el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
                     el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
@@ -737,13 +701,10 @@
         };
 
         document.addEventListener('DOMContentLoaded', () => {
-            initCursor();
-            attachCursorHovers();
-            
-            DOM.btnStart.addEventListener('click', initQuiz);
-            DOM.quiz.btnNext.addEventListener('click', handleNext);
-            DOM.res.btnRestart.addEventListener('click', () => switchView('intro'));
-            DOM.res.btnDownload.addEventListener('click', generateCertificate);
+            initCursor(); attachCursorHovers();
+            DOM.btnStart.addEventListener('click', initQuiz); DOM.quiz.btnNext.addEventListener('click', handleNext);
+            DOM.res.btnRestart.addEventListener('click', () => { sounds.click(); switchView('intro'); });
+            DOM.res.btnDownload.addEventListener('click', () => { sounds.click(); generateCertificate(); });
         });
     </script>
 </body>
