@@ -232,6 +232,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;display:flex;ali
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+console.log("OPTIMUM QUIZ v3 LOADED " + new Date().toISOString());
+window.addEventListener("DOMContentLoaded", function(){
+  var b = document.createElement("div");
+  b.textContent = "v3 ✓";
+  b.style.cssText = "position:fixed;bottom:8px;left:8px;font-size:10px;color:#444;z-index:99999;font-family:monospace";
+  document.body.appendChild(b);
+});
+</script>
 </head>
 <body>
 
