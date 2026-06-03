@@ -292,13 +292,13 @@
         .creator-badge {
             position: fixed; bottom: 24px; right: 24px; display: flex; align-items: center; gap: 12px;
             background: rgba(10, 10, 12, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05); padding: 6px 16px 6px 6px; border-radius: 100px;
-            text-decoration: none; color: var(--text-main); font-size: 0.9rem; transition: var(--transition-smooth); z-index: 90;
+            border: 1px solid rgba(255, 255, 255, 0.05); padding: 8px 20px 8px 8px; border-radius: 100px;
+            text-decoration: none; color: var(--text-main); font-size: 1rem; transition: var(--transition-smooth); z-index: 90;
         }
         .creator-badge:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,0.2); }
-        .creator-pfp { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
-        .creator-text span { color: var(--text-muted); font-size: 0.7rem; display: block; line-height: 1; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
-        .creator-text strong { font-weight: 600; font-size: 0.85rem; }
+        .creator-pfp { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+        .creator-text span { color: var(--text-muted); font-size: 0.8rem; display: block; line-height: 1; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .creator-text strong { font-weight: 600; font-size: 1rem; }
 
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
@@ -783,27 +783,27 @@ quiz by @hawk_tyt`
                     const mascotImg = await loadImage(mascotSrc);
                     const mh = 600; const mw = mh * (mascotImg.width/mascotImg.height);
                     const my = (canvas.height - mh) / 2 + 15;
-                    const mx = canvas.width - mw + 30; // Притиснутий до правого краю
+                    const mx = canvas.width - mw + 150; // Притиснутий до правого краю, ЗМІЩЕНИЙ ВПРАВО
                     ctx.drawImage(mascotImg, mx, my, mw, mh);
                 } catch(e) { console.log("Mascot skip", e); }
 
-                // 4. Built by Hawk - внизу по центру одним рядком
+                // 4. Built by Hawk - внизу по центру одним рядком (ЗБІЛЬШЕНИЙ)
                 const bottomY = canvas.height - 40;
                 const bottomX = canvas.width / 2;
                 
                 try {
                     const pfpImg = await loadImage('./PFP.jpg');
-                    ctx.save(); ctx.beginPath(); ctx.arc(bottomX - 65, bottomY, 15, 0, Math.PI*2); ctx.clip();
-                    ctx.drawImage(pfpImg, bottomX - 80, bottomY - 15, 30, 30); ctx.restore();
+                    ctx.save(); ctx.beginPath(); ctx.arc(bottomX - 85, bottomY, 20, 0, Math.PI*2); ctx.clip();
+                    ctx.drawImage(pfpImg, bottomX - 105, bottomY - 20, 40, 40); ctx.restore(); // Збільшена аватарка
                 } catch(e) {}
                 
                 ctx.textAlign='left';
-                ctx.font = '400 16px sans-serif'; ctx.fillStyle = '#8e8e99'; 
-                ctx.fillText('Built by ', bottomX - 40, bottomY);
+                ctx.font = '400 22px sans-serif'; ctx.fillStyle = '#8e8e99'; // Збільшений шрифт
+                ctx.fillText('Built by ', bottomX - 50, bottomY);
                 
                 const builtByWidth = ctx.measureText('Built by ').width;
-                ctx.font = 'bold 18px sans-serif'; ctx.fillStyle = '#ffffff'; 
-                ctx.fillText('Hawk', bottomX - 40 + builtByWidth, bottomY);
+                ctx.font = 'bold 24px sans-serif'; ctx.fillStyle = '#ffffff'; // Збільшений шрифт
+                ctx.fillText('Hawk', bottomX - 50 + builtByWidth, bottomY);
 
                 // Download
                 const link = document.createElement('a'); link.download = `Optimum_Quiz_Rank.png`; link.href = canvas.toDataURL('image/png'); link.click();
